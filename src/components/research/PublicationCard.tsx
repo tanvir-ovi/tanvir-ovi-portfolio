@@ -11,13 +11,18 @@ export function PublicationCard({ pub, delay = 0 }: { pub: Publication; delay?: 
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
+  // Abstracts are shown only for work that is out in the world. Papers under
+  // review or submitted list the title and venue but keep the abstract private.
+  const isPublic = pub.status === "Published" || pub.status === "Accepted";
+  const showAbstract = Boolean(pub.abstract) && isPublic;
+
   return (
     <Reveal delay={delay}>
       <article
         id={pub.id}
         className="group relative scroll-mt-24 border-b border-border py-9 first:pt-0 last:border-b-0 sm:py-10"
       >
-        {/* Hover marker - a fine accent line grows down the left edge */}
+        {/* Hover marker: a fine accent line grows down the left edge */}
         <span
           className="absolute left-0 top-0 hidden h-0 w-px bg-accent/50 transition-[height] duration-500 ease-out group-hover:h-full sm:block"
           aria-hidden="true"
@@ -26,7 +31,7 @@ export function PublicationCard({ pub, delay = 0 }: { pub: Publication; delay?: 
         <div className="grid gap-x-10 gap-y-4 sm:grid-cols-[8rem_1fr] sm:pl-6">
           <div className="flex flex-row flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-2.5">
             <StatusBadge status={pub.status} />
-            <span className="font-display text-lg italic text-foreground-faint transition-colors duration-300 group-hover:text-accent-strong sm:text-xl">
+            <span className="font-display text-lg italic text-foreground-faint sm:text-xl">
               {pub.year}
             </span>
             {pub.firstAuthor ? (
@@ -37,19 +42,42 @@ export function PublicationCard({ pub, delay = 0 }: { pub: Publication; delay?: 
           </div>
 
           <div>
-            <h3 className="flex items-start gap-2 text-balance text-lg font-medium leading-snug text-foreground transition-colors duration-300 group-hover:text-accent-strong sm:text-xl">
-              <span>{pub.title}</span>
-              <ArrowUpRight
-                size={18}
-                className="mt-1 hidden shrink-0 text-foreground-faint opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-strong group-hover:opacity-100 sm:block"
-                aria-hidden="true"
-              />
+            <h3 className="text-balance text-lg font-medium leading-snug text-foreground sm:text-xl">
+              {pub.url ? (
+                <a
+                  href={pub.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group/link inline-flex items-start gap-2 transition-colors duration-300 hover:text-accent-strong"
+                >
+                  <span>{pub.title}</span>
+                  <ArrowUpRight
+                    size={17}
+                    className="mt-1 shrink-0 text-foreground-faint transition-all duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-accent-strong"
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : (
+                <span>{pub.title}</span>
+              )}
             </h3>
 
             <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{pub.authors}</p>
             <p className="mt-1 text-sm text-foreground-faint">{pub.venue}</p>
 
-            {pub.abstract ? (
+            {pub.url ? (
+              <a
+                href={pub.url}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-accent-strong transition-colors hover:text-accent"
+              >
+                View paper
+                <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
+              </a>
+            ) : null}
+
+            {showAbstract ? (
               <>
                 <button
                   type="button"

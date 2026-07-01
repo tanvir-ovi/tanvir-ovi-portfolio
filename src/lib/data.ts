@@ -56,6 +56,7 @@ export interface Publication {
   firstAuthor: boolean;
   abstract?: string;
   featured?: boolean;
+  url?: string;
 }
 
 export const publications: Publication[] = [
@@ -70,6 +71,7 @@ export const publications: Publication[] = [
     status: "Published",
     firstAuthor: true,
     featured: true,
+    url: "https://www.sciencedirect.com/science/article/pii/S2666827026000666",
     abstract:
       "A three-stage, three-week EEG study asking whether the same brain rhythms can classify mental states and identify individuals at the same time. Delta-band oscillations reached 86.9% accuracy on task classification but only 15.6 to 23.6% on person identification. Broadband signals reversed that pattern, hitting 69.9% authentication accuracy across sessions a week apart. Two-way ANOVA confirmed the split was structured rather than noise. Shared cognitive processes ride on slow cortical rhythms. Stable individual signatures live in the broader frequency bands instead.",
   },
@@ -82,8 +84,6 @@ export const publications: Publication[] = [
     status: "Under Review",
     firstAuthor: true,
     featured: true,
-    abstract:
-      "EEG emotion recognition degrades sharply across sessions days or weeks apart. This work asks whether that decline is random or structured. Using the SEED-IV dataset, variance decomposition showed the subject by emotion interaction explained 80.1% of performance variance, and each person showed a consistent emotion-specific fingerprint across sessions. Baseline patterns predicted how much someone would benefit from personalization, with an R² of 0.951. Phenotype-aware fine-tuning reached 91.92% accuracy against 39.96% for uniform correction.",
   },
   {
     id: "envisioned-english-speech",
@@ -94,6 +94,7 @@ export const publications: Publication[] = [
     status: "Published",
     firstAuthor: false,
     featured: true,
+    url: "https://www.sciencedirect.com/science/article/pii/S2666827025001355",
     abstract:
       "EEG signals from 20 participants imagining 26 English letters and 10 digits were used to train 1D CNN, BiLSTM, and hybrid CNN-BiLSTM models across five frequency bands. BiLSTM performed best, reaching 85.65% accuracy on digits within the delta band and 83.65% on letters within the alpha band. It is a step toward assistive communication for people with motor neuron disorders.",
   },
@@ -105,6 +106,7 @@ export const publications: Publication[] = [
     year: "2026",
     status: "Published",
     firstAuthor: false,
+    url: "https://www.sciencedirect.com/science/article/pii/S000169182501474X",
     abstract:
       "EEG from 28 participants during WhatsApp audio and video calls shows video calls impose significantly higher cognitive load and mental fatigue than audio calls, growing with call duration. Theta-alpha ratio and Mahalanobis-distance fatigue analysis combined with ML classification (ROC-AUC > 0.90) gave convergent evidence that communication modality matters for real-world workload assessment.",
   },
@@ -127,8 +129,6 @@ export const publications: Publication[] = [
     status: "Submitted",
     firstAuthor: true,
     featured: true,
-    abstract:
-      "My undergraduate thesis. Thirty participants watched the same video either on a 2D laptop or in 360° VR through a Meta Quest 3, all wearing a 14-channel Emotiv EPOC X. Theta-alpha ratio was higher on the laptop (0.93) than in VR (0.73), while engagement index and beta-alpha ratio were both higher in VR. That pattern suggests immersive environments lower cognitive load while keeping people more engaged. A KNN classifier combining all three indices reached 83.5% accuracy.",
   },
   {
     id: "bangla-imagined-speech",
@@ -138,8 +138,6 @@ export const publications: Publication[] = [
     year: "2026",
     status: "Submitted",
     firstAuthor: false,
-    abstract:
-      "A new EEG dataset of 10 Bangla words across 5 emotional conditions (love, surprise, anger, sadness, fear) from 17 participants, the first of its kind for imagined Bangla speech. A 1D-CNN trained on Welch power-spectral-density features across theta, alpha, beta, and gamma bands reached 95.40% and 92.25% accuracy across two trials, showing clear neural signatures of emotionally driven imagined speech.",
   },
   {
     id: "bangla-word-level-speech",
