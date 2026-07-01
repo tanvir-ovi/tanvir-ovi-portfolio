@@ -44,16 +44,17 @@ export function Nav() {
           href="/"
           className="flex items-center gap-2.5 rounded-full text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-accent/40 bg-accent-soft">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/25">
             <Image
-              src="/images/portrait.jpg"
-              alt={profile.name}
-              width={64}
-              height={64}
-              className="h-full w-full object-cover object-top"
+              src="/images/logo.png"
+              alt={`${profile.name} logo`}
+              width={72}
+              height={72}
+              priority
+              className="h-[128%] w-[128%] max-w-none object-cover"
             />
           </span>
-          <span className="hidden sm:inline">{profile.shortName}</span>
+          <span>{profile.shortName}</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">

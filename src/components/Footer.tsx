@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EnvelopeSimple, LinkedinLogo, GithubLogo, GraduationCap } from "@phosphor-icons/react/dist/ssr";
 import { navLinks, profile } from "@/lib/data";
 import { Container } from "./ui/Container";
@@ -15,8 +16,19 @@ export function Footer() {
     <footer className="border-t border-border bg-background-elevated">
       <Container className="flex flex-col gap-8 py-12 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-sm">
-          <p className="text-sm font-semibold text-foreground">{profile.name}</p>
-          <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/20">
+              <Image
+                src="/images/logo.png"
+                alt=""
+                width={80}
+                height={80}
+                className="h-[128%] w-[128%] max-w-none object-cover"
+              />
+            </span>
+            <p className="text-sm font-semibold text-foreground">{profile.name}</p>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
             {profile.role} · {profile.location}
           </p>
           <div className="mt-4 flex items-center gap-3">
