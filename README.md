@@ -22,6 +22,29 @@ Open http://localhost:3000 in your browser.
 - `src/lib/data.ts`: all site content (publications, experience, skills, and more) in one place. Edit this file to update copy without touching components.
 - `public/images/`: portrait and experiment setup photos.
 - `public/docs/`: downloadable CV PDF.
+- `public/brain-points.json`: the hero's 3D neural brain, baked from a real MRI-derived cortical surface (see Credits).
+
+## The hero brain
+
+The home hero renders an interactive 3D neural brain with `three.js` and
+`@react-three/fiber` (`src/components/home/NeuralBrain.tsx`). The geometry is not
+loaded from a runtime 3D model; it is pre-baked into `public/brain-points.json`
+(a point cloud plus a low-poly surface shell) so nothing can fail to load at
+runtime. If WebGL is unavailable, the hero falls back to the flat SVG signal
+field. On mobile and with `prefers-reduced-motion`, the lighter SVG field is
+used instead.
+
+## Credits
+
+The 3D brain geometry (`public/brain-points.json`) is derived from the
+**"Brain for Blender"** mesh by **Anderson M. Winkler** (brainder.org), a real
+human brain reconstructed from MRI.
+
+- Source: https://brainder.org/research/brain-for-blender/
+- License: Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0),
+  https://creativecommons.org/licenses/by-sa/3.0/
+- As a derivative work, `public/brain-points.json` is likewise made available
+  under CC BY-SA 3.0. See `public/brain-points.LICENSE.txt`.
 
 ## Contact form
 

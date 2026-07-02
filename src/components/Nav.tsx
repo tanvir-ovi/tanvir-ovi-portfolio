@@ -44,7 +44,7 @@ export function Nav() {
           href="/"
           className="group flex items-center gap-2.5 rounded-full text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/25 transition-all duration-300 group-hover:scale-105 group-hover:ring-accent/50 motion-reduce:group-hover:scale-100">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/30 shadow-[0_3px_12px_-3px_rgba(56,189,248,0.5)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_16px_-3px_rgba(56,189,248,0.7)] group-hover:ring-accent/60 motion-reduce:group-hover:translate-y-0">
             <Image
               src="/images/logo.png"
               alt={`${profile.name} logo`}
@@ -52,6 +52,15 @@ export function Nav() {
               height={72}
               priority
               className="h-[128%] w-[128%] max-w-none object-cover"
+            />
+            {/* Glass sheen for a raised, dimensional feel */}
+            <span
+              className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-white/25 via-transparent to-black/25"
+              aria-hidden="true"
+            />
+            <span
+              className="pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-lg bg-gradient-to-b from-white/15 to-transparent"
+              aria-hidden="true"
             />
           </span>
           <span>{profile.shortName}</span>

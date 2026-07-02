@@ -1,0 +1,23 @@
+brain-points.json — attribution and license
+============================================
+
+The 3D brain geometry in this file (a point cloud and a low-poly surface shell
+used by the site's hero animation) is a derivative work of:
+
+    "Brain for Blender"
+    Anderson M. Winkler
+    https://brainder.org/research/brain-for-blender/
+
+a real human brain surface reconstructed from MRI.
+
+The original mesh is licensed under the Creative Commons
+Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0):
+
+    https://creativecommons.org/licenses/by-sa/3.0/
+
+In accordance with the ShareAlike term, this derived file (brain-points.json)
+is distributed under the same license, CC BY-SA 3.0, with attribution to
+Anderson M. Winkler.
+
+The website's own source code is not affected by this license; only the derived
+brain geometry data in brain-points.json is covered by CC BY-SA 3.0.

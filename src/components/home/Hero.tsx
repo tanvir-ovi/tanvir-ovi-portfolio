@@ -1,48 +1,50 @@
 "use client";
 
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { ButtonLink } from "../ui/Button";
 import { EEGSignalField } from "./EEGSignalField";
 
+/* The 3D neural brain is client-only and code-split so the first paint of
+ * the headline never waits on three.js. */
+const NeuralBrain = dynamic(
+  () => import("./NeuralBrain").then((m) => m.NeuralBrain),
+  { ssr: false }
+);
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  // Mouse parallax for the desktop signal field: the field leans gently
-  // toward the cursor through a spring, giving the hero physical depth.
-  const parallaxX = useMotionValue(0);
-  const parallaxY = useMotionValue(0);
-  const springX = useSpring(parallaxX, { stiffness: 42, damping: 16 });
-  const springY = useSpring(parallaxY, { stiffness: 42, damping: 16 });
+  // Normalised cursor position consumed by the 3D scene for its gentle tilt
+  const pointer = useRef({ x: 0, y: 0 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     if (prefersReducedMotion || !sectionRef.current) return;
     const rect = sectionRef.current.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    parallaxX.set(nx * 22);
-    parallaxY.set(ny * 14);
+    pointer.current.x = (e.clientX - rect.left) / rect.width - 0.5;
+    pointer.current.y = (e.clientY - rect.top) / rect.height - 0.5;
   }
 
   function handleMouseLeave() {
-    parallaxX.set(0);
-    parallaxY.set(0);
+    pointer.current.x = 0;
+    pointer.current.y = 0;
   }
 
-  // Text entrance: masked line reveal for the headline, blur-to-sharp for
-  // the supporting copy. Runs on mount, independent of any asset.
+  // Text entrance: masked line reveal for the headline, blur-to-sharp for the
+  // supporting copy. Timed so the lines land while the brain glides right.
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       gsap
-        .timeline({ defaults: { ease: "power3.out" } })
+        .timeline({ delay: 0.65, defaults: { ease: "power3.out" } })
         .fromTo(
           "[data-hero-overline]",
           { opacity: 0, x: -14 },
@@ -81,7 +83,7 @@ export function Hero() {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="bg-grain relative overflow-hidden border-b border-border"
+      className="bg-grain relative overflow-hidden"
     >
       {/* Distant radial atmosphere - keeps the navy from feeling flat */}
       <div
@@ -93,16 +95,39 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      {/* MOBILE: EEG as a low-opacity decorative layer rising behind the lower copy.
-          No large block above the headline. Hidden on desktop. */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[42%] opacity-[0.55] [mask-image:linear-gradient(to_bottom,transparent,black_22%)] lg:hidden"
-        aria-hidden="true"
-      >
-        <EEGSignalField />
-      </div>
+      {/* The neural brain owns the whole hero canvas on every device. On desktop
+          it glides to the right column; on mobile it stays centred behind the
+          copy (with a readability scrim below). Reduced motion gets the calm
+          EEG field instead. */}
+      {!prefersReducedMotion ? (
+        <>
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <NeuralBrain pointer={pointer} />
+          </div>
+          {/* Mobile-only scrim: keeps the upper copy on solid dark, lets the
+              brain glow through the lower half where it sits */}
+          <div
+            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background from-30% via-background/60 to-transparent lg:hidden"
+            aria-hidden="true"
+          />
+        </>
+      ) : (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 top-[42%] opacity-[0.55] [mask-image:linear-gradient(to_bottom,transparent,black_22%)] lg:hidden"
+          aria-hidden="true"
+        >
+          <EEGSignalField />
+        </div>
+      )}
 
-      <Container className="relative grid grid-cols-1 items-center gap-10 py-24 sm:py-28 lg:min-h-[100svh] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:gap-10 lg:py-16">
+      {/* Smooth transition so the 3D scene melts into the next section instead
+          of ending on a hard seam. Matches the stats section background. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-b from-transparent to-[var(--background-elevated)]"
+        aria-hidden="true"
+      />
+
+      <Container className="relative grid min-h-[100svh] grid-cols-1 items-start gap-10 py-24 sm:py-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-16">
 
         {/* Copy - first in the DOM so it sits at the top of the mobile viewport */}
         <div ref={textRef} className="relative z-10 order-1 max-w-xl">
@@ -166,14 +191,14 @@ export function Hero() {
           </div>
         </div>
 
-        {/* DESKTOP: EEG signal field in the right column with cursor parallax */}
-        <motion.div
-          style={{ x: springX, y: springY }}
+        {/* Right column: spacer the brain occupies; static EEG field when the
+            visitor prefers reduced motion */}
+        <div
           className="relative order-2 hidden h-[72svh] max-h-[620px] w-full lg:block"
           aria-hidden="true"
         >
-          <EEGSignalField />
-        </motion.div>
+          {prefersReducedMotion ? <EEGSignalField /> : null}
+        </div>
       </Container>
     </section>
   );
