@@ -42,9 +42,9 @@ export function Nav() {
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2.5 rounded-full text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group flex items-center gap-2.5 rounded-full text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/25">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1 ring-accent/25 transition-all duration-300 group-hover:scale-105 group-hover:ring-accent/50 motion-reduce:group-hover:scale-100">
             <Image
               src="/images/logo.png"
               alt={`${profile.name} logo`}

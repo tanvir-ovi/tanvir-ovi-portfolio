@@ -15,9 +15,13 @@ export function CtaBanner({
     <section className="border-t border-border py-24 sm:py-32">
       <Container>
         <Reveal className="relative py-14 text-center">
-          {/* Fine hairline across the top */}
+          {/* Fine hairline across the top, with a light that glides along it */}
           <div
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent"
+            aria-hidden="true"
+          />
+          <div
+            className="hairline-shimmer pointer-events-none absolute inset-x-0 top-0 h-px motion-reduce:hidden"
             aria-hidden="true"
           />
           {/* Distant ambient glow */}

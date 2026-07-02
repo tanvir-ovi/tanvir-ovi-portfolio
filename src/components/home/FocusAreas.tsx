@@ -32,7 +32,7 @@ export function FocusAreas() {
                 {String(i + 1).padStart(2, "0")}
               </span>
 
-              <div>
+              <div className="transition-transform duration-300 ease-out group-hover:translate-x-1.5 motion-reduce:group-hover:translate-x-0">
                 <h3 className="text-base font-semibold text-foreground sm:text-lg">
                   {area.title}
                 </h3>
