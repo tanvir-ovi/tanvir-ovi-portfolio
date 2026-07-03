@@ -81,10 +81,12 @@ const fresnelFrag = /* glsl */ `
 function makeFresnelMaterial() {
   return new THREE.ShaderMaterial({
     uniforms: {
-      uColor: { value: new THREE.Color("#5cc8f5") },
-      uPower: { value: 2.7 },
-      uOpacity: { value: 0.42 },
-      uInner: { value: 0.03 },
+      // Crisp rim (high power) reads the anatomical outline and the folded
+      // cortex ridges; low inner fill keeps the interior calm, not a glowing blob.
+      uColor: { value: new THREE.Color("#63c4ef") },
+      uPower: { value: 3.4 },
+      uOpacity: { value: 0.5 },
+      uInner: { value: 0.012 },
     },
     vertexShader: fresnelVert,
     fragmentShader: fresnelFrag,
@@ -199,11 +201,19 @@ function GridFloor({ pointer }: { pointer: PointerRef }) {
   );
 }
 
-const PULSE_COUNT = 10;
+const PULSE_COUNT = 5;
 type PulseState = { edge: number; t: number; speed: number; dir: 0 | 1 };
 
-function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef }) {
-  const { viewport, size } = useThree();
+function BrainScene({
+  data,
+  pointer,
+  variant,
+}: {
+  data: BrainJSON;
+  pointer: PointerRef;
+  variant: "desktop" | "mobile";
+}) {
+  const { viewport } = useThree();
   const group = useRef<THREE.Group>(null);
   const pulseSprites = useRef<(THREE.Sprite | null)[]>([]);
   const flashSprites = useRef<(THREE.Sprite | null)[]>([]);
@@ -251,43 +261,33 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
   }, [data]);
 
   const shellMat = useMemo(() => makeFresnelMaterial(), []);
+  // The neuron material's opacity is animated for a slow shimmer; it is attached
+  // as a JSX child so its ref is set after mount and read only in the frame loop.
+  const brightMatRef = useRef<THREE.PointsMaterial>(null);
 
+  // Dim, fine cortical points suggesting surface texture - not a bright cloud
   const denseMat = useMemo(
     () =>
       new THREE.PointsMaterial({
-        color: new THREE.Color("#67d0f7"),
-        size: 0.023,
+        color: new THREE.Color("#59a6d2"),
+        size: 0.016,
         map: glowTex,
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.5,
         depthWrite: false,
         sizeAttenuation: true,
       }),
     [glowTex]
   );
-  // A soft additive haze over the same points gives the cloud volume/glow
+  // A whisper of additive haze for depth only (no blooming blob)
   const hazeMat = useMemo(
     () =>
       new THREE.PointsMaterial({
         color: new THREE.Color("#38bdf8"),
-        size: 0.06,
+        size: 0.045,
         map: glowTex,
         transparent: true,
-        opacity: 0.14,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        sizeAttenuation: true,
-      }),
-    [glowTex]
-  );
-  const brightMat = useMemo(
-    () =>
-      new THREE.PointsMaterial({
-        color: new THREE.Color("#bae6fd"),
-        size: 0.055,
-        map: glowTex,
-        transparent: true,
-        opacity: 0.95,
+        opacity: 0.045,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
         sizeAttenuation: true,
@@ -299,7 +299,7 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
       new THREE.LineBasicMaterial({
         color: new THREE.Color("#38bdf8"),
         transparent: true,
-        opacity: 0.11,
+        opacity: 0.06,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       }),
@@ -313,8 +313,8 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
     tiltY: 0,
     pulses: Array.from({ length: PULSE_COUNT }, (_, i): PulseState => ({
       edge: built.edgeList.length ? i % built.edgeList.length : 0,
-      t: (i * 0.1) % 1,
-      speed: 0.5 + (i % 4) * 0.16,
+      t: (i * 0.17) % 1,
+      speed: 0.26 + (i % 3) * 0.08,
       dir: 0,
     })),
     flashes: Array.from({ length: PULSE_COUNT }, () => ({ life: 0, pos: new THREE.Vector3() })),
@@ -332,17 +332,21 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
     const p = Math.min(s.clock / INTRO, 1);
     const e = easeInOutCubic(p);
 
-    // Responsive choreography. Desktop: glide from centre to the right column.
-    // Mobile/tablet: stay centred, scaled to fit the narrow viewport, sitting a
-    // little low so the headline above stays clear (a readability scrim in the
-    // DOM keeps the copy legible over it).
-    const mobile = size.width < 1024;
-    if (mobile) {
-      const fit = Math.min(0.95, Math.max(0.55, viewport.width / 2.9));
+    // Desktop: glide from centre to the right column while the headline lands.
+    // Mobile: a staged intro - the brain opens large and centred, slow-zooming
+    // and rotating for a beat, then eases down into the lower half as the text
+    // reveals in the space above it.
+    if (variant === "mobile") {
+      const fit = Math.min(1.18, Math.max(0.72, viewport.width / 2.7));
+      const HOLD = 2.6;
+      const SETTLE = 2.3;
+      const zoom = Math.min(1, s.clock / HOLD);
+      const zoomE = 1 - Math.pow(1 - zoom, 3); // easeOutCubic
+      const sp = Math.min(1, Math.max(0, (s.clock - HOLD) / SETTLE));
+      const se = easeInOutCubic(sp);
       g.position.x = 0;
-      // Sit low so the headline and paragraph above stay clear of the brain
-      g.position.y = -1.15;
-      g.scale.setScalar(fit * (1.22 - e * 0.24));
+      g.position.y = 0.35 - se * 1.55; // centred, then down clear of the copy
+      g.scale.setScalar(fit * (0.9 + 0.26 * zoomE - se * 0.22));
     } else {
       const xRight = viewport.width * 0.22;
       g.position.x = e * xRight;
@@ -350,14 +354,21 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
       g.scale.setScalar(1.62 - e * 0.58);
     }
 
-    s.spin += delta * (p < 1 ? 0.95 - 0.72 * e : 0.14);
+    // Slow, elegant drift (no chaotic motion)
+    const introSpin = variant === "mobile" ? Math.min(1, s.clock / 3.4) : e;
+    s.spin += delta * (introSpin < 1 ? 0.7 - 0.6 * introSpin : 0.075);
 
     const target = pointer.current ?? { x: 0, y: 0 };
-    s.tiltX += (target.y * 0.14 - s.tiltX) * Math.min(1, delta * 3);
-    s.tiltY += (target.x * 0.28 - s.tiltY) * Math.min(1, delta * 3);
+    s.tiltX += (target.y * 0.12 - s.tiltX) * Math.min(1, delta * 2.5);
+    s.tiltY += (target.x * 0.22 - s.tiltY) * Math.min(1, delta * 2.5);
 
     g.rotation.y = -2.2 + e * 2.2 + s.spin + s.tiltY;
-    g.rotation.x = 0.06 + Math.sin(s.clock * 0.3) * 0.04 + s.tiltX;
+    g.rotation.x = 0.06 + Math.sin(s.clock * 0.22) * 0.03 + s.tiltX;
+
+    // Gentle shimmer: a slow breath of brightness across nodes and the shell
+    // Gentle shimmer on the neurons only (the shell stays calm)
+    const shimmer = 0.5 + 0.5 * Math.sin(s.clock * 0.7);
+    if (brightMatRef.current) brightMatRef.current.opacity = 0.46 + 0.18 * shimmer;
 
     const { edgeList, neuronsV, incident } = built;
     if (edgeList.length > 0) {
@@ -387,17 +398,17 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
           pulse.t = 0;
         } else {
           mesh.position.lerpVectors(neuronsV[fromIdx], neuronsV[toIdx], pulse.t);
-          const swell = 0.55 + 0.75 * Math.sin(pulse.t * Math.PI);
-          mesh.scale.setScalar(swell * 0.13);
+          const swell = 0.5 + 0.7 * Math.sin(pulse.t * Math.PI);
+          mesh.scale.setScalar(swell * 0.095);
         }
 
         const flash = s.flashes[i];
         const fm = flashSprites.current[i];
         if (fm) {
-          flash.life = Math.max(0, flash.life - delta * 2.1);
+          flash.life = Math.max(0, flash.life - delta * 1.7);
           fm.position.copy(flash.pos);
-          fm.scale.setScalar(0.1 + (1 - flash.life) * 0.34);
-          (fm.material as THREE.SpriteMaterial).opacity = flash.life * 0.6;
+          fm.scale.setScalar(0.08 + (1 - flash.life) * 0.28);
+          (fm.material as THREE.SpriteMaterial).opacity = flash.life * 0.42;
         }
       });
     }
@@ -410,16 +421,28 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
         <mesh geometry={built.shellGeo} material={shellMat} scale={1.008} />
         <points geometry={built.denseGeo} material={hazeMat} />
         <points geometry={built.denseGeo} material={denseMat} />
-        <points geometry={built.brightGeo} material={brightMat} />
+        <points geometry={built.brightGeo}>
+          <pointsMaterial
+            ref={brightMatRef}
+            map={glowTex}
+            color="#a6d8f2"
+            size={0.038}
+            transparent
+            opacity={0.62}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+            sizeAttenuation
+          />
+        </points>
         <lineSegments geometry={built.edgeGeo} material={edgeMat} />
 
-        {/* Soft core glow for depth */}
-        <sprite scale={3.2} position={[0, 0, -0.1]}>
+        {/* Faint core glow for depth only */}
+        <sprite scale={2.9} position={[0, 0, -0.1]}>
           <spriteMaterial
             map={glowTex}
-            color="#0d2740"
+            color="#0c2136"
             transparent
-            opacity={0.55}
+            opacity={0.28}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
@@ -431,13 +454,13 @@ function BrainScene({ data, pointer }: { data: BrainJSON; pointer: PointerRef })
             ref={(m) => {
               pulseSprites.current[i] = m;
             }}
-            scale={0.13}
+            scale={0.095}
           >
             <spriteMaterial
               map={glowTex}
-              color="#e0f2fe"
+              color="#cbeafe"
               transparent
-              opacity={0.95}
+              opacity={0.7}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
             />
@@ -481,7 +504,13 @@ class WebGLBoundary extends Component<{ fallback: ReactNode; children: ReactNode
   }
 }
 
-export function NeuralBrain({ pointer }: { pointer: PointerRef }) {
+export function NeuralBrain({
+  pointer,
+  variant = "desktop",
+}: {
+  pointer: PointerRef;
+  variant?: "desktop" | "mobile";
+}) {
   const [data, setData] = useState<BrainJSON | null>(null);
   const [failed, setFailed] = useState(false);
 
@@ -517,7 +546,7 @@ export function NeuralBrain({ pointer }: { pointer: PointerRef }) {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         className="!pointer-events-none"
       >
-        <BrainScene data={data} pointer={pointer} />
+        <BrainScene data={data} pointer={pointer} variant={variant} />
       </Canvas>
     </WebGLBoundary>
   );

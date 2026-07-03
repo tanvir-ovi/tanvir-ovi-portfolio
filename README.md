@@ -4,7 +4,7 @@ Personal academic portfolio for Tanvir Hossain Ovi, an EEG and brain-computer
 interface researcher. Built with Next.js (App Router), TypeScript, Tailwind CSS v4,
 and Framer Motion.
 
-Live site: https://tanvir-ovi-portfolio.vercel.app
+Live site: https://tanvir-hossain-ovi.me
 
 ## Getting started
 
@@ -67,6 +67,14 @@ pre-filled message instead, so the form is never broken.
    contact form can send email.
 
 Every push to the `main` branch redeploys the site automatically.
+
+## Domain
+
+The production domain is **https://tanvir-hossain-ovi.me** (primary). `www.tanvir-hossain-ovi.me`
+should be configured in Vercel to redirect to the primary domain. The canonical URL,
+Open Graph URL, sitemap (`/sitemap.xml`), robots (`/robots.txt`), and structured data all
+use the primary domain via `SITE_URL` in `src/app/layout.tsx`, `src/app/sitemap.ts`, and
+`src/app/robots.ts`. To change domains later, update those three files.
 
 ## Build
 

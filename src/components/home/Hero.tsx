@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -23,6 +23,17 @@ export function Hero() {
   const textRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
+  // Desktop and mobile get different hero compositions (full-bleed glide vs a
+  // dedicated framed panel), so we mount only the one that matches the viewport.
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   // Normalised cursor position consumed by the 3D scene for its gentle tilt
   const pointer = useRef({ x: 0, y: 0 });
 
@@ -43,8 +54,18 @@ export function Hero() {
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      // On mobile the brain plays a centred intro first, so the copy reveals
+      // later - as the brain settles into the lower half. Desktop reveals early.
+      const onMobile = !window.matchMedia("(min-width: 1024px)").matches;
+      const startDelay = onMobile ? 2.5 : 0.65;
+      // Hide immediately so nothing flashes during the delay / mobile intro
+      gsap.set("[data-hero-line]", { yPercent: 118 });
+      gsap.set(
+        ["[data-hero-overline]", "[data-hero-para]", "[data-hero-cta]", "[data-hero-meta]"],
+        { opacity: 0 }
+      );
       gsap
-        .timeline({ delay: 0.65, defaults: { ease: "power3.out" } })
+        .timeline({ delay: startDelay, defaults: { ease: "power3.out" } })
         .fromTo(
           "[data-hero-overline]",
           { opacity: 0, x: -14 },
@@ -95,39 +116,33 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      {/* The neural brain owns the whole hero canvas on every device. On desktop
-          it glides to the right column; on mobile it stays centred behind the
-          copy (with a readability scrim below). Reduced motion gets the calm
-          EEG field instead. */}
-      {!prefersReducedMotion ? (
-        <>
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <NeuralBrain pointer={pointer} />
-          </div>
-          {/* Mobile-only scrim: keeps the upper copy on solid dark, lets the
-              brain glow through the lower half where it sits */}
-          <div
-            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background from-30% via-background/60 to-transparent lg:hidden"
-            aria-hidden="true"
-          />
-        </>
-      ) : (
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 top-[42%] opacity-[0.55] [mask-image:linear-gradient(to_bottom,transparent,black_22%)] lg:hidden"
-          aria-hidden="true"
-        >
-          <EEGSignalField />
+      {/* The neural brain owns the hero canvas. Desktop glides it to the right
+          column; mobile plays a staged intro (centred zoom, then it settles into
+          the lower half as the copy reveals above it). Mounted once we know the
+          viewport so each gets the right choreography. */}
+      {!prefersReducedMotion && isDesktop !== null ? (
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <NeuralBrain pointer={pointer} variant={isDesktop ? "desktop" : "mobile"} />
         </div>
-      )}
+      ) : null}
 
-      {/* Smooth transition so the 3D scene melts into the next section instead
-          of ending on a hard seam. Matches the stats section background. */}
+      {/* Mobile scrim: darkens the upper area so the revealed copy reads clearly
+          over the brain that settles below it. */}
+      {!prefersReducedMotion ? (
+        <div
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background from-[12%] via-background/70 via-[52%] to-transparent lg:hidden"
+          aria-hidden="true"
+        />
+      ) : null}
+
+      {/* Smooth transition so the scene melts into the next section instead of
+          ending on a hard seam. Matches the stats section background. */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-b from-transparent to-[var(--background-elevated)]"
         aria-hidden="true"
       />
 
-      <Container className="relative grid min-h-[100svh] grid-cols-1 items-start gap-10 py-24 sm:py-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-16">
+      <Container className="relative flex min-h-[100svh] flex-col justify-start py-24 sm:py-28 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-16">
 
         {/* Copy - first in the DOM so it sits at the top of the mobile viewport */}
         <div ref={textRef} className="relative z-10 order-1 max-w-xl">
@@ -191,8 +206,15 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right column: spacer the brain occupies; static EEG field when the
-            visitor prefers reduced motion */}
+        {/* Reduced-motion mobile fallback: the calm EEG field below the copy */}
+        {prefersReducedMotion ? (
+          <div className="relative order-2 mt-6 h-[46svh] w-full lg:hidden" aria-hidden="true">
+            <EEGSignalField />
+          </div>
+        ) : null}
+
+        {/* Desktop right column: spacer the brain occupies; static EEG field
+            when the visitor prefers reduced motion */}
         <div
           className="relative order-2 hidden h-[72svh] max-h-[620px] w-full lg:block"
           aria-hidden="true"

@@ -20,6 +20,8 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const SITE_URL = "https://tanvir-hossain-ovi.me";
+
 export const metadata: Metadata = {
   title: {
     default: "Tanvir Hossain Ovi | EEG & BCI Researcher",
@@ -27,13 +29,56 @@ export const metadata: Metadata = {
   },
   description:
     "Tanvir Hossain Ovi is an EEG and brain-computer interface researcher working on cognitive load, emotion recognition, and imagined speech decoding.",
-  metadataBase: new URL("https://tanvir-ovi-portfolio.vercel.app"),
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Tanvir Hossain Ovi | EEG & BCI Researcher",
     description:
       "Deep learning systems that decode cognition, emotion, and identity from EEG.",
     type: "website",
+    url: SITE_URL,
+    siteName: "Tanvir Hossain Ovi",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tanvir Hossain Ovi | EEG & BCI Researcher",
+    description:
+      "Deep learning systems that decode cognition, emotion, and identity from EEG.",
+  },
+};
+
+// Person structured data (JSON-LD) for search engines
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Tanvir Hossain Ovi",
+  url: SITE_URL,
+  jobTitle: "EEG & Brain-Computer Interface Researcher",
+  email: "mailto:tanvirhossainovi.eee@std.cu.ac.bd",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Chattogram",
+    addressCountry: "Bangladesh",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Chittagong",
+  },
+  knowsAbout: [
+    "Electroencephalography (EEG)",
+    "Brain-Computer Interfaces",
+    "Deep Learning",
+    "Cognitive Load",
+    "Emotion Recognition",
+    "Imagined Speech Decoding",
+  ],
+  sameAs: [
+    "https://www.linkedin.com/in/tanvir-hossain-ovi/",
+    "https://github.com/tanvir-ovi",
+    "https://scholar.google.com/citations?user=n8SuOHUAAAAJ&hl=en",
+  ],
 };
 
 export default function RootLayout({
@@ -47,6 +92,10 @@ export default function RootLayout({
       className={`${ibmPlexSans.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-accent-contrast"
