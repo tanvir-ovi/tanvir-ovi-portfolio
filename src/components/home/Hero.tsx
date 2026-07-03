@@ -61,15 +61,22 @@ export function Hero() {
       // Hide immediately so nothing flashes during the delay / mobile intro
       gsap.set("[data-hero-line]", { yPercent: 118 });
       gsap.set(
-        ["[data-hero-overline]", "[data-hero-para]", "[data-hero-cta]", "[data-hero-meta]"],
+        ["[data-hero-overline]", "[data-hero-para]", "[data-hero-cta]", "[data-hero-meta]", "[data-hero-scrim]"],
         { opacity: 0 }
       );
       gsap
         .timeline({ delay: startDelay, defaults: { ease: "power3.out" } })
         .fromTo(
+          "[data-hero-scrim]",
+          { opacity: 0 },
+          { opacity: 1, duration: 1.0 },
+          0
+        )
+        .fromTo(
           "[data-hero-overline]",
           { opacity: 0, x: -14 },
-          { opacity: 1, x: 0, duration: 0.7 }
+          { opacity: 1, x: 0, duration: 0.7 },
+          0.1
         )
         .fromTo(
           "[data-hero-line]",
@@ -126,15 +133,6 @@ export function Hero() {
         </div>
       ) : null}
 
-      {/* Mobile scrim: darkens the upper area so the revealed copy reads clearly
-          over the brain that settles below it. */}
-      {!prefersReducedMotion ? (
-        <div
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background from-[12%] via-background/70 via-[52%] to-transparent lg:hidden"
-          aria-hidden="true"
-        />
-      ) : null}
-
       {/* Smooth transition so the scene melts into the next section instead of
           ending on a hard seam. Matches the stats section background. */}
       <div
@@ -146,6 +144,14 @@ export function Hero() {
 
         {/* Copy - first in the DOM so it sits at the top of the mobile viewport */}
         <div ref={textRef} className="relative z-10 order-1 max-w-xl">
+          {/* Mobile-only backdrop: keeps the copy on solid dark over the brain,
+              then fades into the brain zone below. Fades in with the text so the
+              centred intro stays clean. */}
+          <div
+            data-hero-scrim
+            className="pointer-events-none absolute -inset-x-8 -top-28 -bottom-12 -z-10 bg-gradient-to-b from-background from-70% via-background/95 via-[86%] to-transparent lg:hidden"
+            aria-hidden="true"
+          />
           {/* Signal-dot overline - quietly names the field, ties to the EEG theme */}
           <div
             data-hero-overline
