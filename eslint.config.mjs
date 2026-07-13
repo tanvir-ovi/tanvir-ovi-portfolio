@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Nested standalone app with its own tooling — not part of this project.
+    "Namira's Website/**",
   ]),
 ]);
 

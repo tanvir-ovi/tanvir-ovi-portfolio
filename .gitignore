@@ -43,6 +43,9 @@ next-env.d.ts
 # --- Private source material (never publish) ---
 /All Sources/
 
+# Nested standalone app (its own repo) - never part of this site's repo
+/Namira's Website/
+
 # Local QA / scratch artifacts
 /qa-screenshots/
 __*.mjs

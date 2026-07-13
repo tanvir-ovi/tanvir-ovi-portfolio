@@ -1,20 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
-  --background-elevated: #07111f;
-  --surface: #0a1628;
-  --surface-hover: #0d1b2e;
-  --border: rgba(237, 247, 255, 0.08);
-  --border-strong: rgba(237, 247, 255, 0.15);
-  --foreground: #edf7ff;
-  --foreground-muted: #9eb1c8;
-  --foreground-faint: #64748b;
+  /* Neural Observatory — deep space-ink with a cool cast */
+  --background: #03060f;
+  --background-elevated: #070d1a;
+  --surface: #0b1424;
+  --surface-hover: #101d31;
+  --border: rgba(226, 240, 255, 0.08);
+  --border-strong: rgba(226, 240, 255, 0.16);
+  --foreground: #eaf2ff;
+  --foreground-muted: #a3b5cd;
+  --foreground-faint: #74869f;
+
+  /* Dual aurora accent: cyan signal + violet depth */
   --accent: #38bdf8;
   --accent-strong: #7dd3fc;
   --accent-soft: rgba(56, 189, 248, 0.14);
   --accent-glow: rgba(56, 189, 248, 0.45);
-  --accent-contrast: #021018;
+  --accent-2: #8b7dff;
+  --accent-2-strong: #ab9dff;
+  --accent-2-soft: rgba(139, 125, 255, 0.14);
+  --accent-2-glow: rgba(139, 125, 255, 0.42);
+  --accent-contrast: #04121c;
+
+  /* The signature gradient, used for emphasis words, glows, and rules */
+  --aurora: linear-gradient(100deg, #7dd3fc 0%, #38bdf8 40%, #8b7dff 100%);
 }
 
 @theme inline {
@@ -31,9 +41,14 @@
   --color-accent-strong: var(--accent-strong);
   --color-accent-soft: var(--accent-soft);
   --color-accent-glow: var(--accent-glow);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-strong: var(--accent-2-strong);
+  --color-accent-2-soft: var(--accent-2-soft);
+  --color-accent-2-glow: var(--accent-2-glow);
   --color-accent-contrast: var(--accent-contrast);
   --font-sans: var(--font-plex-sans);
-  --font-display: var(--font-instrument);
+  --font-display: var(--font-newsreader);
+  --font-mono: var(--font-plex-mono);
 
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-drift: drift 18s ease-in-out infinite;
@@ -94,6 +109,58 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* Signature aurora gradient, clipped to text, for emphasis words */
+.text-aurora {
+  background: var(--aurora);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Layered aurora mesh for hero / section atmosphere */
+.bg-aurora-mesh {
+  background-image:
+    radial-gradient(58% 48% at 84% 6%, rgba(56, 189, 248, 0.13), transparent 60%),
+    radial-gradient(52% 44% at 6% 102%, rgba(139, 125, 255, 0.13), transparent 62%);
+}
+
+/* Mono "lab readout" eyebrow / kicker */
+.eyebrow-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--foreground-faint);
+}
+
+/* Scroll reveal: rise + blur resolve, once, driven by an IntersectionObserver.
+   Reduced-motion visitors get the resolved state instantly (media query). */
+.reveal-blur {
+  opacity: 0;
+  transform: translateY(26px);
+  filter: blur(9px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.reveal-blur-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-blur {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
 }
 
 /* Lenis smooth-scroll plumbing (official recommended styles) */

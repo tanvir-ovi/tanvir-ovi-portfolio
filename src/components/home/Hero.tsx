@@ -34,6 +34,15 @@ export function Hero() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  // Only apply the reduced-motion branch after mount so server and first client
+  // render match (framer's useReducedMotion differs across that boundary).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  const reduce = mounted && prefersReducedMotion;
+
   // Normalised cursor position consumed by the 3D scene for its gentle tilt
   const pointer = useRef({ x: 0, y: 0 });
 
@@ -113,12 +122,12 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="bg-grain relative overflow-hidden"
     >
-      {/* Distant radial atmosphere - keeps the navy from feeling flat */}
+      {/* Dual aurora atmosphere - cyan signal top-right, violet depth bottom-left */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(130% 80% at 84% 16%, rgba(56,189,248,0.07) 0%, rgba(2,6,23,0) 58%)",
+            "radial-gradient(120% 75% at 84% 12%, rgba(56,189,248,0.10) 0%, rgba(3,6,15,0) 56%), radial-gradient(95% 70% at 4% 102%, rgba(139,125,255,0.11) 0%, rgba(3,6,15,0) 60%)",
         }}
         aria-hidden="true"
       />
@@ -127,7 +136,7 @@ export function Hero() {
           column; mobile plays a staged intro (centred zoom, then it settles into
           the lower half as the copy reveals above it). Mounted once we know the
           viewport so each gets the right choreography. */}
-      {!prefersReducedMotion && isDesktop !== null ? (
+      {!reduce && isDesktop !== null ? (
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <NeuralBrain pointer={pointer} variant={isDesktop ? "desktop" : "mobile"} />
         </div>
@@ -152,10 +161,10 @@ export function Hero() {
             className="pointer-events-none absolute -inset-x-8 -top-28 -bottom-12 -z-10 bg-gradient-to-b from-background from-70% via-background/95 via-[86%] to-transparent lg:hidden"
             aria-hidden="true"
           />
-          {/* Signal-dot overline - quietly names the field, ties to the EEG theme */}
+          {/* Signal-dot overline - a mono lab-readout that names the field */}
           <div
             data-hero-overline
-            className="mb-6 flex items-center gap-2.5 text-[0.78rem] font-medium tracking-wide text-foreground-faint"
+            className="eyebrow-mono mb-6 flex items-center gap-2.5"
           >
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent/70 motion-safe:animate-ping" />
@@ -173,7 +182,7 @@ export function Hero() {
             </span>
             <span className="block overflow-hidden pb-[0.12em]">
               <span data-hero-line className="block text-[#e6edfb]">
-                into <span className="italic text-accent-strong">understanding</span>.
+                into <span className="italic text-aurora">understanding</span>.
               </span>
             </span>
           </h1>
@@ -213,7 +222,7 @@ export function Hero() {
         </div>
 
         {/* Reduced-motion mobile fallback: the calm EEG field below the copy */}
-        {prefersReducedMotion ? (
+        {reduce ? (
           <div className="relative order-2 mt-6 h-[46svh] w-full lg:hidden" aria-hidden="true">
             <EEGSignalField />
           </div>
@@ -225,7 +234,7 @@ export function Hero() {
           className="relative order-2 hidden h-[72svh] max-h-[620px] w-full lg:block"
           aria-hidden="true"
         >
-          {prefersReducedMotion ? <EEGSignalField /> : null}
+          {reduce ? <EEGSignalField /> : null}
         </div>
       </Container>
     </section>

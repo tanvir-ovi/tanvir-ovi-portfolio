@@ -288,10 +288,56 @@ export const referees = [
   },
 ];
 
+// Things I've built beyond research. `url` is the live link; leave empty to
+// render the card without a live button. `locked` marks apps whose public link
+// only ever exposes an encrypted lock screen.
+export interface Project {
+  name: string;
+  kind: string;
+  description: string;
+  tech: string[];
+  accent: "cyan" | "violet";
+  url: string;
+  repoUrl?: string;
+  locked?: boolean;
+}
+
+export const projects: Project[] = [
+  {
+    name: "Haowa Bhobon",
+    kind: "Mess & meal management PWA",
+    description:
+      "A shared-mess operations app: daily meal on/off with lock times, per-member bazar (grocery) tracking, duty rosters, and an automatic monthly settle-up that splits meal cost and utilities across every member.",
+    tech: ["Next.js", "PWA", "Offline-first", "Settle-up engine"],
+    accent: "cyan",
+    url: "",
+  },
+  {
+    name: "Application Command Center",
+    kind: "Encrypted graduate-application tracker",
+    description:
+      "A privacy-first PWA that tracks 170+ professor outreach threads, live applications, deadlines, and spend. Every byte is AES-256 encrypted and decrypted in the browser with a password that never leaves the device.",
+    tech: ["Client-side AES-256", "PWA", "Data viz", "Zero-knowledge"],
+    accent: "violet",
+    url: "",
+    locked: true,
+  },
+  {
+    name: "Personal Website",
+    kind: "Portfolio & writing",
+    description:
+      "A hand-built personal site with a distinct visual identity, motion system, and content model. Designed, engineered, and deployed end to end.",
+    tech: ["Next.js", "TypeScript", "Design system", "SEO"],
+    accent: "cyan",
+    url: "",
+  },
+];
+
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/research", label: "Research" },
   { href: "/experience", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
