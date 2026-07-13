@@ -15,7 +15,7 @@ export function SelectedBuilds() {
           description="Alongside the science, I design and engineer real software end to end: full-stack PWAs I use every day. Proof that I can take an idea from problem to a deployed product."
         />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
           {projects.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08} className="h-full">
               <ProjectCard project={p} />
@@ -90,13 +90,18 @@ function ProjectCard({ project: p }: { project: Project }) {
               linkColor
             )}
           >
-            {p.locked ? "Open the encrypted demo" : "View live"}
+            View live
             <ArrowUpRight
               size={16}
               weight="bold"
               className="transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
             />
           </a>
+        ) : p.locked ? (
+          <span className="inline-flex items-center gap-2 text-sm text-foreground-faint">
+            <LockSimple size={15} weight="bold" />
+            Private, encrypted build
+          </span>
         ) : (
           <span className="text-sm text-foreground-faint">Live link coming soon</span>
         )}

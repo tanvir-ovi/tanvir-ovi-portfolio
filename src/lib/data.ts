@@ -307,29 +307,20 @@ export const projects: Project[] = [
     name: "Haowa Bhobon",
     kind: "Mess & meal management PWA",
     description:
-      "A shared-mess operations app: daily meal on/off with lock times, per-member bazar (grocery) tracking, duty rosters, and an automatic monthly settle-up that splits meal cost and utilities across every member.",
+      "A shared-mess operations app: daily meals on and off, per-member bazar (grocery) tracking, duty rosters, bills, and an automatic month-end settlement that splits every taka across members.",
     tech: ["Next.js", "PWA", "Offline-first", "Settle-up engine"],
     accent: "cyan",
-    url: "",
+    url: "https://haowa-bhobon.web.app",
   },
   {
-    name: "Application Command Center",
-    kind: "Encrypted graduate-application tracker",
+    name: "Command Center",
+    kind: "Encrypted personal dashboard",
     description:
-      "A privacy-first PWA that tracks 170+ professor outreach threads, live applications, deadlines, and spend. Every byte is AES-256 encrypted and decrypted in the browser with a password that never leaves the device.",
-    tech: ["Client-side AES-256", "PWA", "Data viz", "Zero-knowledge"],
+      "A privacy-first PWA for organizing sensitive personal data. Every field is AES-256 encrypted and decrypted entirely in the browser with a password that never leaves the device, so the hosted app only ever exposes ciphertext.",
+    tech: ["Client-side AES-256", "PWA", "Zero-knowledge", "Offline-first"],
     accent: "violet",
     url: "",
     locked: true,
-  },
-  {
-    name: "Personal Website",
-    kind: "Portfolio & writing",
-    description:
-      "A hand-built personal site with a distinct visual identity, motion system, and content model. Designed, engineered, and deployed end to end.",
-    tech: ["Next.js", "TypeScript", "Design system", "SEO"],
-    accent: "cyan",
-    url: "",
   },
 ];
 
