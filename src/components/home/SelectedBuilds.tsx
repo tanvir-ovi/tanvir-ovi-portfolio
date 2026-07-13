@@ -15,7 +15,7 @@ export function SelectedBuilds() {
           description="Alongside the science, I design and engineer real software end to end: full-stack PWAs I use every day. Proof that I can take an idea from problem to a deployed product."
         />
 
-        <div className="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08} className="h-full">
               <ProjectCard project={p} />

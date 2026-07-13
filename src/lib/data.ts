@@ -322,6 +322,15 @@ export const projects: Project[] = [
     url: "",
     locked: true,
   },
+  {
+    name: "Namirah Tarannum",
+    kind: "Commissioned client portfolio",
+    description:
+      "A premium multi-page portfolio built on commission for a graphics designer: a bespoke visual identity, an original self-assembling hero animation, and a curated work gallery. Designed, engineered, and shipped end to end.",
+    tech: ["Next.js", "TypeScript", "Framer Motion", "Design system"],
+    accent: "cyan",
+    url: "https://namirah-tarannum-portfolio.vercel.app",
+  },
 ];
 
 export const navLinks = [

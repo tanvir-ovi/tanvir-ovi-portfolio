@@ -399,7 +399,7 @@ function BrainScene({
         } else {
           mesh.position.lerpVectors(neuronsV[fromIdx], neuronsV[toIdx], pulse.t);
           const swell = 0.5 + 0.7 * Math.sin(pulse.t * Math.PI);
-          mesh.scale.setScalar(swell * 0.095);
+          mesh.scale.setScalar(swell * 0.118);
         }
 
         const flash = s.flashes[i];
@@ -407,8 +407,8 @@ function BrainScene({
         if (fm) {
           flash.life = Math.max(0, flash.life - delta * 1.7);
           fm.position.copy(flash.pos);
-          fm.scale.setScalar(0.08 + (1 - flash.life) * 0.28);
-          (fm.material as THREE.SpriteMaterial).opacity = flash.life * 0.42;
+          fm.scale.setScalar(0.08 + (1 - flash.life) * 0.32);
+          (fm.material as THREE.SpriteMaterial).opacity = flash.life * 0.55;
         }
       });
     }
@@ -458,9 +458,9 @@ function BrainScene({
           >
             <spriteMaterial
               map={glowTex}
-              color="#cbeafe"
+              color="#b8a7ff"
               transparent
-              opacity={0.7}
+              opacity={0.85}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
             />
@@ -476,7 +476,7 @@ function BrainScene({
           >
             <spriteMaterial
               map={glowTex}
-              color="#7dd3fc"
+              color="#9d8bff"
               transparent
               opacity={0}
               blending={THREE.AdditiveBlending}
