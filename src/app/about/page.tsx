@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "About Tanvir Hossain Ovi, an EEG and brain-computer interface researcher and BSc graduate from the University of Chittagong.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {

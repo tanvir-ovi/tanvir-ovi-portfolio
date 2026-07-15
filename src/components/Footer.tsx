@@ -3,12 +3,15 @@ import Image from "next/image";
 import { EnvelopeSimple, LinkedinLogo, GithubLogo, GraduationCap } from "@phosphor-icons/react/dist/ssr";
 import { navLinks, profile } from "@/lib/data";
 import { Container } from "./ui/Container";
+import { ResearchGateLogo, OrcidLogo } from "./icons/BrandIcons";
 
 const socials = [
   { href: `mailto:${profile.email}`, label: "Email", icon: EnvelopeSimple },
   { href: profile.links.linkedin, label: "LinkedIn", icon: LinkedinLogo },
   { href: profile.links.github, label: "GitHub", icon: GithubLogo },
   { href: profile.links.scholar, label: "Google Scholar", icon: GraduationCap },
+  { href: profile.links.researchgate, label: "ResearchGate", icon: ResearchGateLogo },
+  { href: profile.links.orcid, label: "ORCID", icon: OrcidLogo },
 ];
 
 export function Footer() {

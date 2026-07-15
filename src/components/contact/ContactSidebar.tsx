@@ -8,12 +8,15 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
 import { Reveal } from "../ui/Reveal";
+import { ResearchGateLogo, OrcidLogo } from "../icons/BrandIcons";
 
 const channels = [
-  { label: "Email",         value: profile.email,            href: `mailto:${profile.email}`, icon: EnvelopeSimple },
-  { label: "LinkedIn",      value: "View profile",           href: profile.links.linkedin,    icon: LinkedinLogo   },
-  { label: "GitHub",        value: "View profile",           href: profile.links.github,      icon: GithubLogo     },
-  { label: "Google Scholar",value: "View publications",      href: profile.links.scholar,     icon: GraduationCap  },
+  { label: "Email",         value: profile.email,            href: `mailto:${profile.email}`,   icon: EnvelopeSimple    },
+  { label: "LinkedIn",      value: "View profile",           href: profile.links.linkedin,      icon: LinkedinLogo      },
+  { label: "GitHub",        value: "View profile",           href: profile.links.github,        icon: GithubLogo        },
+  { label: "Google Scholar",value: "View publications",      href: profile.links.scholar,       icon: GraduationCap     },
+  { label: "ResearchGate",  value: "View profile",           href: profile.links.researchgate,  icon: ResearchGateLogo  },
+  { label: "ORCID",         value: "0009-0001-8345-3843",    href: profile.links.orcid,         icon: OrcidLogo         },
 ];
 
 export function ContactSidebar() {

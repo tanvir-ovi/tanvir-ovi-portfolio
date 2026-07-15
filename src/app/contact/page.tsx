@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Tanvir Hossain Ovi for research collaboration or questions.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

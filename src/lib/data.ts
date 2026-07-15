@@ -10,6 +10,8 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/tanvir-hossain-ovi/",
     github: "https://github.com/tanvir-ovi",
     scholar: "https://scholar.google.com/citations?user=n8SuOHUAAAAJ&hl=en",
+    researchgate: "https://www.researchgate.net/profile/Tanvir-Ovi",
+    orcid: "https://orcid.org/0009-0001-8345-3843",
   },
   cvPath: "/docs/Tanvir_Hossain_Ovi_CV.pdf",
 };

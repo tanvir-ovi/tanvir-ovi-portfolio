@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Experience",
   description:
     "Education, research experience, technical skills, and academic honors of Tanvir Hossain Ovi.",
+  alternates: { canonical: "/experience" },
 };
 
 export default function ExperiencePage() {

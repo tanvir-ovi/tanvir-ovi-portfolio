@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Research",
   description:
     "Peer-reviewed publications and ongoing research on EEG-based cognitive load, emotion recognition, biometrics, and imagined speech decoding.",
+  alternates: { canonical: "/research" },
 };
 
 const published = publications.filter(
