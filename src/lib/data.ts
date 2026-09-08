@@ -17,7 +17,7 @@ export const profile = {
 };
 
 export const stats = [
-  { label: "Publications", value: "8" },
+  { label: "Publications", value: "9" },
   { label: "Published Journal Papers", value: "3" },
   { label: "IELTS Academic", value: "7.5" },
   { label: "BSc CGPA", value: "3.78/4.0" },
@@ -43,6 +43,11 @@ export const focusAreas = [
     title: "Imagined Speech & Accessibility",
     description:
       "Decoding imagined English and Bangla speech from EEG, aimed at assistive communication tools for people with limited motor control.",
+  },
+  {
+    title: "Intracranial EEG & Reliable Evaluation",
+    description:
+      "I model cross-channel structure in intracranial EEG and design recording-level evaluations that prevent windows from the same recording leaking across train and test sets.",
   },
 ];
 
@@ -81,7 +86,7 @@ export const publications: Publication[] = [
     id: "phenotype-aware-personalization",
     title: "Phenotype-Aware Personalization for Cross-Session EEG-Based Emotion Recognition",
     authors: "T. H. Ovi, T. Forsythe, A. M. M. Chowdhury, N. Siddique, Y. Li",
-    venue: "Pattern Recognition",
+    venue: "Expert Systems With Applications",
     year: "2026",
     status: "Under Review",
     firstAuthor: true,
@@ -114,9 +119,9 @@ export const publications: Publication[] = [
   },
   {
     id: "iot-intrusion-detection",
-    title: "AI-Driven Clustering and Multistage Intrusion Detection for APT Mitigation in IoT Networks",
+    title: "Design of a Clustering-Enabled Multi-Stage Intrusion Detection Framework for APT Mitigation in IoT Networks",
     authors: "T. H. Ovi, A. M. M. Chowdhury, K. Ghazinour, M. Simsek",
-    venue: "9th International Balkan Conference on Communications and Networking (BalkanCom)",
+    venue: "IEEE Conference on Dependable and Secure Computing (DSC)",
     year: "2026",
     status: "Accepted",
     firstAuthor: true,
@@ -136,7 +141,7 @@ export const publications: Publication[] = [
     id: "bangla-imagined-speech",
     title: "Bangla Imagined Speech Using EEG to Understand Emotional Words",
     authors: "T. F. Arin, T. H. Ovi, M. F. Kader",
-    venue: "Computer Speech & Language",
+    venue: "Acta Psychologica",
     year: "2026",
     status: "Submitted",
     firstAuthor: false,
@@ -148,8 +153,21 @@ export const publications: Publication[] = [
     authors: "A. Hossain, M. A. Z. Akas, T. H. Ovi, M. F. Kader",
     venue: "Computer Speech & Language",
     year: "2026",
-    status: "Submitted",
+    status: "Under Review",
     firstAuthor: false,
+  },
+  {
+    id: "recording-level-ieeg-fusion",
+    title:
+      "Cross-Channel Attention and Engineered-Feature Fusion for Recording-Level Focal and Non-Focal Intracranial EEG Classification in Epilepsy",
+    authors: "T. H. Ovi, A. M. M. Chowdhury, K. Watanabe, N. Siddique",
+    venue: "Neurocomputing",
+    year: "2026",
+    status: "Submitted",
+    firstAuthor: true,
+    featured: true,
+    abstract:
+      "A leakage-controlled recording-level study on the Bern-Barcelona intracranial EEG dataset. CSRA-EF Net combines a shared cross-channel attention encoder with a 280-dimensional engineered-feature branch, reaching 96.44% accuracy and 0.993 AUC under five-fold ensemble evaluation.",
   },
 ];
 
@@ -161,6 +179,16 @@ export interface ResearchExperience {
 }
 
 export const researchExperience: ResearchExperience[] = [
+  {
+    id: "cross-channel-ieeg",
+    title: "Cross-Channel Attention and Engineered-Feature Fusion for Focal and Non-Focal iEEG Classification",
+    period: "2026",
+    bullets: [
+      "Designed a recording-level evaluation protocol that prevents windows from the same Bern-Barcelona recording from appearing across training and test splits.",
+      "Built CSRA-EF Net by fusing a shared cross-channel raw-iEEG encoder with 280 engineered differential-entropy, spectral-entropy, Hjorth, and inter-channel-correlation features.",
+      "Reached 96.44% accuracy and 0.993 AUC under five-fold ensemble evaluation; ablation isolated the engineered-feature branch as the largest contributor.",
+    ],
+  },
   {
     id: "phenotype-personalization",
     title: "Phenotype-Aware Personalization for Cross-Session EEG Emotion Recognition",
@@ -321,7 +349,7 @@ export const projects: Project[] = [
       "A privacy-first PWA for organizing sensitive personal data. Every field is AES-256 encrypted and decrypted entirely in the browser with a password that never leaves the device, so the hosted app only ever exposes ciphertext.",
     tech: ["Client-side AES-256", "PWA", "Zero-knowledge", "Offline-first"],
     accent: "violet",
-    url: "",
+    url: "https://tanvir-application-tracker.web.app",
     locked: true,
   },
   {
