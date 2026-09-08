@@ -7,7 +7,7 @@ import { ButtonLink } from "../ui/Button";
 const facts = [
   { icon: MapPin,          label: "Based in",   value: profile.location },
   { icon: ChatCircleText,  label: "Languages",  value: "Bangla (native), English (IELTS 7.5)" },
-  { icon: Target,          label: "Status",     value: "Open to PhD and research master's positions" },
+  { icon: Target,          label: "Status",     value: "Research assistant, SUNY Canton (remote) — open to PhD and research master's positions" },
 ];
 
 export function QuickFacts() {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { EducationBlock } from "@/components/experience/EducationBlock";
+import { AppointmentsBlock } from "@/components/experience/AppointmentsBlock";
 import { ExperienceTimeline } from "@/components/experience/ExperienceTimeline";
 import { SkillsGrid } from "@/components/experience/SkillsGrid";
 import { HonorsAndTests } from "@/components/experience/HonorsAndTests";
@@ -9,7 +10,7 @@ import { CtaBanner } from "@/components/CtaBanner";
 export const metadata: Metadata = {
   title: "Experience",
   description:
-    "Education, research experience, technical skills, and academic honors of Tanvir Hossain Ovi.",
+    "Education, research appointments, research experience, technical skills, and academic honors of Tanvir Hossain Ovi.",
   alternates: { canonical: "/experience" },
 };
 
@@ -22,6 +23,7 @@ export default function ExperiencePage() {
         description="From robotics competitions to EEG laboratories, here is the education, research roles, and skills behind the work."
       />
       <EducationBlock />
+      <AppointmentsBlock />
       <ExperienceTimeline />
       <SkillsGrid />
       <HonorsAndTests />

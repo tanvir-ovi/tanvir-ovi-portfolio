@@ -49,7 +49,7 @@ export default function ResearchPage() {
     <>
       <PageHeader
         eyebrow="Research"
-        title="Eight papers on what EEG reveals, and what it hides"
+        title="Nine papers on what EEG reveals, and what it hides"
         description="From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
       />
 

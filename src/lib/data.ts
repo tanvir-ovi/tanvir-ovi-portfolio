@@ -73,7 +73,7 @@ export const publications: Publication[] = [
       "Frequency Band Dissociation Between Cognitive State Recognition and Person Identification in EEG",
     authors:
       "T. H. Ovi, M. M. Islam, M. A. Uddin, K. Ghazinour, A. M. M. Chowdhury, N. Siddique",
-    venue: "Machine Learning with Applications",
+    venue: "Machine Learning with Applications, p. 100901",
     year: "2026",
     status: "Published",
     firstAuthor: true,
@@ -224,6 +224,34 @@ export const researchExperience: ResearchExperience[] = [
   },
 ];
 
+export interface ResearchAppointment {
+  id: string;
+  role: string;
+  lab: string;
+  department: string;
+  institution: string;
+  period: string;
+  mode: string;
+  bullets: string[];
+}
+
+export const researchAppointments: ResearchAppointment[] = [
+  {
+    id: "biv-lab-suny-canton",
+    role: "Research Assistant",
+    lab: "Biometric Intelligence and Vision Laboratory",
+    department: "Department of Cybersecurity",
+    institution: "State University of New York, Canton, USA",
+    period: "Jul 2025 to Present",
+    mode: "Remote",
+    bullets: [
+      "Preprocessing EEG recordings, designing neural network architectures, feature selection, statistical validation, and drafting manuscripts.",
+      "Supervised by Dr. A M Mahmud Chowdhury, with Dr. Nazmul Siddique of Ulster University, UK, co-supervising the neural signal work.",
+      "First author on the four studies produced during the appointment.",
+    ],
+  },
+];
+
 export const education = {
   institution: "University of Chittagong, Bangladesh",
   degree: "BSc in Electrical and Electronic Engineering",
@@ -266,7 +294,7 @@ export const honors = [
   {
     title: "Industrial Training Certificate (14-day program)",
     venue: "General Electric Manufacturing Company Limited",
-    date: "Jul 2025",
+    date: "Jun-Jul 2024",
   },
 ];
 

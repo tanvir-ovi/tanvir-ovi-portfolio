@@ -9,7 +9,7 @@ export function ExperienceTimeline() {
       <Container>
         <SectionHeading
           eyebrow="Research experience"
-          title="Three studies, one question: what does cross-session EEG actually carry?"
+          title="Four studies on what EEG really carries across sessions, channels, and people"
         />
 
         <div className="relative mt-12">
