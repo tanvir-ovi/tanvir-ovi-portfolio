@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -22,6 +22,14 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [brainReady, setBrainReady] = useState(false);
+  const markBrainReady = useCallback(() => setBrainReady(true), []);
+  // Release the copy even if the model or GPU is unavailable on a slow device.
+  useEffect(() => {
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
+    const timeout = window.setTimeout(markBrainReady, 5000);
+    return () => window.clearTimeout(timeout);
+  }, [markBrainReady]);
 
   // Desktop and mobile get different hero compositions (full-bleed glide vs a
   // dedicated framed panel), so we mount only the one that matches the viewport.
@@ -74,15 +82,18 @@ export function Hero() {
       // Mobile has a dedicated brain stage below the copy, so its introduction
       // need not hold back the reading and navigation controls.
       const onMobile = !window.matchMedia("(min-width: 1024px)").matches;
-      const startDelay = onMobile ? 0.25 : 0.65;
+      const startDelay = onMobile ? 0.25 : 1.7;
       // Hide immediately so nothing flashes during the delay / mobile intro
       gsap.set("[data-hero-line]", { yPercent: 118 });
       gsap.set(
         ["[data-hero-overline]", "[data-hero-para]", "[data-hero-cta]", "[data-hero-meta]", "[data-hero-scrim]"],
         { opacity: 0 }
       );
+      gsap.set("[data-hero-desktop-scrim]", { opacity: 0 });
+      if (!onMobile && !brainReady) return;
       gsap
         .timeline({ delay: startDelay, defaults: { ease: "power3.out" } })
+        .to("[data-hero-desktop-scrim]", { opacity: 1, duration: 1.25 }, 0)
         .fromTo(
           "[data-hero-scrim]",
           { opacity: 0 },
@@ -120,12 +131,13 @@ export function Hero() {
           0.94
         );
     },
-    { scope: textRef }
+    { scope: sectionRef, dependencies: [brainReady], revertOnUpdate: true }
   );
 
   return (
     <section
       ref={sectionRef}
+      data-brain-ready={brainReady}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="bg-grain relative overflow-hidden"
@@ -140,10 +152,10 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      {/* A restrained desktop scrim protects the reading column during the
-          brain's opening move without flattening the full-bleed scene. */}
+      {/* Fade the reading-column scrim in only as the brain leaves the centre. */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-[60%] bg-gradient-to-r from-background via-background/85 to-transparent lg:block"
+        data-hero-desktop-scrim
+        className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-[60%] bg-gradient-to-r from-background via-background/85 to-transparent opacity-0 lg:block"
         aria-hidden="true"
       />
 
@@ -154,7 +166,7 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 motion-reduce:hidden"
           aria-hidden="true"
         >
-          <NeuralBrain pointer={pointer} variant="desktop" />
+          <NeuralBrain pointer={pointer} variant="desktop" onReady={markBrainReady} />
         </motion.div>
       ) : null}
 
@@ -241,7 +253,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* A separate mobile stage keeps the solid brain clear of the copy. */}
+        {/* A separate mobile stage keeps the neural brain clear of the copy. */}
         {!reduce && isDesktop === false ? (
           <div className="relative order-2 mt-8 h-[85vw] max-h-[420px] w-full lg:hidden" aria-hidden="true">
             <NeuralBrain pointer={pointer} variant="mobile" />

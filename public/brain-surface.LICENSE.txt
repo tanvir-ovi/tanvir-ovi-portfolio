@@ -5,7 +5,9 @@ https://brainder.org/research/brain-for-blender/
 
 MRI-derived pial surfaces of both hemispheres, left and right cerebellar
 cortex, and brainstem. Geometry reduced with meshoptimizer, oriented for
-the portfolio, with curvature shading added. No generated anatomy.
+the portfolio, with curvature shading added. The inferior brainstem has been
+lengthened for a visible medullary silhouette. This is a stylized illustration,
+not a clinical anatomical model; animated signals are illustrative, not EEG data.
 
 Original and derivative geometry: Creative Commons Attribution-ShareAlike
 3.0 Unported (CC BY-SA 3.0).

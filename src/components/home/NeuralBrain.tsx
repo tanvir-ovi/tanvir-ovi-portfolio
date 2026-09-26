@@ -4,6 +4,7 @@ import { Component, useEffect, useMemo, useRef, useState, type ReactNode, type R
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EEGSignalField } from "./EEGSignalField";
+import { NeuralSignalNetwork } from "./NeuralSignalNetwork";
 
 export type PointerRef = RefObject<{ x: number; y: number }>;
 type BrainSurface = { positions: Float32Array; shades: Float32Array; indices: Uint32Array };
@@ -77,96 +78,112 @@ function GridFloor({ pointer }: { pointer: PointerRef }) {
   );
 }
 
-function BrainScene({ data, pointer, variant }: { data: BrainSurface; pointer: PointerRef; variant: "desktop" | "mobile" }) {
+function BrainScene({ data, pointer, variant, onReady }: { data: BrainSurface; pointer: PointerRef; variant: "desktop" | "mobile"; onReady?: () => void }) {
   const { viewport } = useThree();
   const group = useRef<THREE.Group>(null);
-  const signalMaterial = useRef<THREE.ShaderMaterial>(null);
-  const state = useRef({ time: 0, spin: 0, tiltX: 0, tiltY: 0 });
-  const uniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
+  const state = useRef({ time: 0, spin: 0, tiltX: 0, tiltY: 0, started: false });
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(data.positions, 3));
     g.setIndex(new THREE.BufferAttribute(data.indices, 1));
     g.computeVertexNormals();
-    const colors = new Float32Array(data.positions.length);
-    for (let i = 0; i < data.shades.length; i++) colors.set([data.shades[i], data.shades[i], data.shades[i]], i * 3);
-    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    g.setAttribute("sulcalShade", new THREE.BufferAttribute(data.shades, 1));
     return g;
   }, [data]);
-  const signals = useMemo(() => {
-    const positions = [], phases = [];
+  const cortexPoints = useMemo(() => {
+    const positions = [], directions = [];
     const normals = geometry.getAttribute("normal");
-    // Surface lights are depth-tested: the solid cortex hides far-side points.
-    for (let i = 83; i < data.shades.length; i += 733) {
-      if (data.shades[i] < 0.72) continue;
-      positions.push(data.positions[i * 3] + normals.getX(i) * 0.006, data.positions[i * 3 + 1] + normals.getY(i) * 0.006, data.positions[i * 3 + 2] + normals.getZ(i) * 0.006);
-      phases.push(i * 0.731);
+    for (let i = 0; i < data.shades.length; i += 14) {
+      positions.push(data.positions[i * 3], data.positions[i * 3 + 1], data.positions[i * 3 + 2]);
+      directions.push(normals.getX(i), normals.getY(i), normals.getZ(i));
     }
-    return { positions: new Float32Array(positions), phases: new Float32Array(phases) };
+    return { positions: new Float32Array(positions), normals: new Float32Array(directions) };
   }, [data, geometry]);
 
   useFrame((_, rawDelta) => {
-    const delta = Math.min(rawDelta, 0.05), s = state.current, g = group.current;
+    const delta = Math.min(rawDelta, 0.1), s = state.current, g = group.current;
     if (!g) return;
+    if (!s.started) { s.started = true; onReady?.(); }
     s.time += delta;
-    const p = Math.min(s.time / 2.8, 1);
+    // Hold a large centred brain, then make one continuous rotating glide.
+    const p = Math.min(Math.max((s.time - 0.65) / 3.1, 0), 1);
     const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
     if (variant === "mobile") {
-      const fit = Math.min(1.35, viewport.width / 3.0, viewport.height / 2.9);
+      const fit = Math.min(1.25, viewport.width / 3.0, viewport.height / 3.15);
       const settle = Math.min(1, Math.max(0, (s.time - 1.1) / 2.0));
       const ease = 1 - Math.pow(1 - settle, 3);
-      g.position.set(0, 0.2 - ease * 0.12, 0);
+      g.position.set(0, 0.23, 0);
       g.scale.setScalar(fit * (1.1 - ease * 0.1));
     } else {
-      g.position.set(viewport.width * 0.23 * (0.86 + e * 0.14), 0.12, 0);
-      g.scale.setScalar(0.99 - e * 0.09);
+      g.position.set(viewport.width * 0.225 * e, 0.22, 0);
+      const openingScale = Math.min(1.64, viewport.width / 3.0, viewport.height / 2.48);
+      const restingScale = Math.min(0.98, viewport.width * 0.44 / 2.65);
+      g.scale.setScalar(THREE.MathUtils.lerp(openingScale, restingScale, e));
     }
-    s.spin += delta * (p < 1 ? 0.55 - e * 0.48 : 0.055);
+    s.spin += delta * (p < 1 ? 0.32 - e * 0.24 : 0.055);
     const ease = 1 - Math.exp(-3 * delta);
     s.tiltX += (pointer.current.y * 0.2 - s.tiltX) * ease;
     s.tiltY += (pointer.current.x * 0.42 - s.tiltY) * ease;
-    g.rotation.set(0.10 + Math.sin(s.time * 0.22) * 0.025 + s.tiltX, -1.7 + e * 1.22 + s.spin + s.tiltY, -0.035);
-    if (signalMaterial.current) signalMaterial.current.uniforms.uTime.value = s.time;
+    g.rotation.set(0.045 + Math.sin(s.time * 0.22) * 0.025 + s.tiltX, -2.25 + e * 2.0 + s.spin + s.tiltY, -0.025);
   });
 
   return (
     <>
-      <hemisphereLight args={["#b6dbf0", "#172139", 1.25]} />
-      <directionalLight position={[-3, 5, 5]} color="#deefff" intensity={2.6} />
-      <directionalLight position={[4, 1, -3]} color="#26bded" intensity={2.1} />
-      <directionalLight position={[1, -2, 3]} color="#8e82ed" intensity={0.65} />
-      <group ref={group}>
+      <group ref={group} name="anatomical-neural-brain">
         <mesh geometry={geometry}>
-          <meshStandardMaterial color="#6890aa" vertexColors roughness={0.55} metalness={0.18} emissive="#071321" emissiveIntensity={0.12} />
-        </mesh>
-        <points>
-          <bufferGeometry>
-            <bufferAttribute attach="attributes-position" args={[signals.positions, 3]} />
-            <bufferAttribute attach="attributes-phase" args={[signals.phases, 1]} />
-          </bufferGeometry>
-          <shaderMaterial
-            ref={signalMaterial} uniforms={uniforms} transparent depthWrite={false}
+          <shaderMaterial transparent depthWrite={false} side={THREE.FrontSide} blending={THREE.AdditiveBlending}
             vertexShader={`
-              attribute float phase;
-              uniform float uTime;
-              varying float vPulse;
+              attribute float sulcalShade;
+              varying vec3 vNormal;
+              varying vec3 vView;
+              varying float vShade;
               void main() {
-                vPulse = pow(0.5 + 0.5 * sin(uTime * 1.4 + phase), 5.0);
                 vec4 mv = modelViewMatrix * vec4(position, 1.0);
-                gl_PointSize = (9.0 + 8.0 * vPulse) / -mv.z;
+                vNormal = normalize(normalMatrix * normal);
+                vView = normalize(-mv.xyz);
+                vShade = sulcalShade;
                 gl_Position = projectionMatrix * mv;
               }
             `}
             fragmentShader={`
-              varying float vPulse;
+              varying vec3 vNormal;
+              varying vec3 vView;
+              varying float vShade;
+              void main() {
+                float rim = pow(1.0 - abs(dot(normalize(vNormal), normalize(vView))), 2.6);
+                float ridge = mix(0.6, 1.0, vShade);
+                vec3 color = mix(vec3(0.045, 0.29, 0.46), vec3(0.28, 0.84, 1.0), rim);
+                gl_FragColor = vec4(color * ridge, (0.022 + rim * 0.42) * ridge);
+              }
+            `}
+          />
+        </mesh>
+        <points>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" args={[cortexPoints.positions, 3]} />
+            <bufferAttribute attach="attributes-normal" args={[cortexPoints.normals, 3]} />
+          </bufferGeometry>
+          <shaderMaterial transparent depthWrite={false} blending={THREE.AdditiveBlending}
+            vertexShader={`
+              varying float vFacing;
+              void main() {
+                vec4 mv = modelViewMatrix * vec4(position, 1.0);
+                vFacing = max(0.15, dot(normalize(normalMatrix * normal), normalize(-mv.xyz)));
+                gl_PointSize = clamp(9.0 / -mv.z, 1.0, 3.0);
+                gl_Position = projectionMatrix * mv;
+              }
+            `}
+            fragmentShader={`
+              varying float vFacing;
               void main() {
                 float d = distance(gl_PointCoord, vec2(0.5));
                 if(d > 0.5) discard;
-                gl_FragColor = vec4(mix(vec3(0.3, 0.7, 1.0), vec3(0.83, 0.8, 1.0), vPulse), (1.0 - smoothstep(0.05, 0.5, d)) * (0.25 + vPulse * 0.75));
+                gl_FragColor = vec4(0.23, 0.68, 0.94, (1.0 - smoothstep(0.0, 0.5, d)) * vFacing * 0.42);
               }
             `}
           />
         </points>
+        <NeuralSignalNetwork surface={data.positions} />
       </group>
       <GridFloor pointer={pointer} />
     </>
@@ -179,7 +196,7 @@ class WebGLBoundary extends Component<{ fallback: ReactNode; children: ReactNode
   render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
-export function NeuralBrain({ pointer, variant = "desktop" }: { pointer: PointerRef; variant?: "desktop" | "mobile" }) {
+export function NeuralBrain({ pointer, variant = "desktop", onReady }: { pointer: PointerRef; variant?: "desktop" | "mobile"; onReady?: () => void }) {
   const host = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<BrainSurface | null>(null);
   const [failed, setFailed] = useState(false);
@@ -208,7 +225,7 @@ export function NeuralBrain({ pointer, variant = "desktop" }: { pointer: Pointer
       {failed ? fallback : data ? (
         <WebGLBoundary fallback={fallback}>
           <Canvas dpr={variant === "mobile" ? [1, 1.25] : [1, 1.75]} frameloop={active ? "always" : "never"} camera={{ position: [0, 0, 5.2], fov: 45 }} gl={{ antialias: true, alpha: true }} className="!pointer-events-none">
-            <BrainScene data={data} pointer={pointer} variant={variant} />
+            <BrainScene data={data} pointer={pointer} variant={variant} onReady={onReady} />
           </Canvas>
         </WebGLBoundary>
       ) : null}

@@ -22,16 +22,25 @@ Open http://localhost:3000 in your browser.
 - `src/lib/data.ts`: all site content (publications, experience, skills, and more) in one place. Edit this file to update copy without touching components.
 - `public/images/`: portrait and experiment setup photos.
 - `public/docs/`: downloadable CV PDF.
-- `public/brain-surface.bin`: the solid MRI-derived hero brain (see Credits).
+- `public/brain-surface.bin`: the detailed MRI-derived hero envelope (see Credits).
 - `public/video/`: optimized Higgsfield neural-dive video and poster.
 
 ## The hero brain
 
-The home hero renders a solid 3D brain with `three.js` and
+The home hero renders a translucent neural brain with `three.js` and
 `@react-three/fiber` (`src/components/home/NeuralBrain.tsx`). Both pial
 hemispheres, the cerebellum and brainstem retain approximately 149,000 triangles.
-Surface shading preserves the grooves during the opening rotation and pointer
-tilt. Geometry is served in a compact binary file, with its format documented in
+Smooth Fresnel shading and fine cortical points preserve the folded outline
+without an opaque surface. `NeuralSignalNetwork.tsx` adds eight traveling
+impulses, curved trails and node-arrival flashes. The lower brainstem is
+lengthened for a clear medullary silhouette; this is a stylized illustration,
+not a clinical model or measured neural activity.
+
+On desktop the brain opens large and centred, rotates, then glides right and
+shrinks into its resting position. The copy and reading-column scrim enter only
+after the 3D scene is ready, with a timeout fallback for unavailable graphics.
+Pointer tilt and ambient rotation remain active after the opening.
+Geometry is served in a compact binary file, with its format documented in
 `public/brain-surface.LICENSE.txt`. The old point-cloud asset remains for history
 but is no longer loaded.
 
