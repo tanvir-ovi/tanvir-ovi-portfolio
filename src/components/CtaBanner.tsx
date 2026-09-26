@@ -26,7 +26,7 @@ export function CtaBanner({
           />
           {/* Distant ambient glow */}
           <div
-            className="pointer-events-none absolute left-1/2 top-0 h-56 w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-35 blur-[90px]"
+            className="pointer-events-none absolute left-1/2 top-0 h-56 w-[30rem] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full opacity-35 blur-[90px]"
             style={{ background: "radial-gradient(circle, rgba(56,189,248,0.45) 0%, transparent 70%)" }}
             aria-hidden="true"
           />

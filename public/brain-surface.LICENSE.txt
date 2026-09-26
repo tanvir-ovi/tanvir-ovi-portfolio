@@ -1,0 +1,16 @@
+brain-surface.bin — attribution and license
+
+Derived from "Brain for Blender" by Anderson M. Winkler:
+https://brainder.org/research/brain-for-blender/
+
+MRI-derived pial surfaces of both hemispheres, left and right cerebellar
+cortex, and brainstem. Geometry reduced with meshoptimizer, oriented for
+the portfolio, with curvature shading added. No generated anatomy.
+
+Original and derivative geometry: Creative Commons Attribution-ShareAlike
+3.0 Unported (CC BY-SA 3.0).
+https://creativecommons.org/licenses/by-sa/3.0/
+
+Binary format (little endian): "BRN1" magic (4 bytes), uint32 vertex count,
+uint32 index count, uint32 vertex stride (16). Each vertex holds four
+float32 values: x, y, z, sulcal shade. Followed by uint32 triangle indices.

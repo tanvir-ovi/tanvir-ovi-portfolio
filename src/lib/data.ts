@@ -159,7 +159,7 @@ export const publications: Publication[] = [
   {
     id: "recording-level-ieeg-fusion",
     title:
-      "Cross-Channel Attention and Engineered-Feature Fusion for Recording-Level Focal and Non-Focal Intracranial EEG Classification in Epilepsy",
+      "Complementary Raw and Engineered Representations for Focal and Non-Focal Intracranial EEG Classification under a Leakage-Controlled Recording-Level Protocol",
     authors: "T. H. Ovi, A. M. M. Chowdhury, K. Watanabe, N. Siddique",
     venue: "Neurocomputing",
     year: "2026",
@@ -167,7 +167,7 @@ export const publications: Publication[] = [
     firstAuthor: true,
     featured: true,
     abstract:
-      "A leakage-controlled recording-level study on the Bern-Barcelona intracranial EEG dataset. CSRA-EF Net combines a shared cross-channel attention encoder with a 280-dimensional engineered-feature branch, reaching 96.44% accuracy and 0.993 AUC under five-fold ensemble evaluation.",
+      "A leakage-controlled recording-level study on all 7,500 recordings in the Bern-Barcelona intracranial EEG dataset. CSRA-EF Net pairs a shared cross-channel raw-signal encoder with a 280-dimensional engineered-feature branch through token cross-attention, reaching 96.27% accuracy and 0.994 AUC across three training seeds.",
   },
 ];
 
@@ -181,12 +181,12 @@ export interface ResearchExperience {
 export const researchExperience: ResearchExperience[] = [
   {
     id: "cross-channel-ieeg",
-    title: "Cross-Channel Attention and Engineered-Feature Fusion for Focal and Non-Focal iEEG Classification",
+    title: "Complementary Raw and Engineered Representations for Focal and Non-Focal iEEG Classification",
     period: "2026",
     bullets: [
       "Designed a recording-level evaluation protocol that prevents windows from the same Bern-Barcelona recording from appearing across training and test splits.",
       "Built CSRA-EF Net by fusing a shared cross-channel raw-iEEG encoder with 280 engineered differential-entropy, spectral-entropy, Hjorth, and inter-channel-correlation features.",
-      "Reached 96.44% accuracy and 0.993 AUC under five-fold ensemble evaluation; ablation isolated the engineered-feature branch as the largest contributor.",
+      "Reached 96.27% accuracy and 0.994 AUC across three training seeds; ablation showed the engineered-feature branch was the only component with a detectable effect under a pre-declared one-point equivalence margin.",
     ],
   },
   {
@@ -290,6 +290,16 @@ export const honors = [
     title: "Second Runner-up, Robo Soccer Competition",
     venue: "Engineering Day, University of Chittagong",
     date: "Jun 2022",
+  },
+  {
+    title: "Principal's Award for Academic Excellence (4th position, Science group)",
+    venue: "Dhaka Imperial College",
+    date: "Sep 2018",
+  },
+  {
+    title: "Government Junior Scholarship",
+    venue: "Junior School Certificate examination, Chatkhil Panch Gaon Government High School",
+    date: "2014",
   },
   {
     title: "Industrial Training Certificate (14-day program)",

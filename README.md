@@ -22,29 +22,42 @@ Open http://localhost:3000 in your browser.
 - `src/lib/data.ts`: all site content (publications, experience, skills, and more) in one place. Edit this file to update copy without touching components.
 - `public/images/`: portrait and experiment setup photos.
 - `public/docs/`: downloadable CV PDF.
-- `public/brain-points.json`: the hero's 3D neural brain, baked from a real MRI-derived cortical surface (see Credits).
+- `public/brain-surface.bin`: the solid MRI-derived hero brain (see Credits).
+- `public/video/`: optimized Higgsfield neural-dive video and poster.
 
 ## The hero brain
 
-The home hero renders an interactive 3D neural brain with `three.js` and
-`@react-three/fiber` (`src/components/home/NeuralBrain.tsx`). The geometry is not
-loaded from a runtime 3D model; it is pre-baked into `public/brain-points.json`
-(a point cloud plus a low-poly surface shell) so nothing can fail to load at
-runtime. If WebGL is unavailable, the hero falls back to the flat SVG signal
-field. On mobile and with `prefers-reduced-motion`, the lighter SVG field is
-used instead.
+The home hero renders a solid 3D brain with `three.js` and
+`@react-three/fiber` (`src/components/home/NeuralBrain.tsx`). Both pial
+hemispheres, the cerebellum and brainstem retain approximately 149,000 triangles.
+Surface shading preserves the grooves during the opening rotation and pointer
+tilt. Geometry is served in a compact binary file, with its format documented in
+`public/brain-surface.LICENSE.txt`. The old point-cloud asset remains for history
+but is no longer loaded.
+
+The render loop pauses outside the viewport and in background tabs. Phones use
+a lower pixel ratio and a dedicated stage below the copy so the brain stays
+visible without overlapping the text. If the mesh or WebGL cannot load, an SVG signal field is
+shown; visitors who prefer reduced motion receive that static alternative.
+
+The "Inside the work" scene uses the existing Higgsfield Cinema Studio Pro
+video, with separate desktop and mobile encodes. The scroll journey spans
+two viewport heights on desktop (300svh total minus the 100svh stage), and
+1.8 on mobile. Seeks are serialized and the current target
+is approached with time-based easing. Reduced motion displays all four stages
+as normal text, without loading the video.
 
 ## Credits
 
-The 3D brain geometry (`public/brain-points.json`) is derived from the
+The 3D brain geometry (`public/brain-surface.bin` and `public/brain-points.json`) is derived from the
 **"Brain for Blender"** mesh by **Anderson M. Winkler** (brainder.org), a real
 human brain reconstructed from MRI.
 
 - Source: https://brainder.org/research/brain-for-blender/
 - License: Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0),
   https://creativecommons.org/licenses/by-sa/3.0/
-- As a derivative work, `public/brain-points.json` is likewise made available
-  under CC BY-SA 3.0. See `public/brain-points.LICENSE.txt`.
+- Both derived geometry files are made available under CC BY-SA 3.0.
+  See their adjacent LICENSE.txt files for attribution and processing details.
 
 ## Contact form
 

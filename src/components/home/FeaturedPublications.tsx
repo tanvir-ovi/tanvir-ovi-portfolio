@@ -16,12 +16,12 @@ export function FeaturedPublications() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
             eyebrow="Selected publications"
-            title="Peer-reviewed work on EEG, cognition, and identity"
+            title="Publications and manuscripts on EEG, cognition, and identity"
             className="mb-0"
           />
           <Reveal>
             <ButtonLink href="/research" variant="ghost" icon={<ArrowRight size={16} />}>
-              All 8 publications
+              All {publications.length} publications
             </ButtonLink>
           </Reveal>
         </div>

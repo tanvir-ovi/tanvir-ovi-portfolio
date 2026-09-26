@@ -9,7 +9,7 @@ export function FocusAreas() {
       <Container>
         <SectionHeading
           eyebrow="Research focus"
-          title="Four questions about the signals we carry"
+          title="Five questions about the signals we carry"
           description="My work sits at the intersection of signal processing and deep learning. I'm mostly asking what EEG can tell us about the mind, and where it quietly stops being able to."
         />
 

@@ -220,6 +220,12 @@ html.lenis body {
   100% { background-position: -120% 0; }
 }
 
+@keyframes scroll-cue {
+  0% { transform: translateY(-110%); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(210%); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

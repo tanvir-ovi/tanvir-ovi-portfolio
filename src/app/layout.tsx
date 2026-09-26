@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Footer } from "@/components/Footer";
 import { MotionProvider } from "@/components/MotionProvider";
 
@@ -188,6 +189,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <MotionProvider>
+          <ScrollProgress />
           <Nav />
           <main id="main-content" className="flex-1">
             {children}

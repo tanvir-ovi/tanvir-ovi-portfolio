@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
 import { Container } from "../ui/Container";
@@ -43,6 +43,14 @@ export function Hero() {
   }, []);
   const reduce = mounted && prefersReducedMotion;
 
+  // Scroll-out: as the hero leaves, the brain swells and dims while the copy
+  // lifts away, so the page hands off to the next section instead of cutting.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const brainScale = useTransform(scrollYProgress, [0, 1], [1, 1.22]);
+  const brainOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
   // Normalised cursor position consumed by the 3D scene for its gentle tilt
   const pointer = useRef({ x: 0, y: 0 });
 
@@ -63,10 +71,10 @@ export function Hero() {
   useGSAP(
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      // On mobile the brain plays a centred intro first, so the copy reveals
-      // later - as the brain settles into the lower half. Desktop reveals early.
+      // Mobile has a dedicated brain stage below the copy, so its introduction
+      // need not hold back the reading and navigation controls.
       const onMobile = !window.matchMedia("(min-width: 1024px)").matches;
-      const startDelay = onMobile ? 2.5 : 0.65;
+      const startDelay = onMobile ? 0.25 : 0.65;
       // Hide immediately so nothing flashes during the delay / mobile intro
       gsap.set("[data-hero-line]", { yPercent: 118 });
       gsap.set(
@@ -132,14 +140,22 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      {/* The neural brain owns the hero canvas. Desktop glides it to the right
-          column; mobile plays a staged intro (centred zoom, then it settles into
-          the lower half as the copy reveals above it). Mounted once we know the
-          viewport so each gets the right choreography. */}
-      {!reduce && isDesktop !== null ? (
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <NeuralBrain pointer={pointer} variant={isDesktop ? "desktop" : "mobile"} />
-        </div>
+      {/* A restrained desktop scrim protects the reading column during the
+          brain's opening move without flattening the full-bleed scene. */}
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-[60%] bg-gradient-to-r from-background via-background/85 to-transparent lg:block"
+        aria-hidden="true"
+      />
+
+      {/* Desktop gives the brain a full-bleed canvas with a rightward glide. */}
+      {!reduce && isDesktop === true ? (
+        <motion.div
+          style={{ scale: brainScale, opacity: brainOpacity }}
+          className="pointer-events-none absolute inset-0 motion-reduce:hidden"
+          aria-hidden="true"
+        >
+          <NeuralBrain pointer={pointer} variant="desktop" />
+        </motion.div>
       ) : null}
 
       {/* Smooth transition so the scene melts into the next section instead of
@@ -149,10 +165,14 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="relative flex min-h-[100svh] flex-col justify-start py-24 sm:py-28 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-16">
+      <Container className="relative flex min-h-[100svh] flex-col justify-start pb-12 pt-16 sm:pt-20 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:items-center lg:gap-10 lg:py-16">
 
         {/* Copy - first in the DOM so it sits at the top of the mobile viewport */}
-        <div ref={textRef} className="relative z-10 order-1 max-w-xl">
+        <motion.div
+          ref={textRef}
+          style={reduce || !isDesktop ? undefined : { y: copyY, opacity: copyOpacity }}
+          className="relative z-10 order-1 max-w-xl"
+        >
           {/* Mobile-only backdrop: keeps the copy on solid dark over the brain,
               then fades into the brain zone below. Fades in with the text so the
               centred intro stays clean. */}
@@ -174,7 +194,7 @@ export function Hero() {
           </div>
 
           {/* Masked line reveal: each line rises out of its own overflow clip */}
-          <h1 className="font-display font-normal leading-[1.03] tracking-tight text-[3rem] sm:text-[3.8rem] lg:text-[4.4rem]">
+          <h1 className="font-display font-normal leading-[1.03] tracking-tight text-[clamp(2.5rem,12.3vw,3rem)] sm:text-[3.8rem] lg:text-[4.4rem]">
             <span className="block overflow-hidden pb-[0.08em]">
               <span data-hero-line className="block text-[#e6edfb]">
                 Turning brainwaves
@@ -219,7 +239,14 @@ export function Hero() {
             <span className="h-3 w-px bg-border-strong" aria-hidden="true" />
             <span>Open to PhD &amp; research-master positions</span>
           </div>
-        </div>
+        </motion.div>
+
+        {/* A separate mobile stage keeps the solid brain clear of the copy. */}
+        {!reduce && isDesktop === false ? (
+          <div className="relative order-2 mt-8 h-[85vw] max-h-[420px] w-full lg:hidden" aria-hidden="true">
+            <NeuralBrain pointer={pointer} variant="mobile" />
+          </div>
+        ) : null}
 
         {/* Reduced-motion mobile fallback: the calm EEG field below the copy */}
         {reduce ? (
@@ -237,6 +264,19 @@ export function Hero() {
           {reduce ? <EEGSignalField /> : null}
         </div>
       </Container>
+
+      {!reduce ? (
+        <motion.div
+          style={{ opacity: copyOpacity }}
+          className="pointer-events-none absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-foreground-faint sm:flex"
+          aria-hidden="true"
+        >
+          <span>Scroll to enter the signal</span>
+          <span className="relative h-10 w-px overflow-hidden bg-white/10">
+            <span className="absolute inset-x-0 top-0 h-1/2 animate-[scroll-cue_1.8s_ease-in-out_infinite] bg-accent" />
+          </span>
+        </motion.div>
+      ) : null}
     </section>
   );
 }
