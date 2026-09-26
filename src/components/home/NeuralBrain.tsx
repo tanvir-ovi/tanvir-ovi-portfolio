@@ -81,7 +81,7 @@ function GridFloor({ pointer }: { pointer: PointerRef }) {
 function BrainScene({ data, pointer, variant, onReady }: { data: BrainSurface; pointer: PointerRef; variant: "desktop" | "mobile"; onReady?: () => void }) {
   const { viewport } = useThree();
   const group = useRef<THREE.Group>(null);
-  const state = useRef({ time: 0, spin: 0, tiltX: 0, tiltY: 0, started: false });
+  const state = useRef({ time: 0, spin: 0, tiltX: 0, tiltY: 0, started: false, startedAt: 0 });
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(data.positions, 3));
@@ -103,8 +103,9 @@ function BrainScene({ data, pointer, variant, onReady }: { data: BrainSurface; p
   useFrame((_, rawDelta) => {
     const delta = Math.min(rawDelta, 0.1), s = state.current, g = group.current;
     if (!g) return;
-    if (!s.started) { s.started = true; onReady?.(); }
-    s.time += delta;
+    if (!s.started) { s.started = true; s.startedAt = performance.now(); onReady?.(); }
+    // Match the copy's wall-clock timeline even when the GPU drops frames.
+    s.time = (performance.now() - s.startedAt) / 1000;
     // Hold a large centred brain, then make one continuous rotating glide.
     const p = Math.min(Math.max((s.time - 0.65) / 3.1, 0), 1);
     const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
