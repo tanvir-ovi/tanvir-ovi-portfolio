@@ -10,7 +10,7 @@ import { MotionProvider } from "@/components/MotionProvider";
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -20,13 +20,16 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
+  // Eyebrows and labels only; the body and headline fonts claim the preloads.
+  preload: false,
 });
 
 // Display — a high-craft editorial serif with a real italic for emphasis.
+// Every display line is set at regular weight, so only 400 ships.
 const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
   style: ["normal", "italic"],
   display: "swap",
 });

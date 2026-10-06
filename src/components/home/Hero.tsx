@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { profile } from "@/lib/data";
@@ -42,6 +40,31 @@ export function Hero() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  // Phones keep the brain mostly below the fold, so three.js waits for the
+  // first scroll or touch (or a quiet moment) and never delays the first tap.
+  const [mobileBrain, setMobileBrain] = useState(false);
+  useEffect(() => {
+    if (isDesktop !== false) return;
+    const events = ["scroll", "touchstart", "pointerdown", "keydown"] as const;
+    let idleId = 0;
+    let timer = 0;
+    const stop = () => {
+      events.forEach((e) => window.removeEventListener(e, start));
+      window.clearTimeout(timer);
+      if (idleId && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
+    };
+    function start() {
+      stop();
+      setMobileBrain(true);
+    }
+    events.forEach((e) => window.addEventListener(e, start, { passive: true }));
+    timer = window.setTimeout(() => {
+      if (typeof window.requestIdleCallback === "function") idleId = window.requestIdleCallback(start, { timeout: 1500 });
+      else start();
+    }, 3500);
+    return stop;
+  }, [isDesktop]);
+
   // Only apply the reduced-motion branch after mount so server and first client
   // render match (framer's useReducedMotion differs across that boundary).
   const [mounted, setMounted] = useState(false);
@@ -74,73 +97,16 @@ export function Hero() {
     pointer.current.y = 0;
   }
 
-  // Text entrance: masked line reveal for the headline, blur-to-sharp for the
-  // supporting copy. Timed so the lines land while the brain glides right.
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      // Mobile has a dedicated brain stage below the copy, so its introduction
-      // need not hold back the reading and navigation controls.
-      const onMobile = !window.matchMedia("(min-width: 1024px)").matches;
-      const startDelay = onMobile ? 0.25 : 1.7;
-      // Hide immediately so nothing flashes during the delay / mobile intro
-      gsap.set("[data-hero-line]", { yPercent: 118 });
-      gsap.set(
-        ["[data-hero-overline]", "[data-hero-para]", "[data-hero-cta]", "[data-hero-meta]", "[data-hero-scrim]"],
-        { opacity: 0 }
-      );
-      gsap.set("[data-hero-desktop-scrim]", { opacity: 0 });
-      if (!onMobile && !brainReady) return;
-      gsap
-        .timeline({ delay: startDelay, defaults: { ease: "power3.out" } })
-        .to("[data-hero-desktop-scrim]", { opacity: 1, duration: 1.25 }, 0)
-        .fromTo(
-          "[data-hero-scrim]",
-          { opacity: 0 },
-          { opacity: 1, duration: 1.0 },
-          0
-        )
-        .fromTo(
-          "[data-hero-overline]",
-          { opacity: 0, x: -14 },
-          { opacity: 1, x: 0, duration: 0.7 },
-          0.1
-        )
-        .fromTo(
-          "[data-hero-line]",
-          { yPercent: 118 },
-          { yPercent: 0, duration: 1.15, ease: "power4.out", stagger: 0.14 },
-          0.15
-        )
-        .fromTo(
-          "[data-hero-para]",
-          { opacity: 0, y: 18, filter: "blur(10px)" },
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 },
-          0.62
-        )
-        .fromTo(
-          "[data-hero-cta]",
-          { opacity: 0, y: 14, scale: 0.985 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7 },
-          0.80
-        )
-        .fromTo(
-          "[data-hero-meta]",
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          0.94
-        );
-    },
-    { scope: sectionRef, dependencies: [brainReady], revertOnUpdate: true }
-  );
-
+  // Text entrance (masked line reveal, blur-to-sharp copy) is pure CSS in
+  // globals.css, so it starts with the first paint instead of after hydration.
+  // On desktop it holds until the brain is ready (data-brain-ready).
   return (
     <section
       ref={sectionRef}
       data-brain-ready={brainReady}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="bg-grain relative overflow-hidden"
+      className="hero-intro relative overflow-hidden"
     >
       {/* Dual aurora atmosphere - cyan signal top-right, violet depth bottom-left */}
       <div
@@ -155,7 +121,7 @@ export function Hero() {
       {/* Fade the reading-column scrim in only as the brain leaves the centre. */}
       <div
         data-hero-desktop-scrim
-        className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-[60%] bg-gradient-to-r from-background via-background/85 to-transparent opacity-0 lg:block"
+        className="pointer-events-none absolute inset-y-0 left-0 z-[1] hidden w-[60%] bg-gradient-to-r from-background via-background/85 to-transparent lg:block"
         aria-hidden="true"
       />
 
@@ -206,14 +172,15 @@ export function Hero() {
           </div>
 
           {/* Masked line reveal: each line rises out of its own overflow clip */}
-          <h1 className="font-display font-normal leading-[1.03] tracking-tight text-[clamp(2.5rem,12.3vw,3rem)] sm:text-[3.8rem] lg:text-[4.4rem]">
+          {/* Desktop size tracks the copy column so each line stays whole */}
+          <h1 className="font-display font-normal leading-[1.03] tracking-tight text-[clamp(2.5rem,12.3vw,3rem)] sm:text-[3.8rem] lg:w-max lg:text-[clamp(3.5rem,calc(5.8vw-0.2rem),4rem)]">
             <span className="block overflow-hidden pb-[0.08em]">
               <span data-hero-line className="block text-[#e6edfb]">
                 Turning brainwaves
               </span>
             </span>
             <span className="block overflow-hidden pb-[0.12em]">
-              <span data-hero-line className="block text-[#e6edfb]">
+              <span data-hero-line style={{ "--i": 1 } as React.CSSProperties} className="block text-[#e6edfb]">
                 into <span className="italic text-aurora">understanding</span>.
               </span>
             </span>
@@ -253,10 +220,12 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* A separate mobile stage keeps the neural brain clear of the copy. */}
+        {/* A separate mobile stage keeps the neural brain clear of the copy.
+            It mounts once the browser is idle so phones paint and hydrate the
+            copy before three.js starts compiling. */}
         {!reduce && isDesktop === false ? (
           <div className="relative order-2 mt-8 h-[85vw] max-h-[420px] w-full lg:hidden" aria-hidden="true">
-            <NeuralBrain pointer={pointer} variant="mobile" />
+            {mobileBrain ? <NeuralBrain pointer={pointer} variant="mobile" /> : null}
           </div>
         ) : null}
 

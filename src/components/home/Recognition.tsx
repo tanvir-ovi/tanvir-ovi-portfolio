@@ -72,21 +72,24 @@ export function Recognition() {
         <div ref={leadRef} className="mt-14">
           <motion.figure
             style={reduce ? undefined : { clipPath: clip }}
-            className="relative aspect-[3/2] w-full overflow-hidden rounded-lg sm:aspect-[16/9]"
+            className="relative w-full overflow-hidden rounded-lg border border-border bg-background-elevated sm:border-0"
           >
-            <motion.div style={reduce ? undefined : { scale: imgScale }} className="h-full w-full">
-              <Image
-                src="/images/awards/merit-ceremony.webp"
-                alt="Tanvir Hossain Ovi receiving the Student Merit Award trophy from faculty of the Department of Electrical and Electronic Engineering at EEE Fest 2025, University of Chittagong"
-                width={2000}
-                height={1333}
-                sizes="(min-width: 1152px) 1100px, 100vw"
-                className="h-full w-full object-cover object-[50%_22%]"
-                priority={false}
-              />
-            </motion.div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[rgba(3,6,15,0.92)] via-[rgba(3,6,15,0.35)] to-transparent" aria-hidden="true" />
-            <figcaption className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
+            <div className="relative aspect-[3/2] w-full overflow-hidden sm:aspect-[16/9]">
+              <motion.div style={reduce ? undefined : { scale: imgScale }} className="h-full w-full">
+                <Image
+                  src="/images/awards/merit-ceremony.webp"
+                  alt="Tanvir Hossain Ovi receiving the Student Merit Award trophy from faculty of the Department of Electrical and Electronic Engineering at EEE Fest 2025, University of Chittagong"
+                  width={2000}
+                  height={1333}
+                  sizes="(min-width: 1152px) 1100px, 100vw"
+                  className="h-full w-full object-cover object-[50%_22%]"
+                  priority={false}
+                />
+              </motion.div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[rgba(3,6,15,0.55)] to-transparent sm:h-2/3 sm:from-[rgba(3,6,15,0.92)] sm:via-[rgba(3,6,15,0.35)]" aria-hidden="true" />
+            </div>
+            {/* Phones set the caption under the photo so it never covers faces */}
+            <figcaption className="p-5 sm:absolute sm:inset-x-0 sm:bottom-0 sm:p-10">
               <p className="eyebrow-mono text-accent-strong">Feb 2025 · EEE Fest, University of Chittagong</p>
               <p className="mt-3 max-w-2xl font-display text-2xl leading-tight text-foreground sm:text-4xl">
                 First Runner-up, <span className="italic text-aurora">Student Merit Award</span>
@@ -138,9 +141,9 @@ export function Recognition() {
               4th position, Summer Semester Final Examination, Science group.
             </p>
             <ul className="mt-5 flex flex-wrap gap-2 text-xs text-foreground-muted">
-              <li className="rounded-full border border-border-strong px-3 py-1">Champion, Robo Soccer · EEE Fest 2023</li>
-              <li className="rounded-full border border-border-strong px-3 py-1">2nd Runner-up, Robo Soccer · Engineering Day 2022</li>
-              <li className="rounded-full border border-border-strong px-3 py-1">Government Junior Scholarship · 2014</li>
+              <li className="rounded-lg border border-border-strong px-3 py-1.5 sm:rounded-full sm:py-1">Champion, Robo Soccer · EEE Fest 2023</li>
+              <li className="rounded-lg border border-border-strong px-3 py-1.5 sm:rounded-full sm:py-1">2nd Runner-up, Robo Soccer · Engineering Day 2022</li>
+              <li className="rounded-lg border border-border-strong px-3 py-1.5 sm:rounded-full sm:py-1">Government Junior Scholarship · 2014</li>
             </ul>
           </Reveal>
         </div>

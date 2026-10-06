@@ -85,23 +85,37 @@ export function NeuralDive() {
     };
     window.addEventListener("touchstart", unlock, { once: true, passive: true });
 
-    let current = 0;
+    let current = -1;
     let raf = 0;
     let running = false;
+    let near = false;
     let lastTime = 0;
 
-    const tick = (now: number) => {
+    // Geometry is measured on resize, not per frame: reading layout inside
+    // the loop forced a synchronous reflow on every animation frame.
+    let top = 0;
+    let span = 1;
+    const measure = () => {
       const rect = section.getBoundingClientRect();
-      const span = rect.height - window.innerHeight;
-      const p = span > 0 ? Math.min(Math.max(-rect.top / span, 0), 1) : 0;
+      top = rect.top + window.scrollY;
+      span = rect.height - window.innerHeight;
+      wake();
+    };
+
+    const tick = (now: number) => {
+      const p = span > 0 ? Math.min(Math.max((window.scrollY - top) / span, 0), 1) : 0;
       const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.05) : 1 / 60;
       lastTime = now;
-      current += (p - current) * (1 - Math.exp(-14 * dt));
+      current = current < 0 ? p : current + (p - current) * (1 - Math.exp(-14 * dt));
       if (Math.abs(p - current) < 0.0005) current = p;
 
-      if (video.readyState >= 2 && Number.isFinite(video.duration) && !video.seeking) {
+      let seekPending = false;
+      if (video.readyState >= 2 && Number.isFinite(video.duration)) {
         const t = current * (video.duration - 0.05);
-        if (Math.abs(video.currentTime - t) > 1 / 30) video.currentTime = t;
+        if (Math.abs(video.currentTime - t) > 1 / 30) {
+          seekPending = true;
+          if (!video.seeking) video.currentTime = t;
+        }
       }
 
       // Per-frame visuals are written straight to the DOM, not through React state
@@ -114,29 +128,51 @@ export function NeuralDive() {
         activeRef.current = nextActive;
         setActive(nextActive);
       }
-      if (running) raf = requestAnimationFrame(tick);
+
+      // Sleep once the easing has settled and the frame is decoded; scroll,
+      // resize and video events wake the loop again.
+      if (near && (current !== p || seekPending)) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        running = false;
+        lastTime = 0;
+      }
     };
+
+    function wake() {
+      if (!near || running) return;
+      running = true;
+      raf = requestAnimationFrame(tick);
+    }
 
     // The scrub loop only runs while the tall scene is near the viewport. This
     // keeps the rest of the portfolio idle instead of paying for a permanent RAF.
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !running) {
-          running = true;
-          raf = requestAnimationFrame(tick);
-        } else if (!entry.isIntersecting && running) {
-          running = false;
-          cancelAnimationFrame(raf);
-        }
+        near = entry.isIntersecting;
+        if (near) measure();
       },
       { rootMargin: "100% 0px 100% 0px" }
     );
     observer.observe(section);
+    // Content above (fonts, images) can move the section without resizing it
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(document.body);
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("resize", measure);
+    video.addEventListener("seeked", wake);
+    video.addEventListener("loadeddata", wake);
 
     return () => {
+      near = false;
       running = false;
       cancelAnimationFrame(raf);
       observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("resize", measure);
+      video.removeEventListener("seeked", wake);
+      video.removeEventListener("loadeddata", wake);
       window.removeEventListener("touchstart", unlock);
     };
   }, [reduce, src]);
@@ -145,7 +181,7 @@ export function NeuralDive() {
     return (
       <section id="inside-the-work" className="border-t border-border py-24" aria-label="Research pipeline, from raw signal to understanding">
         <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
-          <p className="eyebrow-mono mb-8">Inside the work</p>
+          <h2 className="eyebrow-mono mb-8">Inside the work</h2>
           <div className="grid gap-10 sm:grid-cols-2">
             {beats.map((b) => (
               <div key={b.kicker}>
@@ -196,10 +232,10 @@ export function NeuralDive() {
 
         <div className="relative mx-auto flex h-full w-full max-w-6xl items-center px-6 sm:px-8">
           <div className="relative w-full max-w-md">
-            <p className="eyebrow-mono mb-6 flex items-center gap-2.5">
+            <h2 className="eyebrow-mono mb-6 flex items-center gap-2.5">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
               Inside the work
-            </p>
+            </h2>
 
             {/* Beats stack in one grid cell and cross-fade as scroll advances */}
             <div className="grid">

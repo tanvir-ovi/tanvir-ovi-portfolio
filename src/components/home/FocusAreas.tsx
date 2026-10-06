@@ -6,15 +6,18 @@ import { Reveal } from "../ui/Reveal";
 export function FocusAreas() {
   return (
     <section className="py-24 sm:py-32">
-      <Container>
-        <SectionHeading
-          eyebrow="Research focus"
-          title="Five questions about the signals we carry"
-          description="My work sits at the intersection of signal processing and deep learning. I'm mostly asking what EEG can tell us about the mind, and where it quietly stops being able to."
-        />
+      {/* Desktop: the heading holds its place on the left while the questions scroll past */}
+      <Container className="lg:grid lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading
+            eyebrow="Research focus"
+            title="Five questions about the signals we carry"
+            description="My work sits at the intersection of signal processing and deep learning. I'm mostly asking what EEG can tell us about the mind, and where it quietly stops being able to."
+          />
+        </div>
 
         {/* One section-level reveal; individual rows do not animate in */}
-        <Reveal className="mt-14 border-t border-border">
+        <Reveal className="mt-14 border-t border-border lg:mt-1">
           {focusAreas.map((area, i) => (
             /* group: hover shifts index colour and extends a fine accent line along the bottom */
             <div
