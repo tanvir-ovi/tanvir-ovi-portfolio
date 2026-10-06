@@ -195,9 +195,9 @@ export const researchExperience: ResearchExperience[] = [
     period: "2025 to 2026",
     bullets: [
       "Investigated cross-session performance degradation in EEG-based emotion recognition by analyzing the SEED-IV dataset across three weekly recording sessions per participant.",
-      "Implemented variance decomposition and two-way ANOVA to partition performance variance, examining whether cross-session variability reflects structured individual differences rather than random noise.",
+      "Implemented variance decomposition and two-way ANOVA, which placed 80.1% of the explained variance in the participant-by-emotion interaction, so cross-session variability reflects structured individual differences rather than random noise.",
       "Conducted brain-behavior correlation analysis and hierarchical clustering to identify distinct user phenotypes affecting cross-session model generalization.",
-      "Developed and evaluated personalized fine-tuning strategies, demonstrating the efficacy of phenotype-aware domain adaptation over uniform correction methods for cross-session reliability.",
+      "Developed phenotype-aware calibration that raised cross-session accuracy from 39.96% to 88.71%, outperforming uniform correction methods.",
     ],
   },
   {
@@ -248,6 +248,19 @@ export const researchAppointments: ResearchAppointment[] = [
       "Preprocessing EEG recordings, designing neural network architectures, feature selection, statistical validation, and drafting manuscripts.",
       "Supervised by Dr. A M Mahmud Chowdhury, with Dr. Nazmul Siddique of Ulster University, UK, co-supervising the neural signal work.",
       "First author on the four studies produced during the appointment.",
+    ],
+  },
+  {
+    id: "undergraduate-researcher-cu",
+    role: "Undergraduate Researcher",
+    lab: "University of Chittagong",
+    department: "Department of Electrical and Electronic Engineering",
+    institution: "Chattogram, Bangladesh",
+    period: "2023 to 2025",
+    mode: "In person",
+    bullets: [
+      "Recorded EEG from participants for four studies: the VR thesis, imagined Bangla words, emotionally valenced Bangla words, and audio vs. video calls.",
+      "BSc thesis: designed a VR vs. laptop video learning protocol and recorded 30 participants on a 14-channel Emotiv EPOC X. VR lowered cognitive load by 21% and raised engagement by 59%.",
     ],
   },
 ];
@@ -301,11 +314,6 @@ export const honors = [
     venue: "Junior School Certificate examination, Chatkhil Panch Gaon Government High School",
     date: "2014",
   },
-  {
-    title: "Industrial Training Certificate (14-day program)",
-    venue: "General Electric Manufacturing Company Limited",
-    date: "Jun-Jul 2024",
-  },
 ];
 
 export const skills = [
@@ -315,11 +323,11 @@ export const skills = [
   },
   {
     category: "Signal Processing",
-    items: ["MNE-Python", "EEGLAB", "EEG preprocessing", "Feature extraction"],
+    items: ["Emotiv EPOC X recording", "MNE-Python", "EEGLAB", "ICA artifact removal", "EEG preprocessing", "Feature extraction"],
   },
   {
     category: "Statistical Analysis",
-    items: ["t-test", "Wilcoxon", "ANOVA", "MANOVA", "Data modeling"],
+    items: ["t-test", "Wilcoxon", "ANOVA", "MANOVA", "FDR correction", "Hierarchical clustering", "Data modeling"],
   },
   {
     category: "Computer Vision",
@@ -343,16 +351,23 @@ export const referees = [
   {
     name: "Dr. Nazmul Siddique",
     title: "Senior Lecturer, School of Computing, Engineering and Intelligent Systems",
-    institution: "Ulster University, Londonderry",
-    relation: "Research Advisor",
+    institution: "Ulster University, UK",
+    relation: "Research Supervisor",
     email: "nh.siddique@ulster.ac.uk",
   },
   {
     name: "Dr. A M Mahmud Chowdhury",
     title: "Assistant Professor, Department of Cybersecurity",
-    institution: "State University of New York, Canton",
-    relation: "Research Advisor",
+    institution: "State University of New York, Canton, USA",
+    relation: "Research Supervisor",
     email: "Chowdhuryam@canton.edu",
+  },
+  {
+    name: "Dr. Kazi Tanvir Ahmmed",
+    title: "Professor, Department of Electrical and Electronic Engineering",
+    institution: "University of Chittagong, Bangladesh",
+    relation: "Head of Department",
+    email: "tanvir@cu.ac.bd",
   },
 ];
 

@@ -10,10 +10,10 @@ export function References() {
       <Container>
         <SectionHeading
           eyebrow="Academic references"
-          title="People who have supervised this work"
+          title="People who can speak to this work"
         />
 
-        {/* Editorial divided list - two referees, no card boxes */}
+        {/* Editorial divided list - three referees, no card boxes */}
         <Reveal className="mt-10 divide-y divide-border border-y border-border">
           {referees.map((ref) => (
               <div key={ref.name} className="grid grid-cols-1 gap-5 py-8 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-12">

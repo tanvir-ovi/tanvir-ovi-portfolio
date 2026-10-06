@@ -9,7 +9,7 @@ export function AppointmentsBlock() {
       <Container>
         <SectionHeading
           eyebrow="Research appointments"
-          title="Where the current work is done"
+          title="Where the work is done"
         />
 
         <Reveal className="mt-10 divide-y divide-border border-t border-border">
