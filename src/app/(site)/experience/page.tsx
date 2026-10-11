@@ -6,31 +6,26 @@ import { ExperienceTimeline } from "@/components/experience/ExperienceTimeline";
 import { SkillsGrid } from "@/components/experience/SkillsGrid";
 import { HonorsAndTests } from "@/components/experience/HonorsAndTests";
 import { CtaBanner } from "@/components/CtaBanner";
+import { site } from "@/lib/data";
+
+const page = site.experience;
 
 export const metadata: Metadata = {
-  title: "Experience",
-  description:
-    "Education, research appointments, research experience, technical skills, and academic honors of Tanvir Hossain Ovi.",
+  title: page.seo.title,
+  description: page.seo.description,
   alternates: { canonical: "/experience" },
 };
 
 export default function ExperiencePage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Experience"
-        title="Five years of measuring minds"
-        description="From robotics competitions to EEG laboratories, here is the education, research roles, and skills behind the work."
-      />
+      <PageHeader {...page.header} />
       <EducationBlock />
       <AppointmentsBlock />
       <ExperienceTimeline />
       <SkillsGrid />
       <HonorsAndTests />
-      <CtaBanner
-        title="Want the full picture?"
-        description="The complete CV has publication-by-publication detail, references, and contact information."
-      />
+      <CtaBanner title={page.cta.title} description={page.cta.description} />
     </>
   );
 }

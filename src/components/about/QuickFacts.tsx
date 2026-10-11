@@ -1,14 +1,28 @@
-import { DownloadSimple, MapPin, ChatCircleText, Target } from "@phosphor-icons/react/dist/ssr";
-import { profile } from "@/lib/data";
+import {
+  DownloadSimple,
+  MapPin,
+  ChatCircleText,
+  Target,
+  GraduationCap,
+  Briefcase,
+  Sparkle,
+} from "@phosphor-icons/react/dist/ssr";
+import { profile, site } from "@/lib/data";
+import type { FactIcon } from "@/lib/content-types";
 import { Container } from "../ui/Container";
 import { Reveal } from "../ui/Reveal";
 import { ButtonLink } from "../ui/Button";
 
-const facts = [
-  { icon: MapPin,          label: "Based in",   value: profile.location },
-  { icon: ChatCircleText,  label: "Languages",  value: "Bangla (native), English (IELTS 7.5)" },
-  { icon: Target,          label: "Status",     value: "Research assistant, SUNY Canton (remote) — open to PhD and research master's positions" },
-];
+const icons: Record<FactIcon, typeof MapPin> = {
+  location: MapPin,
+  language: ChatCircleText,
+  target: Target,
+  school: GraduationCap,
+  briefcase: Briefcase,
+  sparkle: Sparkle,
+};
+
+const facts = site.about.facts.map((f) => ({ ...f, icon: icons[f.icon] ?? Sparkle }));
 
 export function QuickFacts() {
   return (
@@ -41,7 +55,7 @@ export function QuickFacts() {
         <Reveal delay={0.2}>
           <div className="mt-8 flex flex-col items-start justify-between gap-4 border border-accent/20 bg-accent-soft px-6 py-5 sm:flex-row sm:items-center">
             <p className="text-sm text-foreground">
-              Want the formal version with full publication list and references?
+              {site.about.cvPrompt}
             </p>
             <ButtonLink
               href={profile.cvPath}
@@ -49,7 +63,7 @@ export function QuickFacts() {
               icon={<DownloadSimple size={16} weight="bold" />}
               className="shrink-0"
             >
-              Download CV (PDF)
+              {site.about.cvButton}
             </ButtonLink>
           </div>
         </Reveal>

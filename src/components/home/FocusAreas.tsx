@@ -1,4 +1,4 @@
-import { focusAreas } from "@/lib/data";
+import { focusAreas, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -10,9 +10,9 @@ export function FocusAreas() {
       <Container className="lg:grid lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
-            eyebrow="Research focus"
-            title="Five questions about the signals we carry"
-            description="My work sits at the intersection of signal processing and deep learning. I'm mostly asking what EEG can tell us about the mind, and where it quietly stops being able to."
+            eyebrow={site.home.focus.eyebrow}
+            title={site.home.focus.title}
+            description={site.home.focus.description}
           />
         </div>
 

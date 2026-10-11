@@ -16,7 +16,7 @@ const channels = [
   { label: "GitHub",        value: "View profile",           href: profile.links.github,        icon: GithubLogo        },
   { label: "Google Scholar",value: "View publications",      href: profile.links.scholar,       icon: GraduationCap     },
   { label: "ResearchGate",  value: "View profile",           href: profile.links.researchgate,  icon: ResearchGateLogo  },
-  { label: "ORCID",         value: "0009-0001-8345-3843",    href: profile.links.orcid,         icon: OrcidLogo         },
+  { label: "ORCID",         value: profile.orcidId,          href: profile.links.orcid,         icon: OrcidLogo         },
 ];
 
 export function ContactSidebar() {

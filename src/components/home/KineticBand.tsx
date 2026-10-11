@@ -2,12 +2,12 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { site } from "@/lib/data";
 
 /* Two oversized rows of research vocabulary that slide in opposite directions
  * as the page scrolls past. Pure transform, so it costs almost nothing. */
 
-const rowA = ["Electroencephalography", "Brain-Computer Interfaces", "Cognitive Load", "Emotion Recognition"];
-const rowB = ["EEG Biometrics", "Imagined Speech", "Intracranial EEG", "Deep Learning"];
+const { rowA, rowB } = site.home.kinetic;
 
 function Row({ words, from, to, outline }: { words: string[]; from: string; to: string; outline?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { researchExperience } from "@/lib/data";
+import { researchExperience, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -8,8 +8,8 @@ export function ExperienceTimeline() {
     <section className="border-t border-border py-20 sm:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Research experience"
-          title="Four studies on what EEG really carries across sessions, channels, and people"
+          eyebrow={site.experience.studies.eyebrow}
+          title={site.experience.studies.title}
         />
 
         <div className="relative mt-12">

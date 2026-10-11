@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { publications } from "@/lib/data";
+import { publications, site } from "@/lib/data";
 import { PageHeader } from "@/components/PageHeader";
 import { PublicationCard } from "@/components/research/PublicationCard";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
+const page = site.research;
+
 export const metadata: Metadata = {
-  title: "Research",
-  description:
-    "Peer-reviewed publications and ongoing research on EEG-based cognitive load, emotion recognition, biometrics, and imagined speech decoding.",
+  title: page.seo.title,
+  description: page.seo.description,
   alternates: { canonical: "/research" },
 };
 
@@ -47,18 +48,14 @@ function GroupHeading({
 export default function ResearchPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Research"
-        title="Nine papers on what EEG reveals, and what it hides"
-        description="From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
-      />
+      <PageHeader {...page.header} />
 
       <section className="py-20 sm:py-24">
         <Container>
           <GroupHeading
-            title="Selected publications"
+            title={page.published.title}
             count={published.length}
-            note="Peer-reviewed journal and conference papers. Select any linked title to read the paper on the publisher's site."
+            note={page.published.note}
           />
           <div className="mt-8 border-t border-border">
             {published.map((pub, i) => (
@@ -68,9 +65,9 @@ export default function ResearchPage() {
 
           <div className="mt-20">
             <GroupHeading
-              title="Selected ongoing research"
+              title={page.ongoing.title}
               count={ongoing.length}
-              note="Manuscripts currently under peer review or submitted for publication. Titles and venues are listed; abstracts are kept private while the work is under review."
+              note={page.ongoing.note}
             />
             <div className="mt-8 border-t border-border">
               {ongoing.map((pub, i) => (
@@ -81,10 +78,7 @@ export default function ResearchPage() {
         </Container>
       </section>
 
-      <CtaBanner
-        title="Curious about the methods behind these results?"
-        description="Happy to walk through preprocessing pipelines, model architectures, or statistical design for any of these studies."
-      />
+      <CtaBanner title={page.cta.title} description={page.cta.description} />
     </>
   );
 }

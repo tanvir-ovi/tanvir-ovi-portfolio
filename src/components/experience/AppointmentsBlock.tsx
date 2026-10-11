@@ -1,4 +1,4 @@
-import { researchAppointments } from "@/lib/data";
+import { researchAppointments, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -8,8 +8,8 @@ export function AppointmentsBlock() {
     <section className="border-t border-border py-20 sm:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Research appointments"
-          title="Where the work is done"
+          eyebrow={site.experience.appointments.eyebrow}
+          title={site.experience.appointments.title}
         />
 
         <Reveal className="mt-10 divide-y divide-border border-t border-border">

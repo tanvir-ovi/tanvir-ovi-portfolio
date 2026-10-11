@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
-import { navLinks, profile } from "@/lib/data";
+import { navLinks, profile, site } from "@/lib/data";
 import { cn } from "@/lib/cn";
 import { Container } from "./ui/Container";
 import { ButtonLink } from "./ui/Button";
@@ -98,7 +98,7 @@ export function Nav() {
 
         <div className="hidden md:block">
           <ButtonLink href="/contact" variant="secondary" className="!px-4 !py-2 text-sm">
-            Get in touch
+            {site.nav.ctaLabel}
           </ButtonLink>
         </div>
 

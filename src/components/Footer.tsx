@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { EnvelopeSimple, LinkedinLogo, GithubLogo, GraduationCap } from "@phosphor-icons/react/dist/ssr";
-import { navLinks, profile } from "@/lib/data";
+import { navLinks, profile, site } from "@/lib/data";
 import { Container } from "./ui/Container";
 import { ResearchGateLogo, OrcidLogo } from "./icons/BrandIcons";
 
@@ -64,7 +64,7 @@ export function Footer() {
       </Container>
       <Container className="border-t border-border py-6">
         <p className="text-xs text-foreground-faint">
-          © {new Date().getFullYear()} {profile.name}. Built with Next.js.
+          © {new Date().getFullYear()} {profile.name}. {site.nav.footerNote}
         </p>
       </Container>
     </footer>

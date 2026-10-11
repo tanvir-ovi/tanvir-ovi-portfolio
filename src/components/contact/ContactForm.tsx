@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react/dist/ssr";
-import { profile } from "@/lib/data";
+import { profile, site } from "@/lib/data";
 import { Button } from "../ui/Button";
 
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
@@ -56,9 +56,9 @@ export function ContactForm() {
         className="flex flex-col items-start gap-3 rounded-2xl border border-emerald-400/25 bg-emerald-400/10 p-7"
       >
         <CheckCircle size={28} weight="fill" className="text-emerald-300" />
-        <p className="text-base font-semibold text-foreground">Message sent, thank you.</p>
+        <p className="text-base font-semibold text-foreground">{site.contact.successTitle}</p>
         <p className="text-sm text-foreground-muted">
-          I read every message and usually reply within a couple of days.
+          {site.contact.successBody}
         </p>
         <Button variant="secondary" onClick={() => setStatus("idle")}>
           Send another message
@@ -110,7 +110,7 @@ export function ContactForm() {
           type="text"
           required
           className={fieldClasses}
-          placeholder="Research collaboration, a question about a paper, etc."
+          placeholder={site.contact.subjectPlaceholder}
         />
       </div>
 
@@ -124,7 +124,7 @@ export function ContactForm() {
           rows={5}
           required
           className={`${fieldClasses} resize-none`}
-          placeholder="Tell me a bit about what you'd like to discuss."
+          placeholder={site.contact.messagePlaceholder}
         />
       </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { site } from "@/lib/data";
 
 /* Scroll-scrubbed fly-through: the camera pushes from outside the brain into
  * its neural network as the visitor scrolls, while four short beats describe
@@ -12,28 +13,7 @@ import { cn } from "@/lib/cn";
  * in flight at once, so slower devices finish decoding instead of restarting.
  * Reduced-motion visitors get the four beats as an ordinary static list. */
 
-const beats = [
-  {
-    kicker: "01 · Signal",
-    title: "Faint, noisy, and different in every person.",
-    body: "Scalp EEG is a few microvolts of brain activity buried under eye blinks, muscle, and line noise. Every head reads it a little differently.",
-  },
-  {
-    kicker: "02 · Clean",
-    title: "Keep the evaluation honest.",
-    body: "ICA artifact removal, band filtering, and splits made at the recording level, so no window from a test recording ever leaks into training.",
-  },
-  {
-    kicker: "03 · Decode",
-    title: "Read cognition, emotion, and identity.",
-    body: "From EEGNet variants to cross-attention networks that pair raw signals with engineered features.",
-  },
-  {
-    kicker: "04 · Understand",
-    title: "Ask why the model works.",
-    body: "Which frequency band, which person, which session. Statistics that explain the result, not just score it.",
-  },
-];
+const { heading, beats } = site.home.insideTheWork;
 
 export function NeuralDive() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -181,7 +161,7 @@ export function NeuralDive() {
     return (
       <section id="inside-the-work" className="border-t border-border py-24" aria-label="Research pipeline, from raw signal to understanding">
         <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
-          <h2 className="eyebrow-mono mb-8">Inside the work</h2>
+          <h2 className="eyebrow-mono mb-8">{heading}</h2>
           <div className="grid gap-10 sm:grid-cols-2">
             {beats.map((b) => (
               <div key={b.kicker}>
@@ -234,7 +214,7 @@ export function NeuralDive() {
           <div className="relative w-full max-w-md">
             <h2 className="eyebrow-mono mb-6 flex items-center gap-2.5">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-              Inside the work
+              {heading}
             </h2>
 
             {/* Beats stack in one grid cell and cross-fade as scroll advances */}

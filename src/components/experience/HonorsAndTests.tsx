@@ -1,4 +1,4 @@
-import { honors, standardisedTests } from "@/lib/data";
+import { honors, site, standardisedTests } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -11,7 +11,7 @@ export function HonorsAndTests() {
 
           {/* Honours - editorial divided list, no cards */}
           <div className="lg:col-span-3">
-            <SectionHeading eyebrow="Recognition" title="Honors & awards" className="mb-0" />
+            <SectionHeading eyebrow={site.experience.honors.eyebrow} title={site.experience.honors.title} className="mb-0" />
             <Reveal as="ul" className="mt-10 divide-y divide-border border-b border-border border-t border-t-border">
               {honors.map((honor) => (
                 <li key={honor.title}>
@@ -33,7 +33,7 @@ export function HonorsAndTests() {
 
           {/* Standardised tests - retain structured layout but drop card border/bg */}
           <div className="lg:col-span-2">
-            <SectionHeading eyebrow="Language" title="Standardised tests" className="mb-0" />
+            <SectionHeading eyebrow={site.experience.tests.eyebrow} title={site.experience.tests.title} className="mb-0" />
             <Reveal className="mt-10 divide-y divide-border border-b border-border border-t border-t-border">
               {standardisedTests.map((test) => (
                   <div key={test.name} className="py-7">
@@ -46,7 +46,7 @@ export function HonorsAndTests() {
                     <p className="mt-2 font-display text-3xl font-normal tabular-nums text-foreground">
                       {test.overall}
                       <span className="ml-1.5 text-sm font-sans font-normal text-foreground-faint">
-                        overall band
+                        {test.overallLabel}
                       </span>
                     </p>
                     <dl className="mt-4 grid grid-cols-4 gap-2 border-t border-border pt-4">

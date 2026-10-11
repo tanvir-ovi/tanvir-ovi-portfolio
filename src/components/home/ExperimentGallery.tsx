@@ -1,41 +1,29 @@
 import Image from "next/image";
+import { site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
 
 // Studio cut-outs (white background keyed to alpha) so each subject stands
 // on the dark stage instead of sitting in a white box.
-const setups = [
-  {
-    src: "/images/experiment-vr.webp",
-    width: 791,
-    height: 788,
-    alt: "Tanvir wearing a Meta Quest 3 VR headset fitted with EEG sensors during an immersive cognitive load experiment",
-    tag: "Condition A",
-    label: "360° VR condition",
-    detail: "Meta Quest 3 + 14-channel Emotiv EPOC X",
-    glow: "rgba(56,189,248,0.34)",
-  },
-  {
-    src: "/images/experiment-laptop.webp",
-    width: 629,
-    height: 662,
-    alt: "Tanvir wearing a 14-channel Emotiv EPOC X EEG headset during a laptop-based cognitive load experiment",
-    tag: "Condition B",
-    label: "2D laptop condition",
-    detail: "Laptop display + 14-channel Emotiv EPOC X",
-    glow: "rgba(139,125,255,0.34)",
-  },
-];
+const glows = { cyan: "rgba(56,189,248,0.34)", violet: "rgba(139,125,255,0.34)" };
+const gallery = site.home.gallery;
+const setups = gallery.items.map((item) => ({
+  ...item.image,
+  tag: item.tag,
+  label: item.label,
+  detail: item.detail,
+  glow: glows[item.accent] ?? glows.cyan,
+}));
 
 export function ExperimentGallery() {
   return (
     <section className="border-t border-border py-24 sm:py-32">
       <Container>
         <SectionHeading
-          eyebrow="From signal to system"
-          title="Inside the experimental setup"
-          description="Both conditions of the cognitive load study used the same 14-channel dry EEG headset, so the only variable was the display: a 2D laptop screen or a fully immersive VR headset."
+          eyebrow={gallery.eyebrow}
+          title={gallery.title}
+          description={gallery.description}
         />
 
         <Reveal className="mt-12 grid gap-6 sm:grid-cols-2">

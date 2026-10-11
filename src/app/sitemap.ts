@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/lib/data";
 
-const SITE_URL = "https://tanvir-hossain-ovi.me";
+const SITE_URL = site.seo.siteUrl;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "/research", "/experience", "/about", "/contact"];

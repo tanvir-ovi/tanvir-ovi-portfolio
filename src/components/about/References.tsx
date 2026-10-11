@@ -1,5 +1,5 @@
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
-import { referees } from "@/lib/data";
+import { referees, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -9,8 +9,8 @@ export function References() {
     <section className="border-t border-border py-20 sm:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Academic references"
-          title="People who can speak to this work"
+          eyebrow={site.about.references.eyebrow}
+          title={site.about.references.title}
         />
 
         {/* Editorial divided list - three referees, no card boxes */}

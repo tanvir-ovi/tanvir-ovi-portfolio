@@ -1,4 +1,4 @@
-import { skills } from "@/lib/data";
+import { site, skills } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -7,7 +7,7 @@ export function SkillsGrid() {
   return (
     <section className="border-t border-border py-20 sm:py-24">
       <Container>
-        <SectionHeading eyebrow="Toolkit" title="Technical skills" />
+        <SectionHeading eyebrow={site.experience.skills.eyebrow} title={site.experience.skills.title} />
 
         <Reveal className="mt-10 divide-y divide-border border-b border-border">
           {skills.map((group) => (

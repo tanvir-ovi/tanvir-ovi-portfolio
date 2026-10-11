@@ -1,12 +1,12 @@
 import { ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
-import { profile } from "@/lib/data";
+import { profile, site } from "@/lib/data";
 import { Container } from "./ui/Container";
 import { ButtonLink } from "./ui/Button";
 import { Reveal } from "./ui/Reveal";
 
 export function CtaBanner({
-  title = "Let's talk about EEG, BCI, or a research collaboration.",
-  description = "Reviewing one of my graduate applications, or just curious about phenotype-aware EEG models? I'd love to hear from you.",
+  title = site.home.cta.title,
+  description = site.home.cta.description,
 }: {
   title?: string;
   description?: string;
@@ -39,7 +39,7 @@ export function CtaBanner({
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <ButtonLink href="/contact" icon={<ArrowRight size={16} weight="bold" />}>
-                Get in touch
+                {site.nav.ctaLabel}
               </ButtonLink>
               <ButtonLink
                 href={profile.cvPath}
@@ -47,7 +47,7 @@ export function CtaBanner({
                 variant="secondary"
                 icon={<DownloadSimple size={16} weight="bold" />}
               >
-                Download CV
+                {site.home.hero.cvLabel}
               </ButtonLink>
             </div>
           </div>

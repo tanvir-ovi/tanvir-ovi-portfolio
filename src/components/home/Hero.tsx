@@ -4,10 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
-import { profile } from "@/lib/data";
+import { profile, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { ButtonLink } from "../ui/Button";
+import { Emphasis } from "../ui/Emphasis";
 import { EEGSignalField } from "./EEGSignalField";
+
+const hero = site.home.hero;
 
 /* The 3D neural brain is client-only and code-split so the first paint of
  * the headline never waits on three.js. */
@@ -168,7 +171,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full rounded-full bg-accent/70 motion-safe:animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-strong" />
             </span>
-            EEG · Brain-Computer Interfaces · Deep Learning
+            {hero.overline}
           </div>
 
           {/* Masked line reveal: each line rises out of its own overflow clip */}
@@ -176,12 +179,12 @@ export function Hero() {
           <h1 className="font-display font-normal leading-[1.03] tracking-tight text-[clamp(2.5rem,12.3vw,3rem)] sm:text-[3.8rem] lg:w-max lg:text-[clamp(3.5rem,calc(5.8vw-0.2rem),4rem)]">
             <span className="block overflow-hidden pb-[0.08em]">
               <span data-hero-line className="block text-[#e6edfb]">
-                Turning brainwaves
+                {hero.line1}
               </span>
             </span>
             <span className="block overflow-hidden pb-[0.12em]">
               <span data-hero-line style={{ "--i": 1 } as React.CSSProperties} className="block text-[#e6edfb]">
-                into <span className="italic text-aurora">understanding</span>.
+                <Emphasis text={hero.line2} />
               </span>
             </span>
           </h1>
@@ -190,14 +193,12 @@ export function Hero() {
             data-hero-para
             className="mt-6 max-w-[42ch] text-base leading-relaxed text-foreground-muted sm:text-[1.075rem]"
           >
-            I&apos;m {profile.name}, an EEG and brain-computer interface researcher. I build
-            deep-learning systems that decode cognition, emotion, and identity from brain
-            signals, and I study how immersion reshapes the way we think.
+            {hero.intro}
           </p>
 
           <div data-hero-cta className="mt-8 flex flex-wrap items-center gap-3">
-            <ButtonLink href="/research" icon={<ArrowRight size={16} weight="bold" />}>
-              View research
+            <ButtonLink href={hero.primaryHref} icon={<ArrowRight size={16} weight="bold" />}>
+              {hero.primaryLabel}
             </ButtonLink>
             <ButtonLink
               href={profile.cvPath}
@@ -205,7 +206,7 @@ export function Hero() {
               variant="secondary"
               icon={<DownloadSimple size={16} weight="bold" />}
             >
-              Download CV
+              {hero.cvLabel}
             </ButtonLink>
           </div>
 
@@ -216,7 +217,7 @@ export function Hero() {
           >
             <span>{profile.location}</span>
             <span className="h-3 w-px bg-border-strong" aria-hidden="true" />
-            <span>Open to PhD &amp; research-master positions</span>
+            <span>{profile.availability}</span>
           </div>
         </motion.div>
 
@@ -252,7 +253,7 @@ export function Hero() {
           className="pointer-events-none absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-foreground-faint sm:flex"
           aria-hidden="true"
         >
-          <span>Scroll to enter the signal</span>
+          <span>{hero.scrollCue}</span>
           <span className="relative h-10 w-px overflow-hidden bg-white/10">
             <span className="absolute inset-x-0 top-0 h-1/2 animate-[scroll-cue_1.8s_ease-in-out_infinite] bg-accent" />
           </span>

@@ -4,21 +4,20 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactSidebar } from "@/components/contact/ContactSidebar";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { site } from "@/lib/data";
+
+const page = site.contact;
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Tanvir Hossain Ovi for research collaboration or questions.",
+  title: page.seo.title,
+  description: page.seo.description,
   alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Contact"
-        title="Let's talk"
-        description="If you're reviewing one of my graduate applications, considering a research collaboration, or just curious about EEG-based emotion recognition, send a message."
-      />
+      <PageHeader {...page.header} />
       <section className="py-20 sm:py-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1fr_20rem]">

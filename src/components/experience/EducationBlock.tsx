@@ -8,8 +8,8 @@ export function EducationBlock() {
     <section className="py-20 sm:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Education"
-          title="Bachelor of Science, Electrical & Electronic Engineering"
+          eyebrow={education.eyebrow}
+          title={education.title}
         />
 
         <Reveal delay={0.1}>
@@ -25,7 +25,7 @@ export function EducationBlock() {
             <dl className="mt-7 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border pt-7 sm:grid-cols-2">
               <div>
                 <dt className="text-xs font-medium uppercase tracking-wider text-foreground-faint">
-                  CGPA
+                  {education.cgpaLabel}
                 </dt>
                 <dd className="mt-1.5 font-display text-3xl font-normal tabular-nums text-foreground">
                   {education.cgpa}
@@ -33,7 +33,7 @@ export function EducationBlock() {
               </div>
               <div>
                 <dt className="text-xs font-medium uppercase tracking-wider text-foreground-faint">
-                  Merit position
+                  {education.meritLabel}
                 </dt>
                 <dd className="mt-1.5 font-display text-3xl font-normal text-foreground">
                   {education.merit}
@@ -43,7 +43,7 @@ export function EducationBlock() {
 
             <div className="mt-7 border-t border-border pt-7">
               <dt className="text-xs font-medium uppercase tracking-wider text-foreground-faint">
-                Graduation thesis
+                {education.thesisLabel}
               </dt>
               <dd className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground-muted">
                 {education.thesis}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { publications } from "@/lib/data";
+import { publications, site } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -15,13 +15,13 @@ export function FeaturedPublications() {
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
-            eyebrow="Selected publications"
-            title="Publications and manuscripts on EEG, cognition, and identity"
+            eyebrow={site.home.featured.eyebrow}
+            title={site.home.featured.title}
             className="mb-0"
           />
           <Reveal>
             <ButtonLink href="/research" variant="ghost" icon={<ArrowRight size={16} />}>
-              All {publications.length} publications
+              {site.home.featured.allLabel.replace("{count}", String(publications.length))}
             </ButtonLink>
           </Reveal>
         </div>

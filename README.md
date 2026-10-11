@@ -17,9 +17,11 @@ Open http://localhost:3000 in your browser.
 
 ## Project structure
 
-- `src/app/`: pages for Home, Research, Experience, About, and Contact.
+- `src/app/(site)/`: pages for Home, Research, Experience, About, and Contact.
 - `src/components/`: UI components, grouped by page where relevant.
-- `src/lib/data.ts`: all site content (publications, experience, skills, and more) in one place. Edit this file to update copy without touching components.
+- `src/content/site.json`: every word, link, number and photo on the site. Edit it from the site editor at `/admin` (see [ADMIN.md](ADMIN.md)) or by hand.
+- `src/lib/data.ts`: typed shortcuts into that content for the components.
+- `src/app/admin/`, `src/app/api/admin/`, `src/components/admin/`: the site editor.
 - `public/images/`: portrait and experiment setup photos.
 - `public/docs/`: downloadable CV PDF.
 - `public/brain-surface.bin`: the detailed MRI-derived hero envelope (see Credits).

@@ -1,0 +1,881 @@
+{
+  "profile": {
+    "name": "Tanvir Hossain Ovi",
+    "shortName": "Tanvir Ovi",
+    "role": "EEG & Brain-Computer Interface Researcher",
+    "location": "Chattogram, Bangladesh",
+    "email": "tanvirhossainovi.eee@std.cu.ac.bd",
+    "tagline": "I build deep learning systems that decode cognition, emotion, and identity from EEG. I also study how immersive environments change the way we think.",
+    "availability": "Open to PhD & research-master positions",
+    "orcidId": "0009-0001-8345-3843",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/tanvir-hossain-ovi/",
+      "github": "https://github.com/tanvir-ovi",
+      "scholar": "https://scholar.google.com/citations?user=n8SuOHUAAAAJ&hl=en",
+      "researchgate": "https://www.researchgate.net/profile/Tanvir-Ovi",
+      "orcid": "https://orcid.org/0009-0001-8345-3843"
+    },
+    "cvPath": "/docs/Tanvir_Hossain_Ovi_CV.pdf"
+  },
+  "nav": {
+    "links": [
+      {
+        "href": "/",
+        "label": "Home"
+      },
+      {
+        "href": "/research",
+        "label": "Research"
+      },
+      {
+        "href": "/experience",
+        "label": "Experience"
+      },
+      {
+        "href": "/#projects",
+        "label": "Projects"
+      },
+      {
+        "href": "/about",
+        "label": "About"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact"
+      }
+    ],
+    "ctaLabel": "Get in touch",
+    "footerNote": "Built with Next.js."
+  },
+  "seo": {
+    "siteUrl": "https://tanvir-hossain-ovi.me",
+    "title": "Tanvir Hossain Ovi | EEG & BCI Researcher",
+    "titleTemplate": "%s · Tanvir Hossain Ovi",
+    "description": "Tanvir Hossain Ovi is an EEG and brain-computer interface researcher working on cognitive load, emotion recognition, and imagined speech decoding. Portfolio, publications, and projects.",
+    "shareDescription": "Deep learning systems that decode cognition, emotion, and identity from EEG. Publications, research, and projects.",
+    "twitterDescription": "Deep learning systems that decode cognition, emotion, and identity from EEG.",
+    "keywords": [
+      "Tanvir Hossain Ovi",
+      "Tanvir Ovi",
+      "Tanvir",
+      "Tanvir Hossain",
+      "T. H. Ovi",
+      "Tanvir Ovi EEG",
+      "EEG researcher",
+      "brain-computer interface",
+      "BCI researcher",
+      "deep learning EEG",
+      "emotion recognition EEG",
+      "imagined speech decoding",
+      "cognitive load",
+      "University of Chittagong",
+      "neural engineering"
+    ],
+    "googleVerification": "PiXcgKTo-T5ue6ty_6JrDYzDJcrq2OKt8yrAWms2EXA",
+    "alternateNames": [
+      "Tanvir Ovi",
+      "Tanvir",
+      "Tanvir Hossain",
+      "T. H. Ovi",
+      "Ovi"
+    ],
+    "givenName": "Tanvir Hossain",
+    "familyName": "Ovi",
+    "personDescription": "EEG and brain-computer interface researcher working on cognitive load, emotion recognition, and imagined speech decoding.",
+    "websiteDescription": "Portfolio, publications, and projects of Tanvir Hossain Ovi, EEG and brain-computer interface researcher.",
+    "alumniOf": "University of Chittagong",
+    "addressLocality": "Chattogram",
+    "addressCountry": "Bangladesh",
+    "knowsAbout": [
+      "Electroencephalography (EEG)",
+      "Brain-Computer Interfaces",
+      "Deep Learning",
+      "Cognitive Load",
+      "Emotion Recognition",
+      "Imagined Speech Decoding"
+    ]
+  },
+  "home": {
+    "sections": [
+      {
+        "id": "snapshot",
+        "visible": true
+      },
+      {
+        "id": "insideTheWork",
+        "visible": true
+      },
+      {
+        "id": "focus",
+        "visible": true
+      },
+      {
+        "id": "kinetic",
+        "visible": true
+      },
+      {
+        "id": "featured",
+        "visible": true
+      },
+      {
+        "id": "news",
+        "visible": true
+      },
+      {
+        "id": "gallery",
+        "visible": true
+      },
+      {
+        "id": "recognition",
+        "visible": true
+      },
+      {
+        "id": "builds",
+        "visible": true
+      },
+      {
+        "id": "cta",
+        "visible": true
+      }
+    ],
+    "hero": {
+      "overline": "EEG · Brain-Computer Interfaces · Deep Learning",
+      "line1": "Turning brainwaves",
+      "line2": "into *understanding*.",
+      "intro": "I'm Tanvir Hossain Ovi, an EEG and brain-computer interface researcher. I build deep-learning systems that decode cognition, emotion, and identity from brain signals, and I study how immersion reshapes the way we think.",
+      "primaryLabel": "View research",
+      "primaryHref": "/research",
+      "cvLabel": "Download CV",
+      "scrollCue": "Scroll to enter the signal"
+    },
+    "stats": [
+      {
+        "label": "Publications",
+        "value": "9"
+      },
+      {
+        "label": "Published Journal Papers",
+        "value": "3"
+      },
+      {
+        "label": "IELTS Academic",
+        "value": "7.5"
+      },
+      {
+        "label": "BSc CGPA",
+        "value": "3.78/4.0"
+      }
+    ],
+    "insideTheWork": {
+      "heading": "Inside the work",
+      "beats": [
+        {
+          "kicker": "01 · Signal",
+          "title": "Faint, noisy, and different in every person.",
+          "body": "Scalp EEG is a few microvolts of brain activity buried under eye blinks, muscle, and line noise. Every head reads it a little differently."
+        },
+        {
+          "kicker": "02 · Clean",
+          "title": "Keep the evaluation honest.",
+          "body": "ICA artifact removal, band filtering, and splits made at the recording level, so no window from a test recording ever leaks into training."
+        },
+        {
+          "kicker": "03 · Decode",
+          "title": "Read cognition, emotion, and identity.",
+          "body": "From EEGNet variants to cross-attention networks that pair raw signals with engineered features."
+        },
+        {
+          "kicker": "04 · Understand",
+          "title": "Ask why the model works.",
+          "body": "Which frequency band, which person, which session. Statistics that explain the result, not just score it."
+        }
+      ]
+    },
+    "focus": {
+      "eyebrow": "Research focus",
+      "title": "Five questions about the signals we carry",
+      "description": "My work sits at the intersection of signal processing and deep learning. I'm mostly asking what EEG can tell us about the mind, and where it quietly stops being able to.",
+      "areas": [
+        {
+          "title": "Cognitive Load & Immersive Environments",
+          "description": "I compare 360° VR and 2D laptop viewing to see how immersion changes mental workload. Theta-alpha ratio and engagement index do most of the talking."
+        },
+        {
+          "title": "EEG Biometrics & Security",
+          "description": "Different EEG frequency bands carry different kinds of information. Some are good at reading what a person is doing, others are better at recognizing who they are. I'm trying to find exactly where that split happens."
+        },
+        {
+          "title": "Emotion Recognition & Personalization",
+          "description": "EEG-based emotion recognition tends to fall apart when you test it days or weeks later. I build phenotype-aware models that adapt to each person's neural patterns instead of correcting everyone the same way."
+        },
+        {
+          "title": "Imagined Speech & Accessibility",
+          "description": "Decoding imagined English and Bangla speech from EEG, aimed at assistive communication tools for people with limited motor control."
+        },
+        {
+          "title": "Intracranial EEG & Reliable Evaluation",
+          "description": "I model cross-channel structure in intracranial EEG and design recording-level evaluations that prevent windows from the same recording leaking across train and test sets."
+        }
+      ]
+    },
+    "kinetic": {
+      "rowA": [
+        "Electroencephalography",
+        "Brain-Computer Interfaces",
+        "Cognitive Load",
+        "Emotion Recognition"
+      ],
+      "rowB": [
+        "EEG Biometrics",
+        "Imagined Speech",
+        "Intracranial EEG",
+        "Deep Learning"
+      ]
+    },
+    "featured": {
+      "eyebrow": "Selected publications",
+      "title": "Publications and manuscripts on EEG, cognition, and identity",
+      "allLabel": "All {count} publications"
+    },
+    "news": {
+      "eyebrow": "Latest news",
+      "title": "Recent milestones",
+      "description": "",
+      "items": [
+        {
+          "date": "Oct 2026",
+          "text": "Submitted a first-author study of focal and non-focal intracranial EEG classification to Neural Networks.",
+          "link": "/research#recording-level-ieeg-fusion"
+        },
+        {
+          "date": "Aug 2026",
+          "text": "Clustering-enabled multi-stage intrusion detection paper accepted at the IEEE Conference on Dependable and Secure Computing (DSC 2026).",
+          "link": "/research#iot-intrusion-detection"
+        },
+        {
+          "date": "Nov 2025",
+          "text": "Completed my BSc in Electrical and Electronic Engineering at the University of Chittagong, second in a class of 63.",
+          "link": ""
+        },
+        {
+          "date": "Jul 2025",
+          "text": "Joined the Biometric Intelligence and Vision Laboratory at SUNY Canton as a remote research assistant.",
+          "link": "https://cyber.canton.edu/BIV"
+        }
+      ]
+    },
+    "gallery": {
+      "eyebrow": "From signal to system",
+      "title": "Inside the experimental setup",
+      "description": "Both conditions of the cognitive load study used the same 14-channel dry EEG headset, so the only variable was the display: a 2D laptop screen or a fully immersive VR headset.",
+      "items": [
+        {
+          "image": {
+            "src": "/images/experiment-vr.webp",
+            "width": 791,
+            "height": 788,
+            "alt": "Tanvir wearing a Meta Quest 3 VR headset fitted with EEG sensors during an immersive cognitive load experiment"
+          },
+          "tag": "Condition A",
+          "label": "360° VR condition",
+          "detail": "Meta Quest 3 + 14-channel Emotiv EPOC X",
+          "accent": "cyan"
+        },
+        {
+          "image": {
+            "src": "/images/experiment-laptop.webp",
+            "width": 629,
+            "height": 662,
+            "alt": "Tanvir wearing a 14-channel Emotiv EPOC X EEG headset during a laptop-based cognitive load experiment"
+          },
+          "tag": "Condition B",
+          "label": "2D laptop condition",
+          "detail": "Laptop display + 14-channel Emotiv EPOC X",
+          "accent": "violet"
+        }
+      ]
+    },
+    "recognition": {
+      "eyebrow": "Recognition",
+      "title": "Moments along the way",
+      "description": "Second in a cohort of 63 in Electrical and Electronic Engineering, and a habit of finishing near the top that started well before university.",
+      "lead": {
+        "image": {
+          "src": "/images/awards/merit-ceremony.webp",
+          "width": 2000,
+          "height": 1333,
+          "alt": "Tanvir Hossain Ovi receiving the Student Merit Award trophy from faculty of the Department of Electrical and Electronic Engineering at EEE Fest 2025, University of Chittagong",
+          "focus": "50% 22%"
+        },
+        "meta": "Feb 2025 · EEE Fest, University of Chittagong",
+        "title": "First Runner-up, *Student Merit Award*",
+        "subtitle": "Presented by the Department of Electrical and Electronic Engineering."
+      },
+      "photos": [
+        {
+          "src": "/images/awards/merit-portrait.webp",
+          "width": 1100,
+          "height": 1650,
+          "alt": "Tanvir holding the Student Merit Award trophy and his farewell felicitation plaque at EEE Fest 2025",
+          "focus": "50% 30%"
+        },
+        {
+          "src": "/images/awards/principal-ceremony.webp",
+          "width": 718,
+          "height": 613,
+          "alt": "Tanvir receiving the Principal's Award for Academic Excellence on stage at Dhaka Imperial College, 2018",
+          "focus": ""
+        },
+        {
+          "src": "/images/awards/principal-portrait.webp",
+          "width": 718,
+          "height": 900,
+          "alt": "Tanvir holding the Principal's Award trophy outside Dhaka Imperial College, September 2018",
+          "focus": "50% 25%"
+        }
+      ],
+      "card": {
+        "meta": "Sep 2018 · Dhaka Imperial College",
+        "title": "Principal's Award for Academic Excellence",
+        "subtitle": "4th position, Summer Semester Final Examination, Science group.",
+        "chips": [
+          "Champion, Robo Soccer · EEE Fest 2023",
+          "2nd Runner-up, Robo Soccer · Engineering Day 2022",
+          "Government Junior Scholarship · 2014"
+        ]
+      }
+    },
+    "builds": {
+      "eyebrow": "Selected builds",
+      "title": "Research isn't the only thing I ship",
+      "description": "Alongside the science, I design and engineer real software end to end: full-stack PWAs I use every day. Proof that I can take an idea from problem to a deployed product.",
+      "projects": [
+        {
+          "name": "Haowa Bhobon",
+          "kind": "Mess & meal management PWA",
+          "description": "A shared-mess operations app: daily meals on and off, per-member bazar (grocery) tracking, duty rosters, bills, and an automatic month-end settlement that splits every taka across members.",
+          "tech": [
+            "Next.js",
+            "PWA",
+            "Offline-first",
+            "Settle-up engine"
+          ],
+          "accent": "cyan",
+          "url": "https://haowa-bhobon.web.app",
+          "locked": false
+        },
+        {
+          "name": "Command Center",
+          "kind": "Encrypted personal dashboard",
+          "description": "A privacy-first PWA for organizing sensitive personal data. Every field is AES-256 encrypted and decrypted entirely in the browser with a password that never leaves the device, so the hosted app only ever exposes ciphertext.",
+          "tech": [
+            "Client-side AES-256",
+            "PWA",
+            "Zero-knowledge",
+            "Offline-first"
+          ],
+          "accent": "violet",
+          "url": "https://tanvir-application-tracker.web.app",
+          "locked": true
+        },
+        {
+          "name": "Namirah Tarannum",
+          "kind": "Commissioned client portfolio",
+          "description": "A premium multi-page portfolio built on commission for a graphics designer: a bespoke visual identity, an original self-assembling hero animation, and a curated work gallery. Designed, engineered, and shipped end to end.",
+          "tech": [
+            "Next.js",
+            "TypeScript",
+            "Framer Motion",
+            "Design system"
+          ],
+          "accent": "cyan",
+          "url": "https://namirah-tarannum-portfolio.vercel.app",
+          "locked": false
+        }
+      ]
+    },
+    "cta": {
+      "title": "Let's talk about EEG, BCI, or a research collaboration.",
+      "description": "Reviewing one of my graduate applications, or just curious about phenotype-aware EEG models? I'd love to hear from you."
+    }
+  },
+  "research": {
+    "seo": {
+      "title": "Research",
+      "description": "Peer-reviewed publications and ongoing research on EEG-based cognitive load, emotion recognition, biometrics, and imagined speech decoding."
+    },
+    "header": {
+      "eyebrow": "Research",
+      "title": "Nine papers on what EEG reveals, and what it hides",
+      "description": "From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
+    },
+    "published": {
+      "title": "Selected publications",
+      "note": "Peer-reviewed journal and conference papers. Select any linked title to read the paper on the publisher's site."
+    },
+    "ongoing": {
+      "title": "Selected ongoing research",
+      "note": "Manuscripts currently under peer review or submitted for publication. Titles and venues are listed; abstracts are kept private while the work is under review."
+    },
+    "cta": {
+      "title": "Curious about the methods behind these results?",
+      "description": "Happy to walk through preprocessing pipelines, model architectures, or statistical design for any of these studies."
+    },
+    "publications": [
+      {
+        "id": "frequency-band-dissociation",
+        "title": "Frequency Band Dissociation Between Cognitive State Recognition and Person Identification in EEG",
+        "authors": "T. H. Ovi, M. M. Islam, M. A. Uddin, K. Ghazinour, A. M. M. Chowdhury, N. Siddique",
+        "venue": "Machine Learning with Applications, p. 100901",
+        "year": "2026",
+        "status": "Published",
+        "firstAuthor": true,
+        "featured": true,
+        "url": "https://www.sciencedirect.com/science/article/pii/S2666827026000666",
+        "abstract": "A three-stage, three-week EEG study asking whether the same brain rhythms can classify mental states and identify individuals at the same time. Delta-band oscillations reached 86.9% accuracy on task classification but only 15.6 to 23.6% on person identification. Broadband signals reversed that pattern, hitting 69.9% authentication accuracy across sessions a week apart. Two-way ANOVA confirmed the split was structured rather than noise. Shared cognitive processes ride on slow cortical rhythms. Stable individual signatures live in the broader frequency bands instead."
+      },
+      {
+        "id": "phenotype-aware-personalization",
+        "title": "Phenotype-Aware Personalization for Cross-Session EEG-Based Emotion Recognition",
+        "authors": "T. H. Ovi, T. Forsythe, A. M. M. Chowdhury, N. Siddique, Y. Li",
+        "venue": "Expert Systems With Applications",
+        "year": "2026",
+        "status": "Under Review",
+        "firstAuthor": true,
+        "featured": true,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "envisioned-english-speech",
+        "title": "Classification of Envisioned English Speech from EEG using Deep Learning Approaches",
+        "authors": "A. Hossain, T. H. Ovi, M. A. I. Mahmood, M. F. Kader",
+        "venue": "Machine Learning with Applications, vol. 22, p. 100752",
+        "year": "2025",
+        "status": "Published",
+        "firstAuthor": false,
+        "featured": true,
+        "url": "https://www.sciencedirect.com/science/article/pii/S2666827025001355",
+        "abstract": "EEG signals from 20 participants imagining 26 English letters and 10 digits were used to train 1D CNN, BiLSTM, and hybrid CNN-BiLSTM models across five frequency bands. BiLSTM performed best, reaching 85.65% accuracy on digits within the delta band and 83.65% on letters within the alpha band. It is a step toward assistive communication for people with motor neuron disorders."
+      },
+      {
+        "id": "mobile-phone-brain-activity",
+        "title": "Impact of Mobile Phone Use on the Brain Activity: Audio Call vs Video Call",
+        "authors": "M. A. Z. Akas, T. H. Ovi, M. F. Kader",
+        "venue": "Acta Psychologica, vol. 262, p. 106160",
+        "year": "2026",
+        "status": "Published",
+        "firstAuthor": false,
+        "featured": false,
+        "url": "https://www.sciencedirect.com/science/article/pii/S000169182501474X",
+        "abstract": "EEG from 28 participants during WhatsApp audio and video calls shows video calls impose significantly higher cognitive load and mental fatigue than audio calls, growing with call duration. Theta-alpha ratio and Mahalanobis-distance fatigue analysis combined with ML classification (ROC-AUC > 0.90) gave convergent evidence that communication modality matters for real-world workload assessment."
+      },
+      {
+        "id": "iot-intrusion-detection",
+        "title": "Design of a Clustering-Enabled Multi-Stage Intrusion Detection Framework for APT Mitigation in IoT Networks",
+        "authors": "T. H. Ovi, A. M. M. Chowdhury, K. Ghazinour, M. Simsek",
+        "venue": "IEEE Conference on Dependable and Secure Computing (DSC)",
+        "year": "2026",
+        "status": "Accepted",
+        "firstAuthor": true,
+        "featured": false,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "cognitive-load-vr-laptop",
+        "title": "EEG-Based Cognitive Load Analysis in Immersive Virtual Reality and Laptop-Based Video Learning Environments",
+        "authors": "T. H. Ovi, T. F. Arin, M. A. I. Mahmood, M. F. Kader",
+        "venue": "Applied Cognitive Psychology",
+        "year": "2026",
+        "status": "Submitted",
+        "firstAuthor": true,
+        "featured": true,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "bangla-imagined-speech",
+        "title": "Bangla Imagined Speech Using EEG to Understand Emotional Words",
+        "authors": "T. F. Arin, T. H. Ovi, M. F. Kader",
+        "venue": "Acta Psychologica",
+        "year": "2026",
+        "status": "Submitted",
+        "firstAuthor": false,
+        "featured": false,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "bangla-word-level-speech",
+        "title": "Heterogeneous Deep Learning Approaches for EEG-Based Imagined Bangla Word-Level Speech Recognition",
+        "authors": "A. Hossain, M. A. Z. Akas, T. H. Ovi, M. F. Kader",
+        "venue": "Computer Speech & Language",
+        "year": "2026",
+        "status": "Under Review",
+        "firstAuthor": false,
+        "featured": false,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "recording-level-ieeg-fusion",
+        "title": "Complementary Raw and Engineered Representations for Focal and Non-Focal Intracranial EEG Classification under a Recording-Separated Split",
+        "authors": "T. H. Ovi, A. M. M. Chowdhury, S. Shubbar, K. Watanabe, N. Siddique",
+        "venue": "Neural Networks",
+        "year": "2026",
+        "status": "Submitted",
+        "firstAuthor": true,
+        "featured": true,
+        "url": "",
+        "abstract": "A leakage-controlled recording-level study on all 7,500 recordings in the Bern-Barcelona intracranial EEG dataset. CSRA-EF Net pairs a shared cross-channel raw-signal encoder with a 280-dimensional engineered-feature branch through token cross-attention, reaching 96.27% accuracy and 0.994 AUC across three training seeds."
+      }
+    ]
+  },
+  "experience": {
+    "seo": {
+      "title": "Experience",
+      "description": "Education, research appointments, research experience, technical skills, and academic honors of Tanvir Hossain Ovi."
+    },
+    "header": {
+      "eyebrow": "Experience",
+      "title": "Five years of measuring minds",
+      "description": "From robotics competitions to EEG laboratories, here is the education, research roles, and skills behind the work."
+    },
+    "education": {
+      "eyebrow": "Education",
+      "title": "Bachelor of Science, Electrical & Electronic Engineering",
+      "institution": "University of Chittagong, Bangladesh",
+      "degree": "BSc in Electrical and Electronic Engineering",
+      "period": "Jan 2020 to Nov 2025",
+      "cgpaLabel": "CGPA",
+      "cgpa": "3.78 / 4.00",
+      "meritLabel": "Merit position",
+      "merit": "2nd out of 63 students",
+      "thesisLabel": "Graduation thesis",
+      "thesis": "EEG-based cognitive load analysis in 360° virtual reality and 2D laptop video modes"
+    },
+    "appointments": {
+      "eyebrow": "Research appointments",
+      "title": "Where the work is done",
+      "items": [
+        {
+          "id": "biv-lab-suny-canton",
+          "role": "Research Assistant",
+          "lab": "Biometric Intelligence and Vision Laboratory",
+          "department": "Department of Cybersecurity",
+          "institution": "State University of New York, Canton, USA",
+          "period": "Jul 2025 to Present",
+          "mode": "Remote",
+          "bullets": [
+            "Preprocessing EEG recordings, designing neural network architectures, feature selection, statistical validation, and drafting manuscripts.",
+            "Supervised by Dr. A M Mahmud Chowdhury, with Dr. Nazmul Siddique of Ulster University, UK, co-supervising the neural signal work.",
+            "First author on the four studies produced during the appointment."
+          ]
+        },
+        {
+          "id": "undergraduate-researcher-cu",
+          "role": "Undergraduate Researcher",
+          "lab": "University of Chittagong",
+          "department": "Department of Electrical and Electronic Engineering",
+          "institution": "Chattogram, Bangladesh",
+          "period": "2023 to 2025",
+          "mode": "In person",
+          "bullets": [
+            "Recorded EEG from participants for four studies: the VR thesis, imagined Bangla words, emotionally valenced Bangla words, and audio vs. video calls.",
+            "BSc thesis: designed a VR vs. laptop video learning protocol and recorded 30 participants on a 14-channel Emotiv EPOC X. VR lowered cognitive load by 21% and raised engagement by 59%."
+          ]
+        }
+      ]
+    },
+    "studies": {
+      "eyebrow": "Research experience",
+      "title": "Four studies on what EEG really carries across sessions, channels, and people",
+      "items": [
+        {
+          "id": "cross-channel-ieeg",
+          "title": "Complementary Raw and Engineered Representations for Focal and Non-Focal iEEG Classification",
+          "period": "2026",
+          "bullets": [
+            "Designed a recording-level evaluation protocol that prevents windows from the same Bern-Barcelona recording from appearing across training and test splits.",
+            "Built CSRA-EF Net by fusing a shared cross-channel raw-iEEG encoder with 280 engineered differential-entropy, spectral-entropy, Hjorth, and inter-channel-correlation features.",
+            "Reached 96.27% accuracy and 0.994 AUC across three training seeds; ablation showed the engineered-feature branch was the only component with a detectable effect under a pre-declared one-point equivalence margin."
+          ]
+        },
+        {
+          "id": "phenotype-personalization",
+          "title": "Phenotype-Aware Personalization for Cross-Session EEG Emotion Recognition",
+          "period": "2025 to 2026",
+          "bullets": [
+            "Investigated cross-session performance degradation in EEG-based emotion recognition by analyzing the SEED-IV dataset across three weekly recording sessions per participant.",
+            "Implemented variance decomposition and two-way ANOVA, which placed 80.1% of the explained variance in the participant-by-emotion interaction, so cross-session variability reflects structured individual differences rather than random noise.",
+            "Conducted brain-behavior correlation analysis and hierarchical clustering to identify distinct user phenotypes affecting cross-session model generalization.",
+            "Developed phenotype-aware calibration that raised cross-session accuracy from 39.96% to 88.71%, outperforming uniform correction methods."
+          ]
+        },
+        {
+          "id": "frequency-band-biometrics",
+          "title": "EEG-Based Frequency Band Analysis for Cognitive State and Biometric Applications",
+          "period": "2025",
+          "bullets": [
+            "Independently analyzed a publicly available EEG dataset of 20 participants across three weekly recording sessions to investigate frequency band dissociation between task classification and person authentication.",
+            "Implemented a complete preprocessing pipeline with ICA artifact removal and computed cognitive engagement metrics including Theta-to-Alpha Ratio and Engagement Index.",
+            "Developed and evaluated EEGNet with Squeeze-and-Excitation blocks, Channel Mixing variants, and EEGPT architectures for cognitive state classification across seven frequency bands.",
+            "Conducted cross-session subject authentication experiments, discovering that delta oscillations achieved 86.9% task classification accuracy but only 15.6 to 23.6% authentication accuracy, while broadband signals reached 69.9% authentication performance."
+          ]
+        },
+        {
+          "id": "cognitive-load-vr",
+          "title": "Cognitive Load Analysis in Virtual Reality and Traditional Display Environments",
+          "period": "2024 to 2025",
+          "bullets": [
+            "Designed an experimental protocol comparing cognitive load during 360° VR immersive viewing versus 2D laptop display with 30 participants using a 14-channel Emotiv EPOC X.",
+            "Developed a preprocessing pipeline incorporating bandpass filtering, ICA artifact rejection, and signal normalization, then extracted Theta-Alpha Ratio, Engagement Index, and Beta-Alpha Ratio.",
+            "Performed statistical validation using MANOVA and ANOVA with FDR correction and built classification models with SVM, Random Forest, and kNN using five-fold cross validation.",
+            "Demonstrated that VR environments reduced cognitive load by 21% while increasing engagement by 59%, achieving 83.5% classification accuracy with TAR identified as the optimal marker."
+          ]
+        }
+      ]
+    },
+    "skills": {
+      "eyebrow": "Toolkit",
+      "title": "Technical skills",
+      "groups": [
+        {
+          "category": "Programming & Frameworks",
+          "items": [
+            "Python",
+            "TensorFlow",
+            "Keras",
+            "PyTorch",
+            "Scikit-learn"
+          ]
+        },
+        {
+          "category": "Signal Processing",
+          "items": [
+            "Emotiv EPOC X recording",
+            "MNE-Python",
+            "EEGLAB",
+            "ICA artifact removal",
+            "EEG preprocessing",
+            "Feature extraction"
+          ]
+        },
+        {
+          "category": "Statistical Analysis",
+          "items": [
+            "t-test",
+            "Wilcoxon",
+            "ANOVA",
+            "MANOVA",
+            "FDR correction",
+            "Hierarchical clustering",
+            "Data modeling"
+          ]
+        },
+        {
+          "category": "Computer Vision",
+          "items": [
+            "MediaPipe",
+            "OpenCV",
+            "ROI extraction",
+            "NFIQ2"
+          ]
+        },
+        {
+          "category": "Data Visualization",
+          "items": [
+            "Matplotlib",
+            "Seaborn",
+            "Tableau"
+          ]
+        },
+        {
+          "category": "Tools & Platforms",
+          "items": [
+            "LaTeX",
+            "Google Colab",
+            "Git",
+            "Linux"
+          ]
+        },
+        {
+          "category": "Simulation",
+          "items": [
+            "Advanced Design System (ADS)",
+            "RSoft",
+            "PSpice"
+          ]
+        }
+      ]
+    },
+    "honors": {
+      "eyebrow": "Recognition",
+      "title": "Honors & awards",
+      "items": [
+        {
+          "title": "First Runner-up, Student Merit Award",
+          "venue": "EEE Fest, University of Chittagong",
+          "date": "Feb 2025"
+        },
+        {
+          "title": "Champion, Robo Soccer Competition",
+          "venue": "EEE Fest, University of Chittagong",
+          "date": "Jan 2023"
+        },
+        {
+          "title": "Second Runner-up, Robo Soccer Competition",
+          "venue": "Engineering Day, University of Chittagong",
+          "date": "Jun 2022"
+        },
+        {
+          "title": "Principal's Award for Academic Excellence (4th position, Science group)",
+          "venue": "Dhaka Imperial College",
+          "date": "Sep 2018"
+        },
+        {
+          "title": "Government Junior Scholarship",
+          "venue": "Junior School Certificate examination, Chatkhil Panch Gaon Government High School",
+          "date": "2014"
+        }
+      ]
+    },
+    "tests": {
+      "eyebrow": "Language",
+      "title": "Standardised tests",
+      "items": [
+        {
+          "name": "IELTS Academic",
+          "date": "14 April 2026",
+          "overall": "7.5",
+          "overallLabel": "overall band",
+          "breakdown": [
+            {
+              "label": "Listening",
+              "score": "8.0"
+            },
+            {
+              "label": "Reading",
+              "score": "8.0"
+            },
+            {
+              "label": "Writing",
+              "score": "6.0"
+            },
+            {
+              "label": "Speaking",
+              "score": "7.0"
+            }
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "title": "Want the full picture?",
+      "description": "The complete CV has publication-by-publication detail, references, and contact information."
+    }
+  },
+  "about": {
+    "seo": {
+      "title": "About",
+      "description": "About Tanvir Hossain Ovi, an EEG and brain-computer interface researcher and BSc graduate from the University of Chittagong."
+    },
+    "header": {
+      "eyebrow": "About",
+      "title": "From robo soccer to brainwaves",
+      "description": "A bit about how I got here, what I'm working on, and where I'm headed next."
+    },
+    "bio": [
+      "During my third year at the University of Chittagong, I was tutoring a high school student one evening when his older brother walked in. He was a senior in my department, and he started talking about his research on decoding Bengali words from EEG signals. He mentioned BrainGate, the US program where paralyzed participants had typed full sentences using only signals recorded from their motor cortex. I could not stop thinking about it. I joined his research group the following week, and EEG has been at the center of my academic life ever since.",
+      "My early projects looked at imagined speech and cognitive load. Somewhere along the way I started noticing something stranger. The same brain rhythms that are excellent at telling you what someone is thinking are often terrible at telling you who that person is. Delta band signals classify mental tasks at close to 87 percent accuracy but barely clear 20 percent when the goal shifts to recognizing the individual. Broadband signals do the opposite. That gap became the question behind most of my recent papers, and it eventually led to a phenotype-aware model that lifted cross-session emotion recognition from about 40 percent to almost 92 percent.",
+      "All of this came out of a 14-channel consumer headset running on a university budget, while labs elsewhere worked with 64-channel systems and proper shielded rooms. That constraint forced a certain kind of discipline. You learn to pull real signal out of limited data instead of throwing more hardware at the problem, and that habit has stuck with me.",
+      "Before EEG, I was building robots. My team won the Robo Soccer Competition at EEE Fest in 2023, and we placed second the year before that. Debugging a system in real time, under a deadline, with a crowd watching, turned out to be decent preparation for debugging a preprocessing pipeline at two in the morning before a submission deadline.",
+      "I finished my BSc in November 2025. Since July of that year I have been a remote research assistant in the Biometric Intelligence and Vision Laboratory at the State University of New York, Canton, supervised by Dr. A M Mahmud Chowdhury, with Dr. Nazmul Siddique of Ulster University co-supervising the neural signal work. That appointment is where most of my recent first-author papers come from, including the move from scalp EEG into intracranial recordings.",
+      "Alongside the lab work I am applying to graduate research positions, mostly PhD and a few research master's programs, across several countries. The plan after that has not changed in a while. I want to come back to Bangladesh and start a small lab focused on assistive brain-computer interfaces, beginning with patients who have motor neuron disease and currently get very little support in our health system. The papers, the applications, the late nights with noisy EEG recordings, all of it is really in service of that."
+    ],
+    "portrait": {
+      "src": "/images/portrait.jpg",
+      "width": 2780,
+      "height": 2629,
+      "alt": "Portrait of Tanvir Hossain Ovi"
+    },
+    "thesis": {
+      "visible": true,
+      "image": {
+        "src": "/images/thesis-portrait.png",
+        "width": 1081,
+        "height": 1301,
+        "alt": "Tanvir Hossain Ovi holding his bound BSc thesis"
+      },
+      "quote": "EEG-Based Cognitive Load Analysis in Immersive Virtual Reality and Laptop-Based Video Learning Environments.",
+      "body": "My bound undergraduate thesis, Department of Electrical & Electronic Engineering, University of Chittagong (2024). Thirty participants watched the same video on a 2D laptop or in 360° VR while wearing a 14-channel headset. Immersion lowered cognitive load and raised engagement. That was the first question that pulled me into reading the mind from its signals."
+    },
+    "facts": [
+      {
+        "icon": "location",
+        "label": "Based in",
+        "value": "Chattogram, Bangladesh"
+      },
+      {
+        "icon": "language",
+        "label": "Languages",
+        "value": "Bangla (native), English (IELTS 7.5)"
+      },
+      {
+        "icon": "target",
+        "label": "Status",
+        "value": "Research assistant, SUNY Canton (remote) — open to PhD and research master's positions"
+      }
+    ],
+    "cvPrompt": "Want the formal version with full publication list and references?",
+    "cvButton": "Download CV (PDF)",
+    "references": {
+      "visible": true,
+      "eyebrow": "Academic references",
+      "title": "People who can speak to this work",
+      "referees": [
+        {
+          "name": "Dr. Nazmul Siddique",
+          "title": "Senior Lecturer, School of Computing, Engineering and Intelligent Systems",
+          "institution": "Ulster University, UK",
+          "relation": "Research Supervisor",
+          "email": "nh.siddique@ulster.ac.uk"
+        },
+        {
+          "name": "Dr. A M Mahmud Chowdhury",
+          "title": "Assistant Professor, Department of Cybersecurity",
+          "institution": "State University of New York, Canton, USA",
+          "relation": "Research Supervisor",
+          "email": "Chowdhuryam@canton.edu"
+        },
+        {
+          "name": "Dr. Kazi Tanvir Ahmmed",
+          "title": "Professor, Department of Electrical and Electronic Engineering",
+          "institution": "University of Chittagong, Bangladesh",
+          "relation": "Head of Department",
+          "email": "tanvir@cu.ac.bd"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Let's talk about EEG, BCI, or a research collaboration.",
+      "description": "Reviewing one of my graduate applications, or just curious about phenotype-aware EEG models? I'd love to hear from you."
+    }
+  },
+  "contact": {
+    "seo": {
+      "title": "Contact",
+      "description": "Get in touch with Tanvir Hossain Ovi for research collaboration or questions."
+    },
+    "header": {
+      "eyebrow": "Contact",
+      "title": "Let's talk",
+      "description": "If you're reviewing one of my graduate applications, considering a research collaboration, or just curious about EEG-based emotion recognition, send a message."
+    },
+    "successTitle": "Message sent, thank you.",
+    "successBody": "I read every message and usually reply within a couple of days.",
+    "subjectPlaceholder": "Research collaboration, a question about a paper, etc.",
+    "messagePlaceholder": "Tell me a bit about what you'd like to discuss."
+  }
+}

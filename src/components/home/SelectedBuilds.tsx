@@ -1,5 +1,5 @@
 import { ArrowUpRight, LockSimple } from "@phosphor-icons/react/dist/ssr";
-import { projects, type Project } from "@/lib/data";
+import { projects, site, type Project } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
@@ -10,9 +10,9 @@ export function SelectedBuilds() {
     <section id="projects" className="border-t border-border py-24 sm:py-32">
       <Container>
         <SectionHeading
-          eyebrow="Selected builds"
-          title="Research isn't the only thing I ship"
-          description="Alongside the science, I design and engineer real software end to end: full-stack PWAs I use every day. Proof that I can take an idea from problem to a deployed product."
+          eyebrow={site.home.builds.eyebrow}
+          title={site.home.builds.title}
+          description={site.home.builds.description}
         />
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
