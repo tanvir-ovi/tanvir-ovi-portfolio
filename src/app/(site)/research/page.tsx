@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const published = publications.filter(
-  (p) => p.status === "Published" || p.status === "Accepted"
+  (p) => ["Published", "Accepted", "Presented"].includes(p.status)
 );
 const ongoing = publications.filter(
   (p) => p.status === "Under Review" || p.status === "Submitted"

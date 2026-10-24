@@ -244,12 +244,17 @@
       "items": [
         {
           "date": "Oct 2026",
+          "text": "Built Kotoba to practise a Japanese self-introduction, with audio, word recall and timed speaking rehearsal.",
+          "link": "https://tmu-rehearsal-studio.vercel.app/"
+        },
+        {
+          "date": "Oct 2026",
           "text": "Submitted a first-author study of focal and non-focal intracranial EEG classification to Neural Networks.",
           "link": "/research#recording-level-ieeg-fusion"
         },
         {
-          "date": "Aug 2026",
-          "text": "Clustering-enabled multi-stage intrusion detection paper accepted at the IEEE Conference on Dependable and Secure Computing (DSC 2026).",
+          "date": "Oct 2026",
+          "text": "Presented my first-author paper on a clustering-enabled intrusion detection framework at IEEE DSC 2026.",
           "link": "/research#iot-intrusion-detection"
         },
         {
@@ -347,9 +352,23 @@
     },
     "builds": {
       "eyebrow": "Selected builds",
-      "title": "Research isn't the only thing I ship",
-      "description": "Alongside the science, I design and engineer real software end to end: full-stack PWAs I use every day. Proof that I can take an idea from problem to a deployed product.",
+      "title": "Tools I built and use",
+      "description": "I build web apps around problems I run into, from practising Japanese to keeping shared expenses and graduate applications organised.",
       "projects": [
+        {
+          "name": "Kotoba",
+          "kind": "Japanese speaking and recall practice",
+          "description": "I built Kotoba to learn the Japanese introduction for my TMU interview. Word cards, audio and sentence-building practice turn a script into short daily sessions. Fading prompts and timed rehearsal help me practise speaking without reading every line.",
+          "tech": [
+            "React",
+            "Japanese audio",
+            "Spaced review",
+            "Offline practice"
+          ],
+          "accent": "violet",
+          "url": "https://tmu-rehearsal-studio.vercel.app/",
+          "locked": false
+        },
         {
           "name": "Haowa Bhobon",
           "kind": "Mess & meal management PWA",
@@ -367,12 +386,12 @@
         {
           "name": "Command Center",
           "kind": "Encrypted personal dashboard",
-          "description": "A privacy-first PWA for organizing sensitive personal data. Every field is AES-256 encrypted and decrypted entirely in the browser with a password that never leaves the device, so the hosted app only ever exposes ciphertext.",
+          "description": "An application tracker that keeps university deadlines, professor replies and recommendation letters in one place. Private records unlock in the browser, with a separate public summary for sharing progress.",
           "tech": [
-            "Client-side AES-256",
+            "React",
+            "TypeScript",
             "PWA",
-            "Zero-knowledge",
-            "Offline-first"
+            "AES-256 encryption"
           ],
           "accent": "violet",
           "url": "https://tanvir-application-tracker.web.app",
@@ -381,7 +400,7 @@
         {
           "name": "Namirah Tarannum",
           "kind": "Commissioned client portfolio",
-          "description": "A premium multi-page portfolio built on commission for a graphics designer: a bespoke visual identity, an original self-assembling hero animation, and a curated work gallery. Designed, engineered, and shipped end to end.",
+          "description": "A portfolio commissioned by a graphics designer, with a custom visual identity, an animated opening and a curated work gallery. I designed and developed the site through to deployment.",
           "tech": [
             "Next.js",
             "TypeScript",
@@ -410,8 +429,8 @@
       "description": "From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
     },
     "published": {
-      "title": "Selected publications",
-      "note": "Peer-reviewed journal and conference papers. Select any linked title to read the paper on the publisher's site."
+      "title": "Published and presented work",
+      "note": "Three published journal articles and one presented IEEE conference paper."
     },
     "ongoing": {
       "title": "Selected ongoing research",
@@ -476,7 +495,7 @@
         "authors": "T. H. Ovi, A. M. M. Chowdhury, K. Ghazinour, M. Simsek",
         "venue": "IEEE Conference on Dependable and Secure Computing (DSC)",
         "year": "2026",
-        "status": "Accepted",
+        "status": "Presented",
         "firstAuthor": true,
         "featured": false,
         "url": "",
@@ -825,7 +844,7 @@
       {
         "icon": "target",
         "label": "Status",
-        "value": "Research assistant, SUNY Canton (remote) — open to PhD and research master's positions"
+        "value": "Research assistant, SUNY Canton (remote). Open to PhD and research master's positions"
       }
     ],
     "cvPrompt": "Want the formal version with full publication list and references?",

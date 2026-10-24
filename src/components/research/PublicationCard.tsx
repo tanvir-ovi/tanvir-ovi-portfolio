@@ -13,7 +13,7 @@ export function PublicationCard({ pub, delay = 0 }: { pub: Publication; delay?: 
 
   // Abstracts are shown only for work that is out in the world. Papers under
   // review or submitted list the title and venue but keep the abstract private.
-  const isPublic = pub.status === "Published" || pub.status === "Accepted";
+  const isPublic = ["Published", "Accepted", "Presented"].includes(pub.status);
   const showAbstract = Boolean(pub.abstract) && isPublic;
 
   return (

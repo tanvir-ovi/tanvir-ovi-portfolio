@@ -2,7 +2,7 @@
 // file, and the /admin editor reads and writes it, so keep the two in step:
 // a new field here needs a matching entry in src/components/admin/schema.ts.
 
-export type PubStatus = "Published" | "Accepted" | "Under Review" | "Submitted";
+export type PubStatus = "Published" | "Accepted" | "Presented" | "Under Review" | "Submitted";
 export type Accent = "cyan" | "violet";
 export type FactIcon = "location" | "language" | "target" | "school" | "briefcase" | "sparkle";
 
