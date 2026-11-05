@@ -151,7 +151,7 @@
     "stats": [
       {
         "label": "Publications",
-        "value": "9"
+        "value": "10"
       },
       {
         "label": "Published Journal Papers",
@@ -243,14 +243,19 @@
       "description": "",
       "items": [
         {
-          "date": "Oct 2026",
-          "text": "Built Kotoba to practise a Japanese self-introduction, with audio, word recall and timed speaking rehearsal.",
-          "link": "https://tmu-rehearsal-studio.vercel.app/"
+          "date": "Nov 2026",
+          "text": "Submitted a first-author study of cross-session EEG person identification, E-SpecID, to Brain Theory and Intelligence Science.",
+          "link": "/research#e-specid-person-identification"
+        },
+        {
+          "date": "Nov 2026",
+          "text": "Submitted a first-author study of focal and non-focal intracranial EEG classification to Knowledge-Based Systems.",
+          "link": "/research#recording-level-ieeg-fusion"
         },
         {
           "date": "Oct 2026",
-          "text": "Submitted a first-author study of focal and non-focal intracranial EEG classification to Neural Networks.",
-          "link": "/research#recording-level-ieeg-fusion"
+          "text": "Built Kotoba to practise a Japanese self-introduction, with audio, word recall and timed speaking rehearsal.",
+          "link": "https://tmu-rehearsal-studio.vercel.app/"
         },
         {
           "date": "Oct 2026",
@@ -425,7 +430,7 @@
     },
     "header": {
       "eyebrow": "Research",
-      "title": "Nine papers on what EEG reveals, and what it hides",
+      "title": "Ten papers on what EEG reveals, and what it hides",
       "description": "From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
     },
     "published": {
@@ -460,6 +465,18 @@
         "venue": "Expert Systems With Applications",
         "year": "2026",
         "status": "Under Review",
+        "firstAuthor": true,
+        "featured": true,
+        "url": "",
+        "abstract": ""
+      },
+      {
+        "id": "e-specid-person-identification",
+        "title": "E-SpecID: Electrode-Wise Spectral Learning for Cross-Session EEG Person Identification",
+        "authors": "T. H. Ovi, A. M. M. Chowdhury, N. Siddique",
+        "venue": "Brain Theory and Intelligence Science",
+        "year": "2026",
+        "status": "Submitted",
         "firstAuthor": true,
         "featured": true,
         "url": "",
@@ -541,7 +558,7 @@
         "id": "recording-level-ieeg-fusion",
         "title": "Complementary Raw and Engineered Representations for Focal and Non-Focal Intracranial EEG Classification under a Recording-Separated Split",
         "authors": "T. H. Ovi, A. M. M. Chowdhury, S. Shubbar, K. Watanabe, N. Siddique",
-        "venue": "Neural Networks",
+        "venue": "Knowledge-Based Systems",
         "year": "2026",
         "status": "Submitted",
         "firstAuthor": true,
