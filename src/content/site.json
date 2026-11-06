@@ -244,6 +244,11 @@
       "items": [
         {
           "date": "Nov 2026",
+          "text": "A co-authored study of imagined Bangla word-level speech recognition from EEG was accepted for publication in Computer Speech & Language.",
+          "link": "/research#bangla-word-level-speech"
+        },
+        {
+          "date": "Nov 2026",
           "text": "Submitted a first-author study of cross-session EEG person identification, E-SpecID, to Brain Theory and Intelligence Science.",
           "link": "/research#e-specid-person-identification"
         },
@@ -434,8 +439,8 @@
       "description": "From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
     },
     "published": {
-      "title": "Published and presented work",
-      "note": "Three published journal articles and one presented IEEE conference paper."
+      "title": "Published, accepted and presented work",
+      "note": "Three published journal articles, one accepted journal article and one presented IEEE conference paper."
     },
     "ongoing": {
       "title": "Selected ongoing research",
@@ -548,7 +553,7 @@
         "authors": "A. Hossain, M. A. Z. Akas, T. H. Ovi, M. F. Kader",
         "venue": "Computer Speech & Language",
         "year": "2026",
-        "status": "Under Review",
+        "status": "Accepted",
         "firstAuthor": false,
         "featured": false,
         "url": "",
