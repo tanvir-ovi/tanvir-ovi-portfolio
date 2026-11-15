@@ -3,6 +3,7 @@ import { projects, site, type Project } from "@/lib/data";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
+import { PointerGlow } from "../ui/PointerGlow";
 import { cn } from "@/lib/cn";
 
 export function SelectedBuilds() {
@@ -30,7 +31,7 @@ export function SelectedBuilds() {
 function ProjectCard({ project: p }: { project: Project }) {
   const violet = p.accent === "violet";
   const linkColor = violet ? "text-accent-2" : "text-accent";
-  const glow = violet ? "rgba(139,125,255,0.5)" : "rgba(56,189,248,0.5)";
+  const glow = violet ? "rgba(139,125,255,0.17)" : "rgba(56,189,248,0.15)";
 
   return (
     <article
@@ -39,12 +40,8 @@ function ProjectCard({ project: p }: { project: Project }) {
         violet ? "hover:border-accent-2/40" : "hover:border-accent/40"
       )}
     >
-      {/* Corner glow on hover */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-70"
-        style={{ background: `radial-gradient(circle, ${glow} 0%, transparent 70%)` }}
-      />
+      {/* A soft light that follows the pointer across the card */}
+      <PointerGlow color={glow} />
 
       <div className="relative flex items-center justify-between gap-3">
         <span className="eyebrow-mono">{p.kind}</span>

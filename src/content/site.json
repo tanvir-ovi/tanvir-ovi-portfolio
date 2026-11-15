@@ -363,20 +363,20 @@
     "builds": {
       "eyebrow": "Selected builds",
       "title": "Tools I built and use",
-      "description": "I build web apps around problems I run into, from practising Japanese to keeping shared expenses and graduate applications organised.",
+      "description": "I build web apps around problems I run into, from learning Japanese and training at home to keeping shared expenses and graduate applications organised.",
       "projects": [
         {
-          "name": "Kotoba",
-          "kind": "Japanese speaking and recall practice",
-          "description": "I built Kotoba to learn the Japanese introduction for my TMU interview. Word cards, audio and sentence-building practice turn a script into short daily sessions. Fading prompts and timed rehearsal help me practise speaking without reading every line.",
+          "name": "KanaTales",
+          "kind": "Free Japanese reading course",
+          "description": "A free course for reading and writing Japanese from zero. Hiragana and katakana are taught through picture stories, stroke-order writing, typing drills and spaced review, followed by starter lessons at A1 level. It grew out of the practice tool I built for my own TMU interview.",
           "tech": [
             "React",
-            "Japanese audio",
+            "Stroke-order writing",
             "Spaced review",
-            "Offline practice"
+            "Prerendered pages"
           ],
           "accent": "violet",
-          "url": "https://tmu-rehearsal-studio.vercel.app/",
+          "url": "https://kanatales.vercel.app",
           "locked": false
         },
         {
@@ -394,16 +394,30 @@
           "locked": false
         },
         {
-          "name": "Command Center",
-          "kind": "Encrypted personal dashboard",
-          "description": "An application tracker that keeps university deadlines, professor replies and recommendation letters in one place. Private records unlock in the browser, with a separate public summary for sharing progress.",
+          "name": "Forme",
+          "kind": "Private trainer and nutrition app",
+          "description": "A home training and nutrition app built around my own numbers. A 12-week programme with 44 exercises, each drawn by a small animation rig I wrote, plus meals costed from Bangladeshi food composition tables. It works offline and stores the journal encrypted.",
+          "tech": [
+            "React",
+            "SVG animation rig",
+            "Offline-first PWA",
+            "Android app"
+          ],
+          "accent": "violet",
+          "url": "https://forme-wellness.vercel.app",
+          "locked": true
+        },
+        {
+          "name": "Synapse",
+          "kind": "Encrypted application tracker",
+          "description": "The tracker I run my graduate applications on: university deadlines, professor replies and recommendation letters in one place. Records are encrypted and unlock only in the browser. A Wins page groups every professor who said yes by what they actually committed to, and an offer letter opens with its own ceremony.",
           "tech": [
             "React",
             "TypeScript",
-            "PWA",
+            "Offline-first PWA",
             "AES-256 encryption"
           ],
-          "accent": "violet",
+          "accent": "cyan",
           "url": "https://tanvir-application-tracker.web.app",
           "locked": true
         },
@@ -417,7 +431,7 @@
             "Framer Motion",
             "Design system"
           ],
-          "accent": "cyan",
+          "accent": "violet",
           "url": "https://namirah-tarannum-portfolio.vercel.app",
           "locked": false
         }

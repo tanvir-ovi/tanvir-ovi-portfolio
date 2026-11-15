@@ -16,11 +16,16 @@ export function Reveal({
   className,
   delay = 0,
   as = "div",
+  variant = "blur",
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   as?: "div" | "li" | "ul" | "ol";
+  /* "blur" moves the whole block. "group" leaves the block still and lets its
+   * children choreograph themselves: SplitWords rise word by word, and any
+   * element marked data-rise follows, ordered by its --d delay. */
+  variant?: "blur" | "group";
 }) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
@@ -53,7 +58,11 @@ export function Reveal({
   return (
     <Tag
       ref={ref as React.Ref<never>}
-      className={cn("reveal-blur", shown && "reveal-blur-in", className)}
+      className={cn(
+        variant === "group" ? "reveal-group" : "reveal-blur",
+        shown && (variant === "group" ? "reveal-group-in" : "reveal-blur-in"),
+        className
+      )}
       style={{ "--reveal-delay": `${delay}s` } as React.CSSProperties}
     >
       {children}

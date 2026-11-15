@@ -1,5 +1,6 @@
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
+import { SplitWords } from "./ui/SplitWords";
 import { GlowOrbs } from "./NeuralField";
 
 export function PageHeader({
@@ -15,8 +16,8 @@ export function PageHeader({
     <section className="relative overflow-hidden border-b border-border">
       <GlowOrbs />
       <Container className="relative py-20 sm:py-28">
-        <Reveal>
-          <p className="eyebrow-mono mb-4 flex items-center gap-2.5">
+        <Reveal variant="group">
+          <p data-rise className="eyebrow-mono mb-4 flex items-center gap-2.5">
             <span
               className="inline-block h-1.5 w-1.5 rounded-full bg-accent"
               aria-hidden="true"
@@ -24,9 +25,13 @@ export function PageHeader({
             {eyebrow}
           </p>
           <h1 className="font-display text-balance text-3xl font-normal tracking-tight text-foreground sm:text-5xl">
-            {title}
+            <SplitWords text={title} />
           </h1>
-          <p className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-foreground-muted sm:text-lg">
+          <p
+            data-rise
+            style={{ "--d": "0.32s" } as React.CSSProperties}
+            className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-foreground-muted sm:text-lg"
+          >
             {description}
           </p>
         </Reveal>
