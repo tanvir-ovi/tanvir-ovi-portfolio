@@ -295,8 +295,9 @@ html.lenis body {
 
 /* Hero entrance: masked line rise for the headline, blur-to-sharp for the
    supporting copy. CSS runs from the first paint, so phones never flash the
-   copy before hydration. Desktop holds the sequence until the 3D brain has
-   drawn its first frame, then lets the lines land as it glides right. */
+   copy before hydration. Desktop holds the sequence (for 2 s at most) until
+   the 3D brain has drawn its first frame, then lets the lines land as it
+   glides right. */
 .hero-intro {
   --hero-start: 0.1s;
 }
@@ -321,6 +322,10 @@ html.lenis body {
 @media (min-width: 1024px) {
   .hero-intro {
     --hero-start: 1.7s;
+  }
+  /* The brain is still loading, so the copy stops waiting for its glide */
+  .hero-intro[data-brain-ready="late"] {
+    --hero-start: 0.15s;
   }
 }
 /* Phones show the introduction from the first frame as a soft ghost that

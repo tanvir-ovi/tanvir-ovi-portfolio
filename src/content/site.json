@@ -155,7 +155,7 @@
       },
       {
         "label": "Published Journal Papers",
-        "value": "3"
+        "value": "4"
       },
       {
         "label": "IELTS Academic",
@@ -244,7 +244,7 @@
       "items": [
         {
           "date": "Nov 2026",
-          "text": "A co-authored study of imagined Bangla word-level speech recognition from EEG was accepted for publication in Computer Speech & Language.",
+          "text": "A co-authored study of imagined Bangla word-level speech recognition from EEG was published in Computer Speech & Language.",
           "link": "/research#bangla-word-level-speech"
         },
         {
@@ -453,8 +453,8 @@
       "description": "From cognitive load in virtual reality to the frequency bands that separate mental state from personal identity, this is the published and in-progress work that shapes my research direction."
     },
     "published": {
-      "title": "Published, accepted and presented work",
-      "note": "Three published journal articles, one accepted journal article and one presented IEEE conference paper."
+      "title": "Published and presented work",
+      "note": "Four published journal articles and one presented IEEE conference paper."
     },
     "ongoing": {
       "title": "Selected ongoing research",
@@ -526,6 +526,18 @@
         "abstract": "EEG from 28 participants during WhatsApp audio and video calls shows video calls impose significantly higher cognitive load and mental fatigue than audio calls, growing with call duration. Theta-alpha ratio and Mahalanobis-distance fatigue analysis combined with ML classification (ROC-AUC > 0.90) gave convergent evidence that communication modality matters for real-world workload assessment."
       },
       {
+        "id": "bangla-word-level-speech",
+        "title": "Heterogeneous Deep Learning Approaches for EEG-Based Imagined Bangla Word-Level Speech Recognition",
+        "authors": "A. Hossain, M. A. Z. Akas, T. H. Ovi, T. F. Arin, M. F. Kader",
+        "venue": "Computer Speech & Language, vol. 104, p. 102071",
+        "year": "2027",
+        "status": "Published",
+        "firstAuthor": false,
+        "featured": false,
+        "url": "https://www.sciencedirect.com/science/article/pii/S0885230826001348",
+        "abstract": "EEG from 25 participants imagining ten everyday Bangla words forms the first EEG word dataset in Bangla. After FIR band-pass filtering, ICA artifact removal and a split into six frequency bands, three models were compared: a baseline 1D CNN, the channel-attention EEGNet-SE and the pretrained transformer EEGPT. EEGPT reached the highest accuracy, 99.65% in the beta band. The work carries imagined speech decoding past vowels, digits and English words into a new language."
+      },
+      {
         "id": "iot-intrusion-detection",
         "title": "Design of a Clustering-Enabled Multi-Stage Intrusion Detection Framework for APT Mitigation in IoT Networks",
         "authors": "T. H. Ovi, A. M. M. Chowdhury, K. Ghazinour, M. Simsek",
@@ -556,18 +568,6 @@
         "venue": "Acta Psychologica",
         "year": "2026",
         "status": "Submitted",
-        "firstAuthor": false,
-        "featured": false,
-        "url": "",
-        "abstract": ""
-      },
-      {
-        "id": "bangla-word-level-speech",
-        "title": "Heterogeneous Deep Learning Approaches for EEG-Based Imagined Bangla Word-Level Speech Recognition",
-        "authors": "A. Hossain, M. A. Z. Akas, T. H. Ovi, M. F. Kader",
-        "venue": "Computer Speech & Language",
-        "year": "2026",
-        "status": "Accepted",
         "firstAuthor": false,
         "featured": false,
         "url": "",

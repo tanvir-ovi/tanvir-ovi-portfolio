@@ -3,26 +3,35 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/data";
+import { afterHeroAssets } from "@/lib/load-order";
 
 /* Scroll-scrubbed fly-through: the camera pushes from outside the brain into
  * its neural network as the visitor scrolls, while four short beats describe
  * the research pipeline. The section is tall and its stage is sticky, so the
  * scroll distance becomes the video's timeline.
  *
- * Frequent keyframes support forward/backward seeking. Only one seek may be
- * in flight at once, so slower devices finish decoding instead of restarting.
- * Reduced-motion visitors get the four beats as an ordinary static list. */
+ * The whole clip is downloaded into memory once the page is idle, then played
+ * from a blob URL. Streaming it instead meant every seek waited on the network,
+ * so the scene sat frozen on one frame until the file had fully arrived. Until
+ * the clip is ready, the poster (its first frame) zooms with scroll, so the
+ * scene always moves; the video then fades in over it.
+ *
+ * Only one seek may be in flight at once, so slower devices finish decoding
+ * instead of restarting. Reduced-motion visitors get the four beats as an
+ * ordinary static list. */
 
 const { heading, beats } = site.home.insideTheWork;
 
 export function NeuralDive() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const posterRef = useRef<HTMLImageElement>(null);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
   const railRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [reduce, setReduce] = useState(false);
   const [src, setSrc] = useState<string | null>(null);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -32,31 +41,91 @@ export function NeuralDive() {
     return () => { cancelAnimationFrame(id); mq.removeEventListener("change", update); };
   }, []);
 
-  // Only fetch the clip once the section is near, and pick the size by viewport
+  // Fetch the whole clip (sized by viewport) once the page and the hero brain
+  // have loaded, or straight away if the visitor is already heading for the section.
+  // Data-saver visitors keep the zooming poster and skip the download.
   useEffect(() => {
     const el = sectionRef.current;
     if (!el || reduce || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const io = new IntersectionObserver(
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (connection?.saveData) return;
+
+    const url = window.matchMedia("(min-width: 768px)").matches
+      ? "/video/neural-dive.mp4"
+      : "/video/neural-dive-sm.mp4";
+    const controller = new AbortController();
+    let objectUrl: string | null = null;
+    let started = false;
+    let idleId = 0;
+    let timer = 0;
+    let io: IntersectionObserver | null = null;
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      io?.disconnect();
+      fetch(url, { signal: controller.signal })
+        .then((r) => {
+          if (!r.ok) throw new Error("Clip unavailable");
+          return r.blob();
+        })
+        .then((blob) => {
+          objectUrl = URL.createObjectURL(blob);
+          setSrc(objectUrl);
+        })
+        .catch(() => {
+          // Network trouble: fall back to streaming, which still beats a still frame
+          if (!controller.signal.aborted) setSrc(url);
+        });
+    };
+
+    // The section starts about a screen below the hero, so a wide margin would
+    // fire on load; this fires once the visitor actually scrolls toward it.
+    io = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setSrc(
-            window.matchMedia("(min-width: 768px)").matches
-              ? "/video/neural-dive.mp4"
-              : "/video/neural-dive-sm.mp4"
-          );
-          io.disconnect();
-        }
+        if (entries.some((e) => e.isIntersecting)) start();
       },
-      { rootMargin: "150% 0px 150% 0px" }
+      { rootMargin: "0px 0px 15% 0px" }
     );
     io.observe(el);
-    return () => io.disconnect();
+
+    // After page load, let the hero brain's mesh finish first (at most 8 s), so
+    // the two downloads don't split a slow connection, then start when idle.
+    let cancelWait = () => {};
+    let fallback = 0;
+    const startWhenIdle = () => {
+      cancelWait();
+      window.clearTimeout(fallback);
+      if (started || timer) return;
+      timer = window.setTimeout(() => {
+        if (typeof window.requestIdleCallback === "function") idleId = window.requestIdleCallback(start, { timeout: 2000 });
+        else start();
+      }, 300);
+    };
+    const onLoad = () => {
+      cancelWait = afterHeroAssets(startWhenIdle);
+      fallback = window.setTimeout(startWhenIdle, 8000);
+    };
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
+
+    return () => {
+      controller.abort();
+      io?.disconnect();
+      window.removeEventListener("load", onLoad);
+      cancelWait();
+      window.clearTimeout(fallback);
+      window.clearTimeout(timer);
+      if (idleId && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
   }, [reduce]);
 
   useEffect(() => {
     if (reduce) return;
     const section = sectionRef.current;
     const video = videoRef.current;
+    const poster = posterRef.current;
     if (!section || !video) return;
 
     // iOS only allows seeking after a play() call has been made once
@@ -98,8 +167,10 @@ export function NeuralDive() {
         }
       }
 
-      // Per-frame visuals are written straight to the DOM, not through React state
+      // Per-frame visuals are written straight to the DOM, not through React state.
+      // The poster's stronger zoom stands in for the camera push until the clip is in.
       video.style.transform = `scale(${1 + current * 0.06})`;
+      if (poster) poster.style.transform = `scale(${1 + current * 0.7})`;
       railRefs.current.forEach((el, i) => {
         if (el) el.style.width = `${Math.min(Math.max(current * beats.length - i, 0), 1) * 100}%`;
       });
@@ -140,8 +211,14 @@ export function NeuralDive() {
     resizeObserver.observe(document.body);
     window.addEventListener("scroll", wake, { passive: true });
     window.addEventListener("resize", measure);
+    // Reveal the clip once it has a decoded frame to show
+    const onLoaded = () => {
+      if (src && video.readyState >= 2) setVideoReady(true);
+      wake();
+    };
     video.addEventListener("seeked", wake);
-    video.addEventListener("loadeddata", wake);
+    video.addEventListener("loadeddata", onLoaded);
+    if (src && video.readyState >= 2) onLoaded();
 
     return () => {
       near = false;
@@ -152,7 +229,7 @@ export function NeuralDive() {
       window.removeEventListener("scroll", wake);
       window.removeEventListener("resize", measure);
       video.removeEventListener("seeked", wake);
-      video.removeEventListener("loadeddata", wake);
+      video.removeEventListener("loadeddata", onLoaded);
       window.removeEventListener("touchstart", unlock);
     };
   }, [reduce, src]);
@@ -184,14 +261,29 @@ export function NeuralDive() {
       aria-label="Research pipeline, from raw signal to understanding"
     >
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
+        {/* First frame of the clip; zooms with scroll until the video is ready.
+            A plain img: the file is already a small WebP and the scrub loop
+            writes its transform directly, which next/image's wrapper would get in the way of. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          ref={posterRef}
+          src="/video/neural-dive-poster.webp"
+          alt=""
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover will-change-transform"
+          style={{ filter: "saturate(0.95) brightness(0.78)" }}
+          aria-hidden="true"
+        />
         <video
           ref={videoRef}
           src={src ?? undefined}
-          poster="/video/neural-dive-poster.webp"
           muted
           playsInline
-          preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover"
+          preload="auto"
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
+            videoReady ? "opacity-100" : "opacity-0"
+          )}
           style={{ filter: "saturate(0.95) brightness(0.78)" }}
           aria-hidden="true"
         />

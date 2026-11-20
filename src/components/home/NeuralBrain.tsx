@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EEGSignalField } from "./EEGSignalField";
 import { NeuralSignalNetwork } from "./NeuralSignalNetwork";
+import { markHeroAssetsLoaded } from "@/lib/load-order";
 
 export type PointerRef = RefObject<{ x: number; y: number }>;
 type BrainSurface = { positions: Float32Array; shades: Float32Array; indices: Uint32Array };
@@ -78,7 +79,7 @@ function GridFloor({ pointer }: { pointer: PointerRef }) {
   );
 }
 
-function BrainScene({ data, pointer, variant, onReady }: { data: BrainSurface; pointer: PointerRef; variant: "desktop" | "mobile"; onReady?: () => void }) {
+function BrainScene({ data, pointer, variant, onReady, skipIntro }: { data: BrainSurface; pointer: PointerRef; variant: "desktop" | "mobile"; onReady?: () => void; skipIntro?: RefObject<boolean> }) {
   const { viewport } = useThree();
   const group = useRef<THREE.Group>(null);
   const state = useRef({ time: 0, spin: 0, tiltX: 0, tiltY: 0, started: false, startedAt: 0 });
@@ -103,7 +104,14 @@ function BrainScene({ data, pointer, variant, onReady }: { data: BrainSurface; p
   useFrame((_, rawDelta) => {
     const delta = Math.min(rawDelta, 0.1), s = state.current, g = group.current;
     if (!g) return;
-    if (!s.started) { s.started = true; s.startedAt = performance.now(); onReady?.(); }
+    if (!s.started) {
+      s.started = true;
+      s.startedAt = performance.now();
+      // The copy is already showing, so start at the resting pose (the spin the
+      // opening glide would have built up) instead of sweeping across the text.
+      if (skipIntro?.current) { s.startedAt -= 5000; s.spin = 0.83; }
+      onReady?.();
+    }
     // Match the copy's wall-clock timeline even when the GPU drops frames.
     s.time = (performance.now() - s.startedAt) / 1000;
     // Hold a large centred brain, then make one continuous rotating glide.
@@ -197,7 +205,7 @@ class WebGLBoundary extends Component<{ fallback: ReactNode; children: ReactNode
   render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
-export function NeuralBrain({ pointer, variant = "desktop", onReady }: { pointer: PointerRef; variant?: "desktop" | "mobile"; onReady?: () => void }) {
+export function NeuralBrain({ pointer, variant = "desktop", onReady, skipIntro }: { pointer: PointerRef; variant?: "desktop" | "mobile"; onReady?: () => void; skipIntro?: RefObject<boolean> }) {
   const host = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<BrainSurface | null>(null);
   const [failed, setFailed] = useState(false);
@@ -206,8 +214,8 @@ export function NeuralBrain({ pointer, variant = "desktop", onReady }: { pointer
     const controller = new AbortController();
     fetch("/brain-surface.bin", { signal: controller.signal })
       .then((r) => { if (!r.ok) throw new Error("Brain unavailable"); return r.arrayBuffer(); })
-      .then((buffer) => setData(decodeSurface(buffer)))
-      .catch(() => { if (!controller.signal.aborted) setFailed(true); });
+      .then((buffer) => { setData(decodeSurface(buffer)); markHeroAssetsLoaded(); })
+      .catch(() => { if (!controller.signal.aborted) { setFailed(true); markHeroAssetsLoaded(); } });
     return () => controller.abort();
   }, []);
   useEffect(() => {
@@ -225,8 +233,8 @@ export function NeuralBrain({ pointer, variant = "desktop", onReady }: { pointer
     <div ref={host} className="absolute inset-0">
       {failed ? fallback : data ? (
         <WebGLBoundary fallback={fallback}>
-          <Canvas dpr={variant === "mobile" ? [1, 1.25] : [1, 1.75]} frameloop={active ? "always" : "never"} camera={{ position: [0, 0, 5.2], fov: 45 }} gl={{ antialias: true, alpha: true }} className="!pointer-events-none">
-            <BrainScene data={data} pointer={pointer} variant={variant} onReady={onReady} />
+          <Canvas dpr={variant === "mobile" ? [1, 1.25] : [1, 1.75]} frameloop={active ? "always" : "never"} camera={{ position: [0, 0, 5.2], fov: 45 }} gl={{ antialias: true, alpha: true }} className="!pointer-events-none animate-[hero-fade_0.9s_ease-out_both]">
+            <BrainScene data={data} pointer={pointer} variant={variant} onReady={onReady} skipIntro={skipIntro} />
           </Canvas>
         </WebGLBoundary>
       ) : null}

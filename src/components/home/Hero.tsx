@@ -23,14 +23,22 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const [brainReady, setBrainReady] = useState(false);
-  const markBrainReady = useCallback(() => setBrainReady(true), []);
-  // Release the copy even if the model or GPU is unavailable on a slow device.
+  // "waiting" holds the desktop copy for the brain's opening; "ready" means the
+  // brain arrived in time; "late" means the copy stopped waiting for it.
+  const [brainState, setBrainState] = useState<"waiting" | "ready" | "late">("waiting");
+  const copyReleased = useRef(false);
+  const markBrainReady = useCallback(() => setBrainState((s) => (s === "waiting" ? "ready" : s)), []);
+  // On a slow connection the brain (three.js plus its mesh) can take several
+  // seconds, so the copy waits only briefly. A brain that arrives after that
+  // skips its centre-stage opening and fades in at rest beside the copy.
   useEffect(() => {
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
-    const timeout = window.setTimeout(markBrainReady, 5000);
+    const timeout = window.setTimeout(() => {
+      copyReleased.current = true;
+      setBrainState((s) => (s === "waiting" ? "late" : s));
+    }, 2000);
     return () => window.clearTimeout(timeout);
-  }, [markBrainReady]);
+  }, []);
 
   // Desktop and mobile get different hero compositions (full-bleed glide vs a
   // dedicated framed panel), so we mount only the one that matches the viewport.
@@ -102,11 +110,11 @@ export function Hero() {
 
   // Text entrance (masked line reveal, blur-to-sharp copy) is pure CSS in
   // globals.css, so it starts with the first paint instead of after hydration.
-  // On desktop it holds until the brain is ready (data-brain-ready).
+  // On desktop it holds briefly for the brain (data-brain-ready).
   return (
     <section
       ref={sectionRef}
-      data-brain-ready={brainReady}
+      data-brain-ready={brainState === "waiting" ? "false" : brainState === "late" ? "late" : "true"}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="hero-intro relative overflow-hidden"
@@ -135,7 +143,7 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 motion-reduce:hidden"
           aria-hidden="true"
         >
-          <NeuralBrain pointer={pointer} variant="desktop" onReady={markBrainReady} />
+          <NeuralBrain pointer={pointer} variant="desktop" onReady={markBrainReady} skipIntro={copyReleased} />
         </motion.div>
       ) : null}
 
